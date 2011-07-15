@@ -1,0 +1,1563 @@
+/* LAYOUT */
+
+
+
+/* text highlighting block */
+.selected_para 
+{
+	background-color: #CBFFBD;
+	margin: 0;
+	padding: 7px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+
+
+
+
+body
+{
+	background: #9AAB84;
+	color: #222;
+}
+
+a 
+{
+	color:#222;
+	text-decoration: none;
+}
+
+/* prevents outlines - we set them explicitly for elements that require them */
+a:focus 
+{
+	outline: 0;
+}
+
+/* for content we want out of the way */
+.off-left
+{ 
+	position: absolute; 
+	left: -9999px; 
+	width: 900px;
+}
+
+/* skip links */
+a.skip, 
+a.skip:hover,
+a.skip:visited
+{
+	position: absolute;
+	left: 0px;
+	top: -999px;
+	overflow: hidden;
+	z-index: 2000;
+	font-size: 1.55em;
+	border: 5px solid #B5BFB2;
+	margin: 0;
+	padding: 10px 0;
+	background: #9AAB84;
+	-moz-border-radius: 22px;
+	-khtml-border-radius: 22px;
+	-webkit-border-radius: 22px;
+	border-radius: 22px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+a.skip:active, 
+a.skip:focus
+{
+	color: #fff;
+	position: absolute;
+	top: 36px;
+	left: 1%;
+	width: 58%;
+	text-align: center;
+} 
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Book Header 
+---------------------------------------------------------------------
+*/
+
+/* Book Header wraps Logo/Title & Search */
+#book_header 
+{
+	width: 100%;
+	height: 67px;
+	border-bottom: 2px solid #B5BFB2;
+	position: fixed;
+	z-index: 1999;
+	top: 32px;
+	background: #819565;
+	overflow: hidden;
+}
+
+		#titlewrap
+		{
+			float: left;
+			padding: 0 20px;
+		}
+			
+			#titlewrap img
+			{
+				float: left;
+				padding: 0 20px 0 0;
+			}
+			
+		#page_title
+		{
+			float: left;
+			padding-top: 7px;
+		}
+		
+			#title
+			{
+				float: left;
+			}
+			
+			#tagline
+			{
+				float: left;
+				clear: left;
+				padding-top: 3px;
+			}
+		
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Wordpress user links
+---------------------------------------------------------------------
+*/
+
+#user_links 
+{
+	float: right;
+	clear: right;
+	padding: 10px 0 0 0;
+}
+	
+	#user_links ul li
+	{
+		float: right;
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+	}
+	
+		#user_links ul li a,
+		#user_links ul li a:link,
+		#user_links ul li a:hover,
+		#user_links ul li a:visited
+		{
+			display: block;
+			font-size: 0.7em;
+			margin: 0 10px 0 0;
+			padding: 4px 6px 2px 6px;
+			text-decoration: none;
+			background-color: #9AAB84;
+			text-transform: uppercase;
+			color: #ddd;
+			font-family: Helvetica, Arial, sans-serif;
+		}	
+	
+		#user_links ul li a:hover
+		{
+			background-color: #9AAB84;
+			color: #fff;
+		}	
+	
+		#user_links ul li a:active,
+		#user_links ul li a:focus
+		{
+			color: #9AAB84;
+			background-color: #CBFFBD;
+		}	
+
+	
+
+
+
+/* 
+---------------------------------------------------------------------
+Header 
+---------------------------------------------------------------------
+*/
+#header 
+{
+	width: 100%;
+	position: fixed;
+	z-index: 1000;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	overflow: hidden;
+}
+
+	/* Book Navigation sits within Header */
+	#book_nav 
+	{
+		clear: left;
+		float: left;
+		width: 100%;
+		background: #bfbfbf url(../images/buttonbar_bgr.jpg) repeat-x;
+		border-bottom: 2px solid #B5BFB2;
+		height: 30px;
+	}
+	
+	#book_nav_wrapper
+	{
+	}
+	
+		/* define rollover action */
+		#book_nav ul li a.css_btn:link
+		{
+			overflow: hidden !important; /* hides Mozilla outlines */
+			background-position: top left !important;
+		}
+		
+		#book_nav ul li a.css_btn:hover,
+		#book_nav ul li a.css_btn:focus,
+		#book_nav ul li a.css_btn:active
+		{
+			overflow: hidden !important; /* hides Mozilla outlines */
+			background-position: 0 -30px !important;
+		}
+		
+
+
+
+		/* Site Navigation */
+		#book_nav ul#nav
+		{
+			float: left;
+			/* let's not set a width, but give IE zoom: 1 */
+			/* width: 391px; */
+		}
+		
+		/* Table of Contents Trigger */
+		#book_nav ul#toc_trigger
+		{
+			float: right;
+			width: 33px;
+		}
+		
+		/* Header Minimiser Trigger */
+		#book_nav ul#minimiser_trigger
+		{
+			float: right;
+			width: 33px;
+		}
+		
+			#book_nav ul#nav li,
+			#book_nav ul#toc_trigger li,
+			#book_nav ul#minimiser_trigger li
+			{
+				float: left;
+			}
+			
+				#book_nav ul#nav li a,
+				#book_nav ul#toc_trigger li a,
+				#book_nav ul#minimiser_trigger li a
+				{
+					display: block;
+					text-indent: -9999px;
+					height: 30px;
+				}
+			
+
+
+
+
+
+				/* Menu bar elements */
+				a#btn_contents
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/toc.jpg);
+				}
+			
+				a#btn_cover
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/cover.jpg);
+				}
+			
+				a#btn_home
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/home.jpg);
+				}
+
+				a#btn_general
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/gencomments.jpg);
+				}
+			
+				a#btn_allcomments
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/allcomments.jpg);
+				}
+			
+				a#btn_members
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/members.jpg);
+				}
+			
+				a#btn_blog
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/blog.jpg);
+				}
+			
+				a#btn_header_min
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/header_min.jpg);
+				}
+			
+			
+
+
+
+		/* Book Navigation */
+		#book_nav div#cp_book_nav
+		{
+			float: left;
+			width: 61%;
+		}
+		
+		#book_nav div#cp_book_nav ul li a
+		{
+			display: block;
+			text-indent: -9999px;
+			height: 30px;
+		}
+	
+			#book_nav div#cp_book_nav ul li a#next_page,
+			#book_nav div#cp_book_nav ul li a#previous_page
+			{
+				height: 30px;
+				width: 41px;
+			}
+		
+			#book_nav div#cp_book_nav ul li a#next_page
+			{
+				background: transparent url(../images/page_nav/page_next.jpg);
+			}
+		
+			#book_nav div#cp_book_nav ul li a#previous_page
+			{
+				background: transparent url(../images/page_nav/page_prev.jpg);
+			}
+		
+
+
+		
+			/* blog_navigation */
+			#book_nav div#cp_book_nav ul#blog_navigation li.alignleft a,
+			#book_nav div#cp_book_nav ul#blog_navigation li.alignright a
+			{
+				height: 30px;
+				width: 41px;
+			}
+		
+			#book_nav div#cp_book_nav ul#blog_navigation li.alignright a
+			{
+				background: transparent url(../images/page_nav/page_next.jpg);
+			}
+		
+			#book_nav div#cp_book_nav ul#blog_navigation li.alignleft a
+			{
+				background: transparent url(../images/page_nav/page_prev.jpg);
+			}
+		
+
+
+
+
+		/* Book Information */
+		#book_nav div#cp_book_info
+		{
+			height: 30px;
+			margin: 0 41px;
+		}
+		
+			#book_nav div#cp_book_info p
+			{
+				text-align: center;
+				margin: 0;
+				padding: 10px 0 0 0;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 12px;
+				color: #5a5b5f;
+			}
+			
+		
+
+		
+
+
+
+/* 
+---------------------------------------------------------------------
+Search
+---------------------------------------------------------------------
+*/
+
+/* Book search */
+#book_search 
+{
+	float: right;
+	text-align: right;
+	padding: 6px 10px 0 0;
+}
+
+	#book_search label
+	{
+		float: left;
+		padding: 5px 6px 2px 6px;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 0.7em;
+		color: #eee;
+		visibility: hidden; /* hide, but not from screen-readers */
+	}
+
+	#book_search input#s
+	{
+		width: 100px;
+		float: left;
+		margin: 2px 2px 0 0;
+	}
+
+	#book_search input#searchsubmit
+	{
+		margin: 2px 0 0 5px;
+	}
+
+.post form#searchform
+{
+	padding: 7px 7px 11px 7px;
+}
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Container
+---------------------------------------------------------------------
+*/
+
+/* contains all page content and wrappers */
+#container 
+{
+	position: relative;
+	padding: 0;
+	padding-bottom: 10px;
+	top: 108px;
+}
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Main Wrapper
+---------------------------------------------------------------------
+*/
+
+/* Main wrapper contains all page content and wrappers */
+#main_wrapper 
+{
+}
+
+
+
+
+/* Page wrapper is content column */
+#page_wrapper 
+{
+	width: 58%;
+	padding: 0;
+	margin: 0 0 0 1%;
+	margin-bottom: 10px;
+	background: #fff;
+	border: 5px solid #B5BFB2;
+	-webkit-box-shadow: #888 2px 2px 5px;
+	-moz-box-shadow: #888 2px 2px 5px;
+	-khtml-box-shadow: #888 2px 2px 5px;
+}
+
+
+
+
+
+
+/* Contains post */
+#content 
+{
+	padding: 0 0 20px 0;
+	margin: 0;
+	min-height: 620px;
+	height: 99%;
+	background: #fff;
+}
+
+	.post 
+	{
+		/* To accomodate our left aligned speech bubbles */
+		padding: 45px 0;
+		margin: 0 60px 0 70px;
+	}
+	
+	.full_width .post 
+	{
+		/* For Title Page, to allow Book Cover image */
+		padding: 45px 0;
+		margin: 0;
+		text-align: center;
+		overflow: hidden;
+	}
+	
+	.post div.textblock
+	{
+		padding: 7px 7px 0 7px;
+	}
+	
+	.post div.textblock p,
+	.post div.textblock ul,
+	.post div.textblock ol,
+	.post div.textblock blockquote,
+	.post div.textblock table
+	{
+		padding: 0 0 18px 0;
+	}
+	
+	.archive_item
+	{
+		padding: 40px 0 10px 0;
+	}
+	
+	.postmetadata
+	{
+		padding: 8px;
+	}
+	
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Paragraph Comment Icon
+---------------------------------------------------------------------
+*/
+
+span.commenticonbox 
+{
+	position: absolute;
+	margin-left: -35px;	
+	padding-right: 15px;
+}
+
+.post span.commenticonbox small
+{
+	margin: 0;	
+	padding: 0;	
+}
+
+span.commenticonbox a.para_permalink 
+{
+	display: block;
+	float: left;
+	width: 17px;
+	height: 14px;
+	text-indent: -999px;
+}
+
+	span.commenticonbox a.para_permalink:focus
+	{
+		background-color: #CBFFBD;
+	}
+	
+	span.commenticonbox a.no_comments 
+	{
+		background: transparent url("../images/icons/comment_add.png") no-repeat;
+	}
+	
+	span.commenticonbox a.has_comments 
+	{
+		background: transparent url("../images/icons/comment.png") no-repeat;
+	}
+	
+span.commenticonbox small.comment_count
+{
+	font-size: 10px; 
+	position: absolute; 
+	float: right;
+	padding: 0 0 0 3px;
+}
+
+	span.commenticonbox small.zero_comments
+	{
+		visibility: hidden;
+	}
+	
+/* comment icon in blockquote */
+blockquote span.commenticonbox 
+{
+	margin-left: -50px;	
+	margin-right: 30px;
+}
+
+/* comment icon in lists */
+.post ul li.list_commenticon,
+.post ol li.list_commenticon
+{
+	float: left;
+	width: 0px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+
+
+
+/* page and post navigation links */
+.navigation 
+{
+	padding-top:3px;
+	padding-bottom: 6px;
+	padding-left: 6px;
+}
+
+.navigation a
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+}
+	
+.running_header_top
+{
+	margin-top: -50px;
+	margin-bottom: 35px;
+	padding-right: 25px;
+	font-size: .8em;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #888;
+	text-align: center;
+}
+	
+.running_header_bottom
+{
+	margin-top: 30px;
+	margin-bottom: -35px;
+	padding-right: 25px;
+	font-size: .8em;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #888;
+	text-align: center;
+}
+	
+.navigation a:link,
+.navigation a:hover,
+.navigation a:active,
+.navigation a:visited
+{
+	color: #666;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+}	
+	
+
+
+
+
+
+/* Multipage Navigation */
+#content div.multipager
+{
+	padding: 5px 0;
+	margin: 15px 0;
+	list-style-type: none;
+	border-top: 1px solid #B5BFB2;
+	border-bottom: 1px dotted #B5BFB2;
+}
+
+div.multipager .multipager_sep
+{
+	visibility: hidden;
+}
+
+#content div.multipager:after 
+{
+	content: "";
+	display: block;
+	height: 0px;
+	clear: both;
+}
+
+
+
+
+/* Media Navigation */
+#content ul.image_link
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#content ul.image_link:after 
+{
+	content: "";
+	display: block;
+	height: 0px;
+	clear: both;
+}
+
+#content ul.image_link li
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+
+
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Sidebar
+---------------------------------------------------------------------
+*/
+
+/* Default sidebar */
+#sidebar 
+{
+	position: fixed !important;
+	z-index: 2000;
+	top: 108px;
+	left: 61%;
+	/* float: left; */
+	width: 38%;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	-webkit-box-shadow: #888 2px 2px 5px;
+	-moz-box-shadow: #888 2px 2px 5px;
+	-khtml-box-shadow: #888 2px 2px 5px;
+}
+
+	/* Sidebar style */
+	#sidebar_inner
+	{
+		padding: 5px 5px 5px 5px;
+		background: #fff;
+		border: 3px solid #B5BFB2;
+		-moz-border-radius: 8px;
+		-khtml-border-radius: 8px;
+		-webkit-border-radius: 8px;
+		border-radius: 8px;
+	}
+	
+		/* toc header */
+		div.sidebar_header
+		{
+			border-bottom: 2px solid #B5BFB2;
+			padding: 3px;
+			height: 25px;
+			color: #444;
+			background: #fff;
+		}
+		
+		.sidebar_minimiser
+		{
+			overflow-y: scroll;
+		}
+		
+		.sidebar_contents_wrapper
+		{
+			height: auto;
+			padding: 0;
+		}
+		
+
+
+
+
+
+/* Table of Contents sidebar */
+#toc_sidebar
+{
+	display: none;
+}
+	
+body.cp_sidebar_toc #toc_sidebar
+{
+	display: block;
+}
+	
+	#cp_minimise_toc
+	{
+		cursor: pointer;
+		float: right;
+	}
+	
+	#toc_sidebar .sidebar_minimiser
+	{
+		padding: 10px;
+		height: 320px;
+	}
+	
+		#toc_sidebar .sidebar_minimiser ul
+		{
+			margin: 0;
+			padding: 0;
+		}
+		
+		#toc_sidebar .sidebar_minimiser ul#toc_list
+		{
+			border-bottom: 1px solid #ddd;
+		}
+		
+		#toc_sidebar .sidebar_minimiser ul li ul
+		{
+			padding: 0;
+			margin: 0;
+		}
+		
+		#toc_sidebar .sidebar_minimiser ul li
+		{
+			padding: 0;
+			margin: 0;
+			border-top: 1px solid #ddd;
+		}
+		
+		#toc_sidebar .sidebar_minimiser ul li ul li
+		{
+			padding: 0;
+			margin: 0 0 0 20px;
+		}
+		
+		#toc_sidebar .sidebar_minimiser ul li a
+		{
+			font-family: Helvetica, Arial, sans-serif;
+			font-weight: normal;
+			font-size: 80%;
+			padding: 4px 4px;
+			display: block;
+			background: #fff;
+			margin: 0;
+		}
+		
+		#toc_sidebar .sidebar_minimiser ul li a:link,
+		#toc_sidebar .sidebar_minimiser ul li a:active,
+		#toc_sidebar .sidebar_minimiser ul li a:visited
+		{
+			color: #666;
+			text-decoration: none;
+		}	
+
+		#toc_sidebar .sidebar_minimiser ul li a:hover
+		{
+			background: #EFEFEF;
+			text-decoration: none;
+		}	
+
+
+
+
+
+/* Blog Archives sidebar */
+#archive_sidebar
+{
+	display: none;
+}
+	
+body.cp_sidebar_archive #archive_sidebar
+{
+	display: block;
+}
+	
+	#cp_minimise_archive
+	{
+		cursor: pointer;
+		float: right;
+	}
+	
+	#archive_sidebar .sidebar_minimiser
+	{
+		padding: 10px;
+		height: 320px;
+	}
+	
+
+		#archive_sidebar .sidebar_minimiser ul
+		{
+			margin: 0;
+			padding: 0;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		#archive_sidebar .sidebar_minimiser ul li ul
+		{
+			padding: 0 0 0 0;
+			margin: 0 0 0 0;
+		}
+		
+		#archive_sidebar .sidebar_minimiser ul li
+		{
+			padding: 0;
+			margin: 0;
+			border-top: 1px solid #ddd;
+		}
+		
+		#archive_sidebar .sidebar_minimiser ul li ul li
+		{
+			padding: 0;
+			margin: 0 0 0 20px;
+		}
+		
+		#archive_sidebar .sidebar_minimiser ul li a
+		{
+			font-family: Helvetica, Arial, sans-serif;
+			font-weight: normal;
+			font-size: 80%;
+			padding: 4px 4px;
+			display: block;
+			background: #fff;
+			margin: 0;
+		}
+		
+		#archive_sidebar .sidebar_minimiser ul li a:link,
+		#archive_sidebar .sidebar_minimiser ul li a:active,
+		#archive_sidebar .sidebar_minimiser ul li a:visited
+		{
+			color: #666;
+			text-decoration: none;
+		}	
+
+		#archive_sidebar .sidebar_minimiser ul li a:hover
+		{
+			background: #EFEFEF;
+			text-decoration: none;
+		}	
+
+
+
+
+
+
+/* Contains comments */
+#comments_sidebar
+{
+	display: none;
+}
+	
+body.cp_sidebar_comments #comments_sidebar
+{
+	display: block;
+}
+	
+	#cp_minimise_comments,
+	#cp_minimise_all_comments
+	{
+		cursor: pointer;
+		float: right;
+	}
+	
+	.cp_button
+	{
+		margin: 3px 0 0 5px;
+	}
+	
+	#comments_sidebar .sidebar_minimiser
+	{
+		padding: 0px;
+		height: 340px;
+	}
+	
+	div.comments_container
+	{
+		padding: 10px;
+		border-top: 1px solid #B5BFB2;
+	}
+	
+	/* comments in page */
+	#comments_in_page_wrapper div.comments_container
+	{
+		padding: 0;
+	}
+	
+	/* paragraph header text */
+	.comments_container h3
+	{
+		background: #EFEFEF;
+		border-bottom: 1px solid #B5BFB2;
+	}
+	
+	/* wrapper for all comments for a partcular paragraph */
+	div.paragraph_wrapper
+	{
+		overflow: hidden;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.comment-identifier
+	{
+		margin: 0 0 0 0;
+		border-bottom: 2px solid #B5BFB2;
+		padding-bottom: 5px;
+	}
+	
+	.post .comment-identifier
+	{
+		padding: 0 0 5px 0;
+	}
+	
+	.comment-content
+	{
+		clear: left;
+		padding: 10px 5px 0 5px;
+		border-bottom: 1px dashed #B5BFB2;
+		margin: 0;
+		overflow: hidden;
+	}
+	
+	.post .comment-content
+	{
+		padding: 5px;
+		margin: 0 0 0 0;
+	}
+	
+	/* reply to a partcular paragraph */
+	.reply
+	{
+	}
+	
+	a.comment-reply-link
+	{
+		display: block;
+		padding: 4px 0 4px 4px;
+		border-bottom: 1px dashed #B5BFB2;
+	}
+	
+	div.reply_to_para
+	{
+		padding: 0;
+		margin: 0;
+		border-bottom: 1px dashed #B5BFB2;
+	}
+	
+	/* wrapper for all comments */
+	ol.commentlist
+	{
+		list-style: none;
+		background: #fff;
+		margin: 0;
+		padding: 0;
+	}
+	
+	/* wrapper for each comment and its replies */
+	ol.commentlist li 
+	{
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}	
+	
+	/* wrapper for comment replies */
+	ol.children,
+	ul.children
+	{
+		padding: 0;
+		margin: 0;
+	}
+	
+	/* wrapper for each comment reply */
+	ol.children li,
+	ul.children li
+	{
+		padding: 0 0 0 20px;
+		margin: 0;
+	}
+	
+	/* wrapper for each comment */
+	.comment-wrapper
+	
+	{
+		margin: 0;
+		padding: 0;
+	}
+	
+	.comment-author, 
+	.comment-author .photo, 
+	.comment-author cite,
+	.comment-author span
+	
+	{
+		margin: 0;
+		padding: 0;
+		vertical-align: middle;
+	}
+	
+	div.reply_to_para
+	{
+		background-color: #fff;
+		margin: 0;
+	}
+	
+
+
+	/* wrapper for comment form wrapper */
+	#respond_wrapper
+	{
+		/* margin: 0 20px; */
+		padding: 0;
+	}
+	
+	/* comments in page */
+	#content #respond_wrapper
+	{
+		padding: 0 7px;
+	}
+
+	/* wrapper for comment form */
+	div#respond
+	{
+		background-color: #CBFFBD;
+		margin: 0;
+		padding: 8px 8px;
+	}
+	
+		/* cancel reply link */
+		div#respond .cancel-comment-reply
+		{
+		}
+		
+		div#respond #cancel-comment-reply-link
+		{
+			display: block;
+		}
+		
+		/* cancel reply link */
+		div#respond p#respond_button
+		{
+			padding: 0;
+			margin: 0;
+		}
+		
+		.post div#respond p,
+		.post div#respond ul,
+		.post div#respond ol
+		{
+		}
+		
+		
+	/* comments */
+	textarea#comment {
+		width: 99%;
+		margin: 0 0 5px 0;
+	}
+
+
+
+	/* amends for comments in page NOT sidebar */
+
+	.post .comments_container h3
+	{
+		margin: 0;
+		padding: 6px 0;
+		background: #fff;
+		border-bottom: 1px solid #B5BFB2;
+	}
+
+	.post ol.children li, 
+	.post ul.children li 
+	{
+		list-style: none;
+	}
+
+	/* wrapper for each comment and its replies */
+	.post ol.commentlist li 
+	{
+		padding: 0 0 0 0;
+		margin: 0;
+	}	
+	
+	/* wrapper for each comment reply */
+	.post ol.children li,
+	.post ul.children li
+	{
+		padding: 5px 0 0 20px;
+		margin: 0;
+	}
+	
+
+	
+	#comments_in_page_wrapper,
+	#respond_in_page_wrapper
+	{
+		padding-left: 7px;
+		padding-right: 7px;
+	}
+	
+	/* wrapper for comment form */
+	#respond_in_page_wrapper div#respond
+	{
+		background-color: #fff;
+		margin: 12px 0;
+		padding: 10px;
+		background-color: #CBFFBD;
+	}
+	
+	/* comments */
+	#respond_in_page_wrapper textarea#comment {
+		width: 99%;
+		margin: 0 0 5px 0;
+	}
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Footer
+---------------------------------------------------------------------
+*/
+
+#footer 
+{
+	clear: left;
+	margin: 0 0 0 1%;
+	width: 58%;
+	background: transparent;
+	background: #819565;
+	border: 5px solid #819565;
+	-webkit-box-shadow: #888 2px 2px 5px;
+	-moz-box-shadow: #888 2px 2px 5px;
+	-khtml-box-shadow: #888 2px 2px 5px;
+}
+
+#footer_inner,
+#footer_inner a
+{
+	color: #819565;
+	color: #BBC5B9;
+	color: #B5BFB2;
+}
+
+#footer_inner
+{
+	padding: 5px;
+}
+
+
+
+
+
+/* 
+---------------------------------------------------------------------
+'All Comments' & 'Comments by Commenter' Pages
+---------------------------------------------------------------------
+*/
+
+#content .post ul.all_comments_listing 
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 90%;
+	list-style: none;
+	padding: 0;
+	margin: 0 7px 30px 7px;
+	border-bottom: 1px solid #B5BFB2;
+}
+
+	#content .post ul.all_comments_listing ul
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0 0 0 10px;
+	}
+	
+	/* style six levels deep */
+	#content .post ul.all_comments_listing ul ul,
+	#content .post ul.all_comments_listing ul ul ul,
+	#content .post ul.all_comments_listing ul ul ul ul,
+	#content .post ul.all_comments_listing ul ul ul ul ul
+	{
+		list-style: none;
+		margin: 0;
+		padding: 0 0 0 20px;
+	}
+	
+	/* remove list style */
+	#content .post ul.all_comments_listing li,
+	#content .post ul.all_comments_listing ul li
+	#content .post ul.all_comments_listing ul ul li,
+	#content .post ul.all_comments_listing ul ul ul li,
+	#content .post ul.all_comments_listing ul ul ul ul li,
+	#content .post ul.all_comments_listing ul ul ul ul ul li
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#content .post ul.all_comments_listing h3 
+	{
+		font-size: 1em;
+		color: #761D19;
+		cursor: pointer;
+		padding: 5px 0;
+		margin: 0 0 0 0;
+	}
+	
+		#content .post ul.all_comments_listing h3:hover
+		{
+			background: #EFEFEF;
+		}
+		
+	#content .post ul.all_comments_listing h3 span
+	{
+		font-weight: normal;
+		color: #000;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body 
+	{
+		padding: 0;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_wrapper
+	{
+		border-top: 2px solid #B5BFB2;
+		padding: 1px 0 0 0;
+		margin: 10px 0 0 0;
+		font-family: Georgia;
+		font-size: 1.1em;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_meta 
+	{
+		font-size: 70%;
+		line-height: 1.4;
+		font-family: Helvetica, Arial, sans-serif;
+		color: #222;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_meta a:link,
+	#content .post ul.all_comments_listing div.item_body div.comment_meta a:hover,
+	#content .post ul.all_comments_listing div.item_body div.comment_meta a:active,
+	#content .post ul.all_comments_listing div.item_body div.comment_meta a:visited
+	{
+		color: #666;
+		text-decoration: none;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_content 
+	{
+		font-size: 90%;
+		line-height: 1.4;
+	}
+	
+	
+	
+	
+	
+/* 
+---------------------------------------------------------------------
+Theme My Login
+---------------------------------------------------------------------
+*/
+
+.login
+{
+	padding: 5px;
+}
+
+.login p.error 
+{
+	padding: 5px;
+	border: 1px solid #c00;
+	background-color: #ffebe8;
+	color: #333;
+}
+
+/* be more specific */
+#theme-my-login p.message
+{
+	background-color: #CBFFBD;
+	border: 1px solid #761D19;
+	padding: 15px;
+	margin: 0 0 20px 0;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.45;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.login form
+{
+	padding: 10px;
+	margin: 0 0 20px 0;
+	background: #CBFFBD;
+	border: 5px solid #B5BFB2;
+}
+
+.login form label
+{
+	display: block;
+}
+
+.login form p.forgetmenot label
+{
+	display: inline;
+}
+
+.login form input[type="text"], 
+.login form input[type="password"]
+{
+	width: 50%;
+	padding: 5px;
+	font-size: 110%;
+}
+
+.tml-user-avatar
+{
+	padding: 0 0 20px 0;
+}
+
+ul.tml-action-links,
+ul.tml-user-links
+{
+	list-style: none;
+	margin: 2px 0px 16px;
+	padding: 0px;
+}
+
+	ul.tml-action-links li,
+	ul.tml-user-links li
+	{
+		display: inline;
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+	}
+	
+		
+	ul.tml-action-links li a,
+	ul.tml-user-links li a
+	{
+		background: #819565;
+		color: white;
+		font-family: Arial, sans-serif;
+		font-size: 0.9em;
+		margin: 0px 6px 0px 0px;
+		padding: 3px 6px;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+
+
+
+/* 
+---------------------------------------------------------------------
+Misc
+---------------------------------------------------------------------
+*/
+
+a.download_link
+{
+	display: block;
+	text-align: center;
+	font-size: 1.55em;
+	border: 3px solid #761D19;
+	background-color: #CBFFBD;
+	padding: 8px 20px;
+	margin: 0 0 10px 0;
+	-moz-border-radius: 12px;
+	-khtml-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	text-decoration: none;
+}
+
+/* These rather presentational classes are generated by WordPress, so it's useful to have some styles for them. Edit as you see fit. More info: http://codex.wordpress.org/CSS */
+.aligncenter 
+{ 
+	display: block; 
+	margin: 0 auto 
+}
+
+.alignleft 
+{ 
+	float: left;
+}
+
+.alignright 
+{ 
+	float: right;
+}
+
+.wp-caption 
+{ 
+	display: block;
+	border: 1px solid #B5BFB2; 
+	border-bottom: 0px solid #B5BFB2; 
+	text-align: center; 
+	background: #ccc; 
+	margin: -10px 0 0 0; 
+	padding: 10px 10px 0 10px; 
+}
+
+.wp-caption-text
+{ 
+	display: block;
+	border: 1px solid #B5BFB2; 
+	border-top: 0px solid #B5BFB2; 
+	text-align: center; 
+	background: #ccc; 
+	padding: 0 10px 10px 10px; 
+}
+
+
+
+/* You might find the following useful */
+
+/* Use this br class to clear your floated columns */
+br.dirtyLittleTrick 
+{ 
+	clear: both; 
+	display: block; 
+	height: 1px; 
+	margin: -1px 0 0 0;
+} 
+

@@ -1,0 +1,26 @@
+/* custom styles */
+
+table#matrix
+{
+	margin: 0 0 0 0;
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	border: 1px solid white;
+}
+
+table#matrix th,
+table#matrix td
+{
+	text-align: center;
+	padding: 5px;
+	border: 1px solid white;
+	width: 18%;
+	background: #c5c7c8;
+}
+
+table#matrix tr.odd_row th,
+table#matrix tr.odd_row td
+{
+	background: #d6d6d7;
+}

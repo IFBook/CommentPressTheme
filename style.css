@@ -1,0 +1,12 @@
+/*
+Theme Name: Commentpress
+Theme URI: http://www.futureofthebook.org/commentpress/
+Description: The default theme for Commentpress
+Version: 3.2
+Author: Christian Wach
+Author URI: http://www.haystack.co.uk
+*/
+
+@import "style/css/reset.css";
+@import "style/css/typography.css";
+@import "style/css/layout.css";

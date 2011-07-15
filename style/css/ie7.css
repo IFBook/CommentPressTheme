@@ -1,0 +1,44 @@
+/* IE7 */
+
+
+
+/* zoom! */
+#container,
+#main_wrapper,
+#page_wrapper,
+#footer,
+div.item_body,
+div.item_body ul,
+div.item_body ul li,
+#content,
+.sidebar_minimiser,
+.sidebar_minimiser ul li a,
+#cp_book_info,
+div.paragraph_wrapper
+{
+	zoom: 1;
+}
+
+#footer,
+#page_wrapper
+{
+	margin-bottom: 10px;
+}
+
+
+
+/* Book search */
+#book_search 
+{
+	padding: 4px 0 0 0;
+}
+
+#book_search input#s
+{
+	margin: 2px 5px 0 0;
+}
+
+#book_search input#searchsubmit
+{
+	margin: 0 10px 0 0;
+}
