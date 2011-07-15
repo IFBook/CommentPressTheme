@@ -518,6 +518,14 @@ function cp_get_header_offset() {
 	// get header offset
 	var offset = 0 - ( jQuery.px_to_num( jQuery('#container').css('top') ) );
 	
+	// is the admin bar shown?
+	if ( cp_wp_adminbar == 'y' ) {
+	
+		// subtract admin bar height
+		offset -= cp_wp_adminbar_height;
+	
+	}
+	
 	//alert( offset );
 	
 	// --<
