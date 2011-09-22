@@ -906,6 +906,8 @@ function cp_enable_comment_permalink_clicks() {
  */
 function cp_scroll_to_anchor_on_load() {
 
+	var text_sig = '';
+
 	// if there is an anchor in the URL (only on non-special pages)
 	var url = document.location.toString();
 	
@@ -938,8 +940,49 @@ function cp_scroll_to_anchor_on_load() {
 				var para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').attr('id');
 				var para_num = para_id.split('-')[1];
 				var post_id = jQuery('#comment_post_ID').attr('value');
+				//alert(post_id);
 				
-				addComment.moveFormToPara( para_num, text_sig, post_id );
+				// seems like TinyMCE isn't yet working and that moving the form
+				// prevents it from loading properly
+				if ( cp_tinymce == '1' ) { 
+					
+					// if we have link text, then a comment reply is allowed...
+					if ( jQuery( '#comment-' + comment_id + ' > .reply' ).text() != '' ) {
+						
+						// temporarily override global so that TinyMCE is not
+						// meddled with in any way...
+						cp_tinymce = '0';
+	
+						// move the form
+						addComment.moveForm( 
+						
+							'comment-' + comment_id, 
+							comment_id, 
+							'respond', 
+							post_id,
+							text_sig
+							
+						);
+						
+						// restore global
+						cp_tinymce = '1';
+						
+					}
+					
+				} else {
+				
+					// move the form
+					addComment.moveForm( 
+					
+						'comment-' + comment_id, 
+						comment_id, 
+						'respond', 
+						post_id,
+						text_sig
+						
+					);
+
+				}
 
 			}
 			

@@ -102,7 +102,7 @@ addComment = {
 		
 		// set comment_parent hidden input to parentID
 		parent_e.value = parentID;
-		//alert( 'parent_e.value set: ' + parent_e.value );
+		//console.log( 'parent_e.value set: ' + parent_e.value );
 		
 		// set text_signature hidden input to text signature
 		if ( sig_e !== '' ) { sig_e.value = textSig; }
@@ -270,8 +270,9 @@ addComment = {
 		// if not special page
 		if ( cp_special_page != '1' ) {
 
-			// set text_sig
+			// init text_sig
 			var text_sig = '';
+			var para_num = '';
 			
 			// if we have a text sig
 			if ( addComment.I('text_signature') ) {
@@ -280,12 +281,39 @@ addComment = {
 				text_sig = addComment.I('text_signature').value;
 				addComment.I('text_signature').value = '';
 				
+				//console.log('text_sig: '+text_sig);
+
+				// This is a potential source of weakness: if the para text has been changed,
+				// but not by much, then levenshtein will still associate the comment with
+				// a paragraph, but there will be no *exact* reference in the DOM.
+
 				// find para num
 				var para_id = jQuery('#para_wrapper-' + text_sig + ' .reply_to_para').attr('id');
-				var para_num = para_id.split('-')[1];
-		
+				
+				// is there an element for the exact match?
+				if ( para_id === undefined ) {
+				
+					// NO -> crawl up the DOM looking for the wrapper
+					var parent_wrapper = jQuery('#respond').closest('div.paragraph_wrapper');
+					
+					// if we get it...
+					if ( parent_wrapper.length > 0 ) {
+					
+						// grab it's id
+						var parent_wrapper_id = parent_wrapper.attr('id');
+						
+						// proceed with this instead
+						var para_id = jQuery( '#' + parent_wrapper_id + ' .reply_to_para').attr('id');
+
+					}
+
+				}
+				
+				// get paragraph number
+				para_num = para_id.split('-')[1];
+
 			}
-			
+		
 			
 			
 			// are we encouraging reading?
@@ -298,10 +326,10 @@ addComment = {
 				
 			} else {
 			
-				// return form to para position
-				
 				// get comment post ID
 				var post_id = addComment.I('comment_post_ID').value;
+				
+				// return form to para position
 				
 				// return form to para
 				addComment.moveFormToPara( para_num, text_sig, post_id );
@@ -393,7 +421,7 @@ addComment = {
 		
 			// load tinyMCE, changed from this: tinyMCE.execCommand('mceAddControl', false, 'comment');
 			setTimeout( function() { tinyMCE.execCommand('mceAddControl', false, 'comment'); }, 1 );
-			//alert( 'control added' );
+			//console.log( 'control added' );
 			
 		}
 		
@@ -412,7 +440,7 @@ addComment = {
 		
 			// unload tinyMCE
 			tinyMCE.execCommand('mceRemoveControl', false, 'comment');
-			//alert( 'control removed' );
+			//console.log( 'control removed' );
 			
 		}
 		
@@ -427,7 +455,7 @@ addComment = {
 	 */	
 	setTitle : function( parentID, textSig, mode ) {
 	
-		//alert( 'parentID: '+parentID+' textSig: '+textSig+' mode: ' + mode );
+		//console.log( 'parentID: '+parentID+' textSig: '+textSig+' mode: ' + mode );
 	
 		// get comment form title item
 		var title = addComment.I('respond_title');
@@ -499,24 +527,29 @@ addComment = {
 			
 			// store
 			//addComment.replyTitle = title.innerHTML;
-			//alert( jQuery( '#comment-' + parentID + ' > .reply' ).text() );
+			//console.log( jQuery( '#comment-' + parentID + ' > .reply' ).text() );
 			
-			// get reply link text
-			title.innerHTML = jQuery( '#comment-' + parentID + ' > .reply' ).text();
+			// if we have link text, then a comment reply is allowed...
+			if ( jQuery( '#comment-' + parentID + ' > .reply' ).text() != '' ) {
 			
-			// sanitise textSig
-			if ( textSig === undefined || textSig == '' ) { textSig == ''; }
-			
-			// if promoting commenting, sort out reply to para links
-			if ( cp_promote_reading == '1' ) {
+				// get reply link text
+				title.innerHTML = jQuery( '#comment-' + parentID + ' > .reply' ).text();
 				
-				// show previous
-				if ( addComment.text_signature !== undefined ) {
-					jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+				// sanitise textSig
+				if ( textSig === undefined || textSig == '' ) { textSig == ''; }
+				
+				// if promoting commenting, sort out reply to para links
+				if ( cp_promote_reading == '1' ) {
+					
+					// show previous
+					if ( addComment.text_signature !== undefined ) {
+						jQuery( '#para_wrapper-' + addComment.text_signature + ' div.reply_to_para' ).show();
+					}
+					
+					// show current
+					jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
+					
 				}
-				
-				// show current
-				jQuery( '#para_wrapper-' + textSig + ' div.reply_to_para' ).show();
 				
 			}
 			
