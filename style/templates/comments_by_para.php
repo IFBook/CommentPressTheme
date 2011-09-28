@@ -46,6 +46,15 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments_by_para.php' == basename($_
 
 
 
+<?php
+
+// include comment form
+include( TEMPLATEPATH . '/style/templates/comment_form.php');
+
+?>
+
+
+
 </div><!-- /comments_container -->
 
 
@@ -54,9 +63,3 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments_by_para.php' == basename($_
 
 
 
-<?php
-
-// include comment form
-include( TEMPLATEPATH . '/style/templates/comment_form.php');
-
-?>

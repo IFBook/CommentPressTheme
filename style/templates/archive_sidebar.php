@@ -1,6 +1,6 @@
 <!-- archive_sidebar.php -->
 
-<div id="archive_sidebar">
+<div id="archive_sidebar" class="sidebar_container">
 
 
 

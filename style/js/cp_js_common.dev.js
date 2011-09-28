@@ -181,7 +181,7 @@ function cp_page_setup() {
 			if ( cp_sidebar_minimised == 'y' ) {
 			
 				// set visibility of comments
-				styles += '#comments_sidebar .sidebar_minimiser { display: none; } ';
+				styles += '#comments_sidebar .sidebar_contents_wrapper { display: none; } ';
 	
 			}
 		
@@ -250,6 +250,11 @@ function cp_page_setup() {
 
 		}
 	
+
+		
+		// show tabs when JS enabled
+		styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #archive_header.sidebar_header { display: block; } ';
+		
 
 
 		// close style declaration
@@ -343,7 +348,7 @@ function cp_setup_page_layout() {
 				original_content_width = me.width();
 				original_sidebar_width = sidebar.width();
 				original_nav_width = book_nav.width();
-				//alert(original_sidebar_width);
+				//console.log(original_sidebar_width);
 				
 				// calculate sidebar left
 				original_sidebar_left = sidebar.css( "left" );
@@ -391,7 +396,7 @@ function cp_setup_page_layout() {
 				
 				// get percent to four decimal places
 				var me_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
-				//alert(w);
+				//console.log(w);
 				
 				// set element width
 				me.css("width" , me_w + '%');
@@ -411,7 +416,7 @@ function cp_setup_page_layout() {
 				
 				// get percent to four decimal places
 				var book_nav_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
-				//alert(w);
+				//console.log(w);
 				
 				// set element width
 				book_nav.css("width" , book_nav_w + '%');
@@ -427,7 +432,7 @@ function cp_setup_page_layout() {
 				
 				// get percent to four decimal places
 				var sidebar_w = parseFloat( Math.ceil( ( 1000000 * parseFloat( width ) / ww ) ) / 10000 );
-				//alert(w);
+				//console.log(w);
 				
 				// set element width
 				sidebar.css("width" , sidebar_w + '%');
@@ -526,7 +531,7 @@ function cp_get_header_offset() {
 	
 	}
 	
-	//alert( offset );
+	//console.log( offset );
 	
 	// --<
 	return offset;
@@ -629,7 +634,7 @@ function cp_scroll_comments( target, speed ) {
 	if ( cp_is_mobile == '0' ) {
 	
 		// scroll comment area to para heading
-		jQuery('#comments_sidebar .sidebar_minimiser').scrollTo( target, {duration: speed} );
+		jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
 		
 	}
 	
@@ -697,9 +702,6 @@ function cp_setup_comment_headers() {
 				
 					// unhighlight paragraphs
 					jQuery.unhighlight_para();
-					
-					// highlight this paragraph
-					jQuery.highlight_para( textblock );
 					
 					// scroll page
 					cp_scroll_page( textblock );
@@ -783,7 +785,7 @@ function cp_setup_comment_headers() {
 				// if we have a comment list
 				if ( comment_list[0] ) {
 				
-					//alert( 'has' );
+					//console.log( 'has' );
 					
 					// are we closing with no reply form?
 					if ( !opening && !has_form ) {
@@ -802,7 +804,7 @@ function cp_setup_comment_headers() {
 					// if we have no respond
 					if ( !has_form ) {
 					
-						//alert( 'none' );
+						//console.log( 'none' );
 						para_wrapper.css('display','none');
 						opening = true;
 					
@@ -940,7 +942,7 @@ function cp_scroll_to_anchor_on_load() {
 				var para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').attr('id');
 				var para_num = para_id.split('-')[1];
 				var post_id = jQuery('#comment_post_ID').attr('value');
-				//alert(post_id);
+				//console.log(post_id);
 				
 				// seems like TinyMCE isn't yet working and that moving the form
 				// prevents it from loading properly
@@ -1039,7 +1041,7 @@ function cp_scroll_to_anchor_on_load() {
 			// do we have a paragraph or comment block permalink?
 			if ( url.match('#' + text_sig ) || url.match('#para_heading-' + text_sig ) ) {
 			
-				//alert('yep');
+				//console.log('yep');
 			
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
@@ -1143,7 +1145,237 @@ function cp_scroll_to_comment_on_load() {
 
 
 /** 
- * @description: set up clicks on comment icons
+ * @description: does what a click on a comment icon should do
+ * @todo: 
+ *
+ */
+function cp_do_comment_icon_action( text_sig ) {
+
+	// get para wrapper
+	var para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
+	
+	// get comment list
+	var comment_list = jQuery( '#para_wrapper-' + text_sig + ' .commentlist' );
+	
+	// get respond
+	var respond = para_wrapper.find('#respond');
+	
+	// is it a direct child of para wrapper?
+	var top_level = addComment.getLevel();
+
+
+
+	// init
+	var opening = false;
+	
+	// get visibility
+	var visible = para_wrapper.css('display');
+	
+	// override
+	if ( visible == 'none' ) { opening = true; }
+	
+
+
+	// clear other highlights
+	jQuery.unhighlight_para();
+	
+	// did we get a text_sig?
+	if ( text_sig != '' ) {
+	
+		// get text block
+		var textblock = jQuery('#textblock-' + text_sig);
+		//console.log(text_sig);
+		
+		// if encouraging reading and closing
+		if ( cp_promote_reading == '1' && !opening ) {
+		
+			// skip the highlight
+		
+		} else {
+		
+			// highlight this paragraph
+			jQuery.highlight_para( textblock );
+			
+			// scroll page
+			cp_scroll_page( textblock );
+			
+		}
+		
+	}
+	
+
+
+	// if encouraging commenting
+	if ( cp_promote_reading == '0' ) {
+	
+		// are comments open?
+		if ( cp_comments_open == 'y' ) {
+
+			// get comment post ID
+			var post_id = jQuery('#comment_post_ID').attr('value');
+			var para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').attr('id');
+			var para_num = para_id.split('-')[1];
+			
+		}
+		
+		
+		
+		// Choices, choices...
+		
+		
+		
+		// if it doesn't have the commentform
+		if ( !respond[0] ) {
+		
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+				addComment.moveFormToPara( para_num, text_sig, post_id );
+			}
+			
+		}
+			
+		// if it has the commentform but is not top level
+		if ( respond[0] && !top_level ) {
+		
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// move comment form
+				addComment.moveFormToPara( para_num, text_sig, post_id );
+			
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			
+			} else {
+			
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+			
+			}
+
+			return;
+			
+		}
+			
+		// if it doesn't have the commentform but has a comment
+		if ( !respond[0] && comment_list[0] && !opening ) {
+		
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			
+			} else {
+			
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+			
+			}
+
+			return;
+			
+		}
+
+		// if closing with comment list
+		if ( !opening && comment_list[0] ) {
+		
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			
+			} else {
+			
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+			
+			}
+
+			return;
+		
+		}
+		
+		// if commentform but no comments and closing
+		if ( respond[0] && !comment_list[0] && !opening ) {
+		
+			// are comments open?
+			if ( cp_comments_open == 'y' ) {
+
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+			
+			} else {
+			
+				// scroll comments to comment form
+				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+			
+			}
+
+			// --<
+			return;
+			
+		}
+		
+		// if closing with no comment list
+		if ( !opening && !comment_list[0] ) {
+		
+			//console.log( 'none + closing' );
+			para_wrapper.css( 'display', 'none' );
+			opening = true;
+
+		}
+	
+	}
+	
+
+
+	// toggle next item_body
+	para_wrapper.slideToggle( 'slow', function () {
+	
+		// animation finished
+	
+		// are we encouraging reading?
+		if ( cp_promote_reading == '1' && opening ) {
+		
+			// scroll comments
+			cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+			
+		} else {
+		
+			// only if opening
+			if ( opening ) {
+			
+				// are comments open?
+				if ( cp_comments_open == 'y' ) {
+
+					// scroll comments to comment form
+					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				
+				} else {
+				
+					// scroll comments to comment form
+					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+				
+				}
+
+			}
+			
+		}
+		
+		
+	});
+	
+}
+
+
+
+
+
+
+/** 
+ * @description: set up clicks on comment icons attached to comment-blocks in post/page
  * @todo: 
  *
  */
@@ -1162,224 +1394,9 @@ function cp_setup_comment_icons() {
 		// get text signature
 		var text_sig = jQuery(this).attr('id');
 		
-		// get para wrapper
-		var para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
+		// use function
+		cp_do_comment_icon_action( text_sig );
 		
-		// get comment list
-		var comment_list = jQuery( '#para_wrapper-' + text_sig + ' .commentlist' );
-		
-		// get respond
-		var respond = para_wrapper.find('#respond');
-		
-		// is it a direct child of para wrapper?
-		var top_level = addComment.getLevel();
-
-
-
-		// init
-		var opening = false;
-		
-		// get visibility
-		var visible = para_wrapper.css('display');
-		
-		// override
-		if ( visible == 'none' ) { opening = true; }
-		
-
-
-		// clear other highlights
-		jQuery.unhighlight_para();
-		
-		// did we get a text_sig?
-		if ( text_sig != '' ) {
-		
-			// get text block
-			var textblock = jQuery('#textblock-' + text_sig);
-			//alert(text_sig);
-			
-			// if encouraging reading and closing
-			if ( cp_promote_reading == '1' && !opening ) {
-			
-				// skip the highlight
-			
-			} else {
-			
-				// highlight this paragraph
-				jQuery.highlight_para( textblock );
-				
-				// scroll page
-				cp_scroll_page( textblock );
-				
-			}
-			
-		}
-		
-
-
-		// if encouraging commenting
-		if ( cp_promote_reading == '0' ) {
-		
-			// are comments open?
-			if ( cp_comments_open == 'y' ) {
-
-				// get comment post ID
-				var post_id = jQuery('#comment_post_ID').attr('value');
-				var para_id = jQuery('#para_wrapper-'+text_sig+' .reply_to_para').attr('id');
-				var para_num = para_id.split('-')[1];
-				
-			}
-			
-			
-			
-			// Choices, choices...
-			
-			
-			
-			// if it doesn't have the commentform
-			if ( !respond[0] ) {
-			
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-					addComment.moveFormToPara( para_num, text_sig, post_id );
-				}
-				
-			}
-				
-			// if it has the commentform but is not top level
-			if ( respond[0] && !top_level ) {
-			
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-
-					// move comment form
-					addComment.moveFormToPara( para_num, text_sig, post_id );
-				
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
-				
-				} else {
-				
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-				
-				}
-
-				return;
-				
-			}
-				
-			// if it doesn't have the commentform but has a comment
-			if ( !respond[0] && comment_list[0] && !opening ) {
-			
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
-				
-				} else {
-				
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-				
-				}
-
-				return;
-				
-			}
-
-			// if closing with comment list
-			if ( !opening && comment_list[0] ) {
-			
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
-				
-				} else {
-				
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-				
-				}
-
-				return;
-			
-			}
-			
-			// if commentform but no comments and closing
-			if ( respond[0] && !comment_list[0] && !opening ) {
-			
-				// are comments open?
-				if ( cp_comments_open == 'y' ) {
-
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
-				
-				} else {
-				
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-				
-				}
-
-				// --<
-				return;
-				
-			}
-			
-			// if closing with no comment list
-			if ( !opening && !comment_list[0] ) {
-			
-				//alert( 'none + closing' );
-				para_wrapper.css( 'display', 'none' );
-				opening = true;
-
-			}
-		
-		}
-		
-
-
-		// toggle next item_body
-		para_wrapper.slideToggle( 'slow', function () {
-		
-			// animation finished
-		
-			// are we encouraging reading?
-			if ( cp_promote_reading == '1' && opening ) {
-			
-				// scroll comments
-				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-				
-			} else {
-			
-				// only if opening
-				if ( opening ) {
-				
-					// are comments open?
-					if ( cp_comments_open == 'y' ) {
-	
-						// scroll comments to comment form
-						cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
-					
-					} else {
-					
-						// scroll comments to comment form
-						cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
-					
-					}
-	
-				}
-				
-			}
-			
-			
-		});
-		
-
-
 		// --<
 		return false;
 		
@@ -1400,7 +1417,7 @@ function cp_setup_comment_icons() {
 function cp_open_header() {
 
 	// ------------------------------------
-	//alert( 'open' );
+	//console.log( 'open' );
 	// ------------------------------------
 
 
@@ -1527,7 +1544,7 @@ function cp_open_header() {
 function cp_close_header() {
 
 	// ------------------------------------
-	//alert( 'close' );
+	//console.log( 'close' );
 	// ------------------------------------
 
 
@@ -1699,18 +1716,92 @@ function cp_setup_para_links() {
 	
 		// get text signature
 		var text_sig = jQuery(this).attr('href').split('#')[1];
+		//console.log(text_sig);
 		
-		// get text block
-		var textblock = jQuery('#textblock-' + text_sig);
-		//alert(text_sig);
-		
-		// scroll page
-		cp_scroll_page( textblock );
+		// use function
+		cp_do_comment_icon_action( text_sig );
 		
 		// --<
 		return false;
 		
 	});
+
+}
+
+
+
+
+
+	
+/** 
+ * @description: get top of sidebar
+ * @todo: 
+ *
+ */
+function cp_get_sidebar_top() {
+
+	// --<
+	return jQuery.px_to_num( jQuery('#toc_sidebar').css('top') );
+	
+}
+
+
+
+
+
+	
+/** 
+ * @description: get border width of sidebar
+ * @todo: 
+ *
+ */
+function cp_get_sidebar_top_border() {
+
+	// --<
+	return jQuery.px_to_num( jQuery('.sidebar_minimiser').css('borderTopWidth') );
+	
+}
+
+
+
+
+
+	
+/** 
+ * @description: bring sidebar to front
+ * @todo: 
+ *
+ */
+function cp_activate_sidebar( sidebar ) {
+
+	// get visibility of TOC
+	var ontop = jQuery('#' + sidebar + '_sidebar').css('z-index');
+	
+	// is it hidden
+	if ( ontop == '2001' ) {
+	
+		// hide all
+		jQuery('.sidebar_container').css('z-index','2001');
+
+		// show toc
+		jQuery('#' + sidebar + '_sidebar').css('z-index','2010');
+		
+		var s_top = cp_get_sidebar_top();
+		var s_top_border = cp_get_sidebar_top_border();
+
+		// set all tabs to min height
+		jQuery('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
+		
+		// set toc tab to max height
+		jQuery('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
+		
+		// set flag
+		cp_toc_on_top = 'y';
+		
+	}
+	
+	// just to make sure...
+	jQuery.set_sidebar_height();
 
 }
 
@@ -1796,50 +1887,45 @@ jQuery(document).ready( function($) {
 
 
 	/** 
-	 * @description: clicking on the TOC button
+	 * @description: clicking on the Contents Header
+	 * @todo:
+	 *
+	 */
+	$('#toc_header h2 a').click( function() {
+		
+		// activate it
+		cp_activate_sidebar('toc')
+
+		// --<
+		return false;
+		
+	});
+
+	/** 
+	 * @description: clicking on the Archive Header
 	 * @todo: 
 	 *
 	 */
-	$('#btn_contents').click( function() {
+	$('#archive_header h2 a').click( function() {
 	
-		// kick out if toc
-		if ( cp_default_sidebar == 'toc' ) { return false; }
-	
-	
-	
-		// get visibilty of TOC
-		var toc_visible = $('#toc_sidebar').css('display');
-		
-		// is it hidden
-		if ( toc_visible == 'none' ) {
-		
-			// show toc
-			$('#toc_sidebar').show();
+		// activate it
+		cp_activate_sidebar('archive')
 
-			// hide default
-			$('#'+cp_default_sidebar+'_sidebar').hide();
-			
-			// set flag
-			cp_toc_on_top = 'y';
-			
-		} else {
-			
-			// hide toc
-			$('#toc_sidebar').hide();
-
-			// show default
-			$('#'+cp_default_sidebar+'_sidebar').show();
-
-			// set flag
-			cp_toc_on_top = 'n';
-			
-		}
+		// --<
+		return false;
 		
-		// just to make sure...
-		$.set_sidebar_height();
+	});
+
+	/** 
+	 * @description: clicking on the Comments Header
+	 * @todo: 
+	 *
+	 */
+	$('#comments_header h2 a').click( function() {
 	
-	
-	
+		// activate it
+		cp_activate_sidebar('comments')
+
 		// --<
 		return false;
 		
@@ -1938,22 +2024,6 @@ jQuery(document).ready( function($) {
 
 
 	/** 
-	 * @description: clicking on the minimise archive icon
-	 * @todo: 
-	 *
-	 */
-	$('#cp_minimise_archive').click( function() {
-	
-		// toggle next div
-		$(this).parent().next().slideToggle();
-		
-	});
-
-
-
-
-
-	/** 
 	 * @description: clicking on the minimise comments icon
 	 * @todo: 
 	 *
@@ -2000,7 +2070,7 @@ jQuery(document).ready( function($) {
 		$('div.paragraph_wrapper').slideUp();
 		
 		// unhighlight paragraphs
-		jQuery.unhighlight_para();
+		$.unhighlight_para();
 
 	});
 
@@ -2046,21 +2116,7 @@ jQuery(document).ready( function($) {
 
 
 
-	/** 
-	 * @description: clicking on the minimise toc icon
-	 * @todo: 
-	 *
-	 */
-	$('#cp_minimise_toc').click( function() {
-	
-		// toggle next div
-		$(this).parent().next().slideToggle();
-		
-	});
-	
-	
-	
-	
+
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
 		cp_scroll_to_comment_on_load();
@@ -2084,7 +2140,7 @@ jQuery(document).ready( function($) {
 jQuery(window).unload( function() { 
 
 	// debug
-	//alert('Bye now!'); 
+	//console.log('Bye now!'); 
 	
 });
 */

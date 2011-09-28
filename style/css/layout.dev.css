@@ -766,41 +766,214 @@ Sidebar
 	margin: 0;
 	padding: 0;
 	background: transparent;
+	/*
 	-webkit-box-shadow: #888 2px 2px 5px;
 	-moz-box-shadow: #888 2px 2px 5px;
 	-khtml-box-shadow: #888 2px 2px 5px;
+	*/
 }
 
 	/* Sidebar style */
 	#sidebar_inner
 	{
-		padding: 5px 5px 5px 5px;
-		background: #fff;
+		position: relative;
+		padding: 0;
+		/*
 		border: 3px solid #B5BFB2;
 		-moz-border-radius: 8px;
 		-khtml-border-radius: 8px;
 		-webkit-border-radius: 8px;
 		border-radius: 8px;
+		*/
 	}
 	
-		/* toc header */
-		div.sidebar_header
+
+
+	/* toc header */
+	ul#sidebar_tabs
+	{
+		position: absolute;
+		height: 30px;
+		z-index: 2020;
+	}
+	
+	li.sidebar_header
+	{
+		float: left;
+		color: #444;
+		border: 3px solid #B5BFB2;
+		border-bottom: 0;
+		height: 24px;
+		background: #fff;
+		margin: 0 6px 0 0;
+		z-index: 2004;
+	}
+	
+		li.sidebar_header h2
 		{
-			border-bottom: 2px solid #B5BFB2;
-			padding: 3px;
-			height: 25px;
-			color: #444;
-			background: #fff;
+			text-transform: uppercase;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 1;
+			width: auto;
+			padding: 7px 6px 0 26px;
+		}
+		
+		li.sidebar_header h2 a
+		{
+			color: #761D19;
+		}
+		
+		
+		
+		/* Table of Contents Header */
+		#toc_header.sidebar_header
+		{
+			display: none;
+		}
+		
+		body.cp_sidebar_toc #toc_header.sidebar_header
+		{
+			display: block;
+			height: 27px;
+		}
+
+		#toc_header.sidebar_header h2
+		{
+			background: #fff url(../images/icons/toc.jpg) no-repeat;
+			background-position: -4px -4px;
+		}
+	
+		#toc_header.sidebar_header h2:hover,
+		#toc_header.sidebar_header h2:focus,
+		#toc_header.sidebar_header h2:active
+		{
+			overflow: hidden !important; /* hides Mozilla outlines */
+			background-position: -4px -34px !important;
+		}
+
+
+		
+		/* Archive Header */
+		#archive_header.sidebar_header,
+		body.blog_post #archive_header.sidebar_header
+		{
+			display: none;
+		}
+		
+		body.cp_sidebar_archive #archive_header.sidebar_header
+		{
+			display: block;
+			height: 27px;
+		}
+
+		#archive_header.sidebar_header h2
+		{
+			background: #fff url(../images/icons/archive.jpg) no-repeat;
+			background-position: -4px -4px;
+		}
+	
+		#archive_header.sidebar_header h2:hover,
+		#archive_header.sidebar_header h2:focus,
+		#archive_header.sidebar_header h2:active
+		{
+			overflow: hidden !important; /* hides Mozilla outlines */
+			background-position: -4px -34px !important;
+		}
+
+
+		
+		/* Comments Header */
+		#comments_header.sidebar_header
+		{
+			display: none;
+		}
+		
+		body.cp_sidebar_comments #comments_header.sidebar_header
+		{
+			display: block;
+			height: 27px;
+		}
+		
+		#comments_header.sidebar_header h2
+		{
+			padding: 7px 0 0 26px;
+			background: #fff url(../images/icons/comment.jpg) no-repeat;
+			background-position: -4px -4px;
+		}
+	
+		#comments_header.sidebar_header h2:hover,
+		#comments_header.sidebar_header h2:focus,
+		#comments_header.sidebar_header h2:active
+		{
+			overflow: hidden !important; /* hides Mozilla outlines */
+			background-position: -4px -34px !important;
+		}
+	
+		#cp_minimise_comments
+		{
+			display: none;
+		}
+	
+		#cp_minimise_all_comments
+		{
+			display: block;
+			width: 15px;
+			height: 15px;
+			cursor: pointer;
+			float: left;
+			padding: 4px 6px 0 5px;
+			background: #fff url(../images/icons/min.jpg) no-repeat;
+			background-position: -4px -4px;
+		}
+		
+		#cp_minimise_all_comments:hover
+		{
+			overflow: hidden !important; /* hides Mozilla outlines */
+			background-position: -4px -34px !important;
+		}
+
+
+
+
+		/* General Sidebar stuff */
+		#toc_sidebar,
+		#archive_sidebar,
+		#comments_sidebar
+		{
+			width: 100%;
+			position: absolute;
+			top: 27px;
+			z-index: 2001;
+		}
+			
+		#toc_sidebar .sidebar_header,
+		#comments_sidebar .sidebar_header,
+		#archive_sidebar .sidebar_header
+		{
+			float: none;
+			display: none;
 		}
 		
 		.sidebar_minimiser
 		{
-			overflow-y: scroll;
+			padding: 6px 0;
+			background: #fff;
+			/*
+			-moz-border-radius: 8px;
+			-khtml-border-radius: 8px;
+			-webkit-border-radius: 8px;
+			border-radius: 8px;
+			*/
+			height: auto;
+			border: 3px solid #B5BFB2;
 		}
 		
 		.sidebar_contents_wrapper
 		{
-			height: auto;
+			background: #fff;
+			height: 320px;
+			overflow-y: scroll;
 			padding: 0;
 		}
 		
@@ -809,201 +982,178 @@ Sidebar
 
 
 
-/* Table of Contents sidebar */
+
+/*
+---------------------------------------------------------------------
+Table of Contents sidebar
+---------------------------------------------------------------------
+*/
 #toc_sidebar
 {
-	display: none;
 }
 	
 body.cp_sidebar_toc #toc_sidebar
 {
-	display: block;
+	z-index: 2010;
 }
-	
-	#cp_minimise_toc
-	{
-		cursor: pointer;
-		float: right;
-	}
 	
 	#toc_sidebar .sidebar_minimiser
 	{
-		padding: 10px;
-		height: 320px;
 	}
 	
-		#toc_sidebar .sidebar_minimiser ul
-		{
-			margin: 0;
-			padding: 0;
-		}
-		
-		#toc_sidebar .sidebar_minimiser ul#toc_list
-		{
-			border-bottom: 1px solid #ddd;
-		}
-		
-		#toc_sidebar .sidebar_minimiser ul li ul
-		{
-			padding: 0;
-			margin: 0;
-		}
-		
-		#toc_sidebar .sidebar_minimiser ul li
-		{
-			padding: 0;
-			margin: 0;
-			border-top: 1px solid #ddd;
-		}
-		
-		#toc_sidebar .sidebar_minimiser ul li ul li
-		{
-			padding: 0;
-			margin: 0 0 0 20px;
-		}
-		
-		#toc_sidebar .sidebar_minimiser ul li a
-		{
-			font-family: Helvetica, Arial, sans-serif;
-			font-weight: normal;
-			font-size: 80%;
-			padding: 4px 4px;
-			display: block;
-			background: #fff;
-			margin: 0;
-		}
-		
-		#toc_sidebar .sidebar_minimiser ul li a:link,
-		#toc_sidebar .sidebar_minimiser ul li a:active,
-		#toc_sidebar .sidebar_minimiser ul li a:visited
-		{
-			color: #666;
-			text-decoration: none;
-		}	
+	#toc_sidebar .sidebar_minimiser ul
+	{
+		margin: 0;
+		padding: 0;
+	}
+	
+	#toc_sidebar .sidebar_minimiser ul#toc_list
+	{
+		margin: 10px;
+		border-bottom: 1px solid #ddd;
+	}
+	
+	#toc_sidebar .sidebar_minimiser ul li ul
+	{
+		padding: 0;
+		margin: 0;
+	}
+	
+	#toc_sidebar .sidebar_minimiser ul li
+	{
+		padding: 0;
+		margin: 0;
+		border-top: 1px solid #ddd;
+	}
+	
+	#toc_sidebar .sidebar_minimiser ul li ul li
+	{
+		padding: 0;
+		margin: 0 0 0 20px;
+	}
+	
+	#toc_sidebar .sidebar_minimiser ul li a
+	{
+		font-family: Helvetica, Arial, sans-serif;
+		font-weight: normal;
+		font-size: 80%;
+		padding: 4px 4px;
+		display: block;
+		background: #fff;
+		margin: 0;
+	}
+	
+	#toc_sidebar .sidebar_minimiser ul li a:link,
+	#toc_sidebar .sidebar_minimiser ul li a:active,
+	#toc_sidebar .sidebar_minimiser ul li a:visited
+	{
+		color: #666;
+		text-decoration: none;
+	}	
 
-		#toc_sidebar .sidebar_minimiser ul li a:hover
-		{
-			background: #EFEFEF;
-			text-decoration: none;
-		}	
-
-
-
+	#toc_sidebar .sidebar_minimiser ul li a:hover
+	{
+		background: #EFEFEF;
+		text-decoration: none;
+	}	
 
 
-/* Blog Archives sidebar */
+
+
+
+/*
+---------------------------------------------------------------------
+Blog Archives sidebar
+---------------------------------------------------------------------
+*/
 #archive_sidebar
 {
-	display: none;
 }
 	
 body.cp_sidebar_archive #archive_sidebar
 {
-	display: block;
+	z-index: 2010;
 }
 	
-	#cp_minimise_archive
+	#archive_sidebar .sidebar_minimiser ul
 	{
-		cursor: pointer;
-		float: right;
+		margin: 10px;
+		padding: 0;
+		border-bottom: 1px solid #ddd;
 	}
 	
-	#archive_sidebar .sidebar_minimiser
+	#archive_sidebar .sidebar_minimiser ul li ul
 	{
-		padding: 10px;
-		height: 320px;
+		padding: 0 0 0 0;
+		margin: 0 0 0 0;
 	}
 	
+	#archive_sidebar .sidebar_minimiser ul li
+	{
+		padding: 0;
+		margin: 0;
+		border-top: 1px solid #ddd;
+	}
+	
+	#archive_sidebar .sidebar_minimiser ul li ul li
+	{
+		padding: 0;
+		margin: 0 0 0 20px;
+	}
+	
+	#archive_sidebar .sidebar_minimiser ul li a
+	{
+		font-family: Helvetica, Arial, sans-serif;
+		font-weight: normal;
+		font-size: 80%;
+		padding: 4px 4px;
+		display: block;
+		background: #fff;
+		margin: 0;
+	}
+	
+	#archive_sidebar .sidebar_minimiser ul li a:link,
+	#archive_sidebar .sidebar_minimiser ul li a:active,
+	#archive_sidebar .sidebar_minimiser ul li a:visited
+	{
+		color: #666;
+		text-decoration: none;
+	}	
 
-		#archive_sidebar .sidebar_minimiser ul
-		{
-			margin: 0;
-			padding: 0;
-			border-bottom: 1px solid #ddd;
-		}
-		
-		#archive_sidebar .sidebar_minimiser ul li ul
-		{
-			padding: 0 0 0 0;
-			margin: 0 0 0 0;
-		}
-		
-		#archive_sidebar .sidebar_minimiser ul li
-		{
-			padding: 0;
-			margin: 0;
-			border-top: 1px solid #ddd;
-		}
-		
-		#archive_sidebar .sidebar_minimiser ul li ul li
-		{
-			padding: 0;
-			margin: 0 0 0 20px;
-		}
-		
-		#archive_sidebar .sidebar_minimiser ul li a
-		{
-			font-family: Helvetica, Arial, sans-serif;
-			font-weight: normal;
-			font-size: 80%;
-			padding: 4px 4px;
-			display: block;
-			background: #fff;
-			margin: 0;
-		}
-		
-		#archive_sidebar .sidebar_minimiser ul li a:link,
-		#archive_sidebar .sidebar_minimiser ul li a:active,
-		#archive_sidebar .sidebar_minimiser ul li a:visited
-		{
-			color: #666;
-			text-decoration: none;
-		}	
-
-		#archive_sidebar .sidebar_minimiser ul li a:hover
-		{
-			background: #EFEFEF;
-			text-decoration: none;
-		}	
+	#archive_sidebar .sidebar_minimiser ul li a:hover
+	{
+		background: #EFEFEF;
+		text-decoration: none;
+	}	
 
 
 
 
 
 
-/* Contains comments */
+/*
+---------------------------------------------------------------------
+Comments Sidebar
+---------------------------------------------------------------------
+*/
 #comments_sidebar
 {
-	display: none;
 }
 	
 body.cp_sidebar_comments #comments_sidebar
 {
-	display: block;
+	z-index: 2010;
 }
-	
-	#cp_minimise_comments,
-	#cp_minimise_all_comments
-	{
-		cursor: pointer;
-		float: right;
-	}
-	
-	.cp_button
-	{
-		margin: 3px 0 0 5px;
-	}
-	
+		
 	#comments_sidebar .sidebar_minimiser
 	{
-		padding: 0px;
-		height: 340px;
+		clear: left;
 	}
 	
 	div.comments_container
 	{
 		padding: 10px;
-		border-top: 1px solid #B5BFB2;
+		/* border-top: 1px solid #B5BFB2; */
 	}
 	
 	/* comments in page */
@@ -1032,6 +1182,7 @@ body.cp_sidebar_comments #comments_sidebar
 		margin: 0 0 0 0;
 		border-bottom: 2px solid #B5BFB2;
 		padding-bottom: 5px;
+		background: #CBFFBD;
 	}
 	
 	.post .comment-identifier
@@ -1054,7 +1205,7 @@ body.cp_sidebar_comments #comments_sidebar
 		margin: 0 0 0 0;
 	}
 	
-	/* reply to a partcular paragraph */
+	/* reply to a particular paragraph */
 	.reply
 	{
 	}

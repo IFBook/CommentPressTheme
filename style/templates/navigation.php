@@ -194,12 +194,6 @@ else {
 
 
 
-<ul id="toc_trigger">
-	<li><a href="<?php echo get_bloginfo('wpurl'); ?>" id="btn_contents" class="css_btn" title="Table of Contents">Table of Contents</a></li>
-</ul>
-
-
-
 </div><!-- /book_nav_wrapper -->
 
 

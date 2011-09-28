@@ -405,8 +405,21 @@ function cp_get_body_classes(
 
 
 	
+	// set default page type
+	$page_type = '';
+	
+	// if blog post...
+	if ( is_single() ) {
+	
+		// get sidebar
+		$page_type = ' blog_post';
+		
+	}
+	
+
+
 	// construct attribute
-	$_body_classes = ' class="'.$sidebar_class.$layout_class.'"';
+	$_body_classes = ' class="'.$sidebar_class.$layout_class.$page_type.'"';
 
 
 

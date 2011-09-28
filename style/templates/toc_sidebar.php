@@ -1,6 +1,6 @@
 <!-- toc_sidebar.php -->
 
-<div id="toc_sidebar">
+<div id="toc_sidebar" class="sidebar_container">
 
 
 

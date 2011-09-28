@@ -31,7 +31,7 @@ abbr.truncation { speak: normal; }
 /* Page heading-related styles */
 #title h1
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 2em;
 	line-height: 1;
 	font-weight: normal;	
@@ -50,7 +50,7 @@ abbr.truncation { speak: normal; }
 
 #tagline
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 0.9em;
 	line-height: 1;
 	font-style :italic;
@@ -87,9 +87,10 @@ ul#toc li a:visited
 
 .sidebar_header h2
 {
-	margin-bottom: 5px;
-	margin-top: 4px;
-	font-family: Helvetica, Arial, sans-serif;
+	float: left;
+	/* margin-bottom: 5px; */
+	/* margin-top: 4px; */
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 15px;
 	color: #761D19;
 	font-weight: normal;
@@ -234,7 +235,7 @@ ul#toc li a:visited
 .post p.postmetadata
 {
 	font-size: .7em;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	padding: 5px 0;
 	color: #666;
 	padding-left: 7px;
@@ -243,7 +244,7 @@ ul#toc li a:visited
 
 .post p.postname 
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	padding: 0 0 7px 0;
 	font-size: 0.7em;
 	color: #666;
@@ -291,7 +292,7 @@ blockquote
 
 .comments_hl
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 1em;
 	border-bottom: 2px solid #B5BFB2;
 	color: #444;
@@ -299,7 +300,7 @@ blockquote
 
 .post p.archive_hl
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 1.1em;
 	border-bottom: 2px solid #B5BFB2;
 	color: #666;
@@ -324,17 +325,17 @@ blockquote
 
 .footnotes
 {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 12px;
 }
 
 .post hr 
 {
-    margin: 20px 0 8px 0;
-    color: #999;
-    background-color: #999;
-    height: 1px;
-    border: none;
+	margin: 20px 0 8px 0;
+	color: #999;
+	background-color: #999;
+	height: 1px;
+	border: none;
 }
 
 .post a
@@ -379,7 +380,7 @@ a.comment-edit-link:active,
 a.comment-edit-link:visited
 {
 	display: block;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 70%;
 	color: #666;
 	text-decoration: none;
@@ -425,7 +426,7 @@ a.comment_permalink:visited
 {
 	display: block;
 	padding: 0 5px;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 70%;
 	color: #666;
 	text-decoration: none;
@@ -451,7 +452,7 @@ a.comment_permalink:hover
 /* reply to a particular paragraph div */
 div.reply_to_para
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 70%;
 	color: #666;
 	text-decoration: none;
@@ -471,14 +472,14 @@ a#cancel-comment-reply-link:visited
 {	
 	display: block;
 	padding: 5px 4px;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	color: #666;
 	text-decoration: none;
 }
 
 .reply a
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 70%;
 	color: #666;
 	text-decoration: none;
@@ -496,7 +497,7 @@ div#respond h4
 {
 	padding: 0px 0 5px 0;
 	background-color: transparent;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	color: #666;
 	font-size: 1em;
 	font-weight: normal;
@@ -514,7 +515,7 @@ div#respond h4 a:visited
 
 div#respond p
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-size: 70%;
 	color: #666;
 	padding: 0;
@@ -609,7 +610,7 @@ ul.image_link h4
 #content .post div.multipager a:active,
 #content .post div.multipager a:visited
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	color: #666;
 	font-weight: bold;
 	font-size: 70%;

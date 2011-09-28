@@ -10,7 +10,7 @@ global $commentpress_obj;
 <?php
 
 // login/logout
-?><li><?php wp_loginout(); ?></li>
+?><li><?php wp_loginout(); ?></li>
 <?php
 
 // is this multisite?
@@ -20,7 +20,7 @@ if ( is_multisite() ) {
 	if ( get_option('users_can_register') ) {
 		
 		// this works for get_site_option( 'registration' ) == 'none' and 'user'
-		?><li><?php wp_register(' ' , ' '); ?></li>
+		?><li><?php wp_register(' ' , ' '); ?></li>
 		<?php 
 
 	}
