@@ -2075,8 +2075,8 @@ function cp_image_caption_shortcode( $attr, $content ) {
 
 	if ( $id ) $id = 'id="' . esc_attr($id) . '" ';
 
-	return '<p><span ' . $id . 'class="wp-caption ' . esc_attr($align) . '" style="width: ' . (0 + (int) $width) . 'px">'
-	. do_shortcode( $content ) . '</span><small class="wp-caption-text" style="width: ' . (0 + (int) $width) . 'px">' . $caption . '</small></p>';
+	return '<span ' . $id . 'class="wp-caption ' . esc_attr($align) . '" style="width: ' . (0 + (int) $width) . 'px">'
+	. do_shortcode( $content ) . '</span><small class="wp-caption-text ' . esc_attr($align) . '" style="width: ' . (0 + (int) $width) . 'px">' . $caption . '</small>';
 	
 }
 endif; // cp_image_caption_shortcode
