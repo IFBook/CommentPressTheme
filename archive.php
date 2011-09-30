@@ -47,7 +47,7 @@
 		
 		<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 		
-		<p class="postname"><?php the_time('l, F jS, Y') ?></p>
+		<p class="postname"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_time('l, F jS, Y') ?></a></p>
 		
 		<?php the_excerpt() ?>
 		

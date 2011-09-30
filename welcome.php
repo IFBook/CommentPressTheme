@@ -64,8 +64,8 @@ Template Name: Welcome
 	// if show...
 	if ( $hide == 'show' ) {
 
-	?>
-	<h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+	?><h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+	
 	<?php
 	
 	}
@@ -114,24 +114,9 @@ Template Name: Welcome
 	
 	// NOTE: Comment permalinks are filtered if the comment is not on the first page 
 	// in a multipage post... see: cp_multipage_comment_link in functions.php
-	
-	// set default behaviour
-	$defaults = array(
-		
-		'before' => '<div class="multipager">', // . __('Pages: '), 
-		'after' => '</div>',
-		'link_before' => '', 
-		'link_after' => '',
-		'next_or_number' => 'next', 
-		'nextpagelink' => '<span class="alignright">'.__('Next page').' &raquo;</span>', // <li class="alignright"></li>
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page').'</span>', // <li class="alignleft"></li>
-		'pagelink' => '%',
-		'more_file' => '', 
-		'echo' => 1
-		
-	);
+	echo cp_multipager();
 
-	wp_link_pages( $defaults ); ?>
+	?>
 
 
 

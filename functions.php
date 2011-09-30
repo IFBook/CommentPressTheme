@@ -1222,7 +1222,7 @@ function cp_get_comments_by_page_content() {
 	$_page_content = '<h2>Comments by Commenter</h2>'."\n\n";
 
 	// get data
-	$_page_content .= cp_get_comments_by_content( $page_or_post );
+	$_page_content .= cp_get_comments_by_content();
 	
 
 	
@@ -1396,7 +1396,7 @@ function cp_get_comments_by_para() {
 					$query = remove_query_arg( array( 'replytocom' ) ); 
 		
 					// add param to querystring
-					$query = wp_specialchars( 
+					$query = esc_html( 
 						add_query_arg( 
 							array( 'replytopara' => $para_num ),
 							$query
@@ -1621,7 +1621,7 @@ function cp_comment_reply_link( $args = array(), $comment = null, $post = null )
 		$query = remove_query_arg( array( 'replytopara' ), get_permalink( $post->ID ) ); 
 
 		// define query string
-		$addquery = wp_specialchars( 
+		$addquery = esc_html( 
 		
 			add_query_arg( 
 			
@@ -1749,9 +1749,14 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 	
 	
 	
+	// get comment class(es)
+	$_comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
+	
+	
+	
 	// stripped source
 	$html = '	
-<li id="li-comment-'.$comment->comment_ID.'">
+<li id="li-comment-'.$comment->comment_ID.'"'.$_comment_class.'>
 <div class="comment-wrapper">
 <div id="comment-'.$comment->comment_ID.'">
 
@@ -2005,6 +2010,53 @@ add_filter( 'get_comment_link', 'cp_multipage_comment_link', 10, 3 );
 
 
 
+if ( ! function_exists( 'cp_multipager' ) ):
+/** 
+ * @description: adds some style
+ * @todo: 
+ *
+ */
+function cp_multipager() {
+
+	// set default behaviour
+	$defaults = array(
+		
+		'before' => '<div class="multipager">', // . __('Pages: '), 
+		'after' => '</div>',
+		'link_before' => '', 
+		'link_after' => '',
+		'next_or_number' => 'next', 
+		'nextpagelink' => '<span class="alignright">'.__('Next page').' &raquo;</span>', // <li class="alignright"></li>
+		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page').'</span>', // <li class="alignleft"></li>
+		'pagelink' => '%',
+		'more_file' => '', 
+		'echo' => 0
+		
+	);
+	
+	// get page links
+	$page_links = wp_link_pages( $defaults );
+	
+	// add separator when there are two links
+	$page_links = str_replace( 
+	
+		'a><a', 
+		'a> <span class="multipager_sep">|</span> <a', 
+		$page_links 
+		
+	);
+	
+	// --<
+	return $page_links;
+
+}
+endif; // cp_multipager
+
+
+
+
+
+
 if ( ! function_exists( 'cp_comment_post_redirect' ) ):
 /** 
  * @description: filter comment post redirects for multipage posts
@@ -2049,7 +2101,7 @@ remove_shortcode( 'caption' );
 
 if ( ! function_exists( 'cp_image_caption_shortcode' ) ):
 /** 
- * @description: modify caption shortcode output
+ * @description: rebuild caption shortcode output
  * @param array $attr Attributes attributed to the shortcode.
  * @param string $content Optional. Shortcode content.
  * @return string
@@ -2072,11 +2124,18 @@ function cp_image_caption_shortcode( $attr, $content ) {
 
 	if ( 1 > (int) $width || empty($caption) )
 		return $content;
-
+	
+	// sanitise id
 	if ( $id ) $id = 'id="' . esc_attr($id) . '" ';
+	
+	// add space prior to alignment
+	$_alignment = ' '.esc_attr($align);
+	
+	// get width
+	$_width = (0 + (int) $width);
 
-	return '<span ' . $id . 'class="wp-caption ' . esc_attr($align) . '" style="width: ' . (0 + (int) $width) . 'px">'
-	. do_shortcode( $content ) . '</span><small class="wp-caption-text ' . esc_attr($align) . '" style="width: ' . (0 + (int) $width) . 'px">' . $caption . '</small>';
+	return '<span class="captioned_image'.$_alignment.'" style="width: '.$_width.'px"><span '.$id.' class="wp-caption">'
+	. do_shortcode( $content ) . '</span><small class="wp-caption-text">'.$caption.'</small></span>';
 	
 }
 endif; // cp_image_caption_shortcode
@@ -2206,6 +2265,32 @@ add_filter( 'front_page_template', 'cp_trap_empty_search' );
 
 
 
+
+if ( ! function_exists( 'cp_amend_password_form' ) ):
+/** 
+ * @description: adds some style
+ * @todo: 
+ *
+ */
+function cp_amend_password_form( $output ) {
+
+	// add css class to form
+	$output = str_replace( '<form ', '<form class="post_password_form" ', $output );
+	
+	// add css class to text field
+	$output = str_replace( '<input name="post_password" ', '<input class="post_password_field" name="post_password" ', $output );
+
+	// add css class to submit button
+	$output = str_replace( '<input type="submit" ', '<input class="post_password_button" type="submit" ', $output );
+
+	// --<
+	return $output;
+
+}
+endif; // cp_amend_password_form
+
+// add filter for the above
+add_filter( 'the_password_form', 'cp_amend_password_form' );
 
 
 

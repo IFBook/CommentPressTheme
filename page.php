@@ -71,37 +71,8 @@
 	
 	// NOTE: Comment permalinks are filtered if the comment is not on the first page 
 	// in a multipage post... see: cp_multipage_comment_link in functions.php
-	
-	// set default behaviour
-	$defaults = array(
-		
-		'before' => '<div class="multipager">', // . __('Pages: '), 
-		'after' => '</div>',
-		'link_before' => '', 
-		'link_after' => '',
-		'next_or_number' => 'next', 
-		'nextpagelink' => '<span class="alignright">'.__('Next page').' &raquo;</span>', // <li class="alignright"></li>
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page').'</span>', // <li class="alignleft"></li>
-		'pagelink' => '%',
-		'more_file' => '', 
-		'echo' => 1
-		
-	);
+	echo cp_multipager();
 
-	// get page links
-	$page_links = wp_link_pages( $defaults );
-	
-	// add separator when there are two links
-	$page_links = str_replace( 
-	
-		'a><a', 
-		'a> <span class="multipager_sep">|</span> <a', 
-		$page_links 
-		
-	);
-	
-	echo $page_links;
-	
 	?>
 
 
@@ -118,11 +89,11 @@
 		// get page num
 		$num = $commentpress_obj->nav->get_page_number( get_the_ID() );
 		
+		//print_r( $num ); die();
+	
 		// if we get one
 		if ( $num ) {
 			
-			//print_r( $num ); die();
-	
 			// is it arabic?
 			if ( is_numeric( $num ) ) {
 			

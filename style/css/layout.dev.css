@@ -102,7 +102,7 @@ Book Header
 		#titlewrap
 		{
 			float: left;
-			padding: 0 20px;
+			padding: 0 0 0 20px;
 		}
 			
 			#titlewrap img
@@ -114,7 +114,6 @@ Book Header
 		#page_title
 		{
 			float: left;
-			padding-top: 7px;
 		}
 		
 			#title
@@ -126,7 +125,6 @@ Book Header
 			{
 				float: left;
 				clear: left;
-				padding-top: 3px;
 			}
 		
 
@@ -521,6 +519,7 @@ Main Wrapper
 		/* To accomodate our left aligned speech bubbles */
 		padding: 45px 0;
 		margin: 0 60px 0 70px;
+		overflow: hidden;
 	}
 	
 	.full_width .post 
@@ -529,6 +528,14 @@ Main Wrapper
 		padding: 45px 0;
 		margin: 0;
 		text-align: center;
+		overflow: hidden;
+	}
+	
+	.general_comments 
+	{
+		/* To match .post */
+		padding: 45px 0;
+		margin: 0 60px 0 70px;
 		overflow: hidden;
 	}
 	
@@ -554,6 +561,17 @@ Main Wrapper
 	.postmetadata
 	{
 		padding: 8px;
+	}
+	
+	/* galleries */
+	.post .gallery-item
+	{
+		width: 30% !important;
+	}
+	
+	.post .gallery-caption
+	{
+		font-size: smaller;
 	}
 	
 
@@ -639,6 +657,57 @@ blockquote span.commenticonbox
 
 
 
+/* 
+---------------------------------------------------------------------
+Captioned Images
+---------------------------------------------------------------------
+*/
+
+span.captioned_image
+{
+	display: block;
+	background: #ccc; 
+	padding: 10px; 
+	margin: 7px 0; 
+	border: 1px solid #B5BFB2; 
+}
+
+	span.captioned_image.aligncenter
+	{
+		margin: 0 auto;
+		margin-top: 7px; 
+	}
+	
+	span.captioned_image.alignleft
+	{ 
+		margin-right: 7px; 
+	}
+	
+	span.captioned_image.alignright
+	{ 
+		margin-left: 7px; 
+	}
+
+span.wp-caption 
+{ 
+	display: block;
+	text-align: center; 
+	padding: 0;
+	margin: 0;
+}
+
+.post small.wp-caption-text
+{ 
+	display: block;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+
+
 /* page and post navigation links */
 .navigation 
 {
@@ -667,6 +736,7 @@ blockquote span.commenticonbox
 	
 .running_header_bottom
 {
+	clear: both;
 	margin-top: 30px;
 	margin-bottom: -35px;
 	padding-right: 25px;
@@ -696,6 +766,7 @@ blockquote span.commenticonbox
 /* Multipage Navigation */
 #content div.multipager
 {
+	clear: both;
 	padding: 5px 0;
 	margin: 15px 0;
 	list-style-type: none;
@@ -715,6 +786,24 @@ div.multipager .multipager_sep
 	height: 0px;
 	clear: both;
 }
+
+/* Multipage links */
+#content .post div.multipager a,
+#content .post div.multipager a:link,
+#content .post div.multipager a:hover,
+#content .post div.multipager a:active,
+#content .post div.multipager a:visited
+{
+	font-family: Helvetica,Arial,sans-serif;
+	color: #666;
+	font-weight: bold;
+	font-size: 70%;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+
+
 
 
 
@@ -740,6 +829,38 @@ div.multipager .multipager_sep
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
+}
+
+
+
+
+
+/* Password protection form */
+form.post_password_form label
+{
+	color: #761D19;
+	font-size: 1.2em;
+	margin: 30px 0 5px 0;
+}
+
+form.post_password_form input.post_password_field
+{
+	width: 100%;
+	font-size: 24px;
+	margin: 5px 0 15px 0;
+}
+
+form.post_password_form input.post_password_button
+{
+	width: auto;
+	font-size: 1.55em;
+	border: 3px solid #761D19;
+	padding: 8px 20px;
+	cursor: pointer;
+	-moz-border-radius: 22px;
+	-khtml-border-radius: 22px;
+	-webkit-border-radius: 22px;
+	border-radius: 22px;
 }
 
 
@@ -830,6 +951,7 @@ Sidebar
 		#toc_header.sidebar_header
 		{
 			display: none;
+			margin-right: 0:
 		}
 		
 		body.cp_sidebar_toc #toc_header.sidebar_header
@@ -1162,13 +1284,6 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 0;
 	}
 	
-	/* paragraph header text */
-	.comments_container h3
-	{
-		background: #EFEFEF;
-		border-bottom: 1px solid #B5BFB2;
-	}
-	
 	/* wrapper for all comments for a partcular paragraph */
 	div.paragraph_wrapper
 	{
@@ -1189,6 +1304,12 @@ body.cp_sidebar_comments #comments_sidebar
 	{
 		padding: 0 0 5px 0;
 	}
+	
+		.comment-author-admin .comment-identifier,
+		.bypostauthor .comment-identifier
+		{
+			background: #D2DCCF;
+		}
 	
 	.comment-content
 	{
@@ -1298,33 +1419,61 @@ body.cp_sidebar_comments #comments_sidebar
 	}
 
 	/* wrapper for comment form */
-	div#respond
+	#respond
 	{
 		background-color: #CBFFBD;
 		margin: 0;
 		padding: 8px 8px;
 	}
 	
+		/* need to reset table styles because TinyMCE doesn't do that by default. Doh. */
+		#respond .defaultSkin table,
+		#respond .defaultSkin table tr,
+		#respond .defaultSkin table td,
+		#respond .defaultSkin table th
+		{
+			margin: 0;
+			padding: 0;
+		}
+		
+		#respond .defaultSkin table td,
+		#respond .defaultSkin table
+		{
+			background: none;
+		}
+		
+		/* reinstate border */
+		#respond .defaultSkin td.mceToolbar
+		{
+			background: #F0F0EE;
+		}
+		
+		/* reinstate header colour */
+		#respond .defaultSkin td.mceToolbar
+		{
+			background: #F0F0EE;
+		}
+		
 		/* cancel reply link */
-		div#respond .cancel-comment-reply
+		#respond .cancel-comment-reply
 		{
 		}
 		
-		div#respond #cancel-comment-reply-link
+		#cancel-comment-reply-link
 		{
 			display: block;
 		}
 		
 		/* cancel reply link */
-		div#respond p#respond_button
+		#respond_button
 		{
 			padding: 0;
 			margin: 0;
 		}
 		
-		.post div#respond p,
-		.post div#respond ul,
-		.post div#respond ol
+		.post #respond p,
+		.post #respond ul,
+		.post #respond ol
 		{
 		}
 		
@@ -1678,26 +1827,6 @@ a.download_link
 	float: right;
 }
 
-.wp-caption 
-{ 
-	display: block;
-	border: 1px solid #B5BFB2; 
-	border-bottom: 0px solid #B5BFB2; 
-	text-align: center; 
-	background: #ccc; 
-	margin: -10px 0 0 0; 
-	padding: 10px 10px 0 10px; 
-}
-
-.wp-caption-text
-{ 
-	display: block;
-	border: 1px solid #B5BFB2; 
-	border-top: 0px solid #B5BFB2; 
-	text-align: center; 
-	background: #ccc; 
-	padding: 0 10px 10px 10px; 
-}
 
 
 
@@ -1711,4 +1840,106 @@ br.dirtyLittleTrick
 	height: 1px; 
 	margin: -1px 0 0 0;
 } 
+
+
+
+/* Reduces sizes */
+@media (max-width: 1024px) {
+
+	#title h1
+	{
+		padding-top: 13px;
+		font-size: 1.2em;
+	}
+	
+	#tagline
+	{
+		font-size: 0.8em;
+	}
+	
+	li.sidebar_header
+	{
+		margin: 0 2px 0 0;
+	}
+	
+	#toc_header.sidebar_header h2,
+	#comments_header.sidebar_header h2,
+	#archive_header.sidebar_header h2
+	{
+		font-size: 10px;
+		line-height: 1.1;
+		padding-right: 4px; 
+	}
+	
+}
+
+/* Reduces sizes */
+@media (max-width: 800px) {
+
+	#titlewrap
+	{
+		width: 50%;
+	}
+
+	#title h1
+	{
+		padding-top: 10px;
+		font-size: 1em;
+	}
+	
+	#tagline
+	{
+		font-size: 0.6em;
+	}
+	
+	li.sidebar_header
+	{
+		margin: 0 2px 0 0;
+	}
+	
+	#toc_header.sidebar_header h2,
+	#comments_header.sidebar_header h2,
+	#archive_header.sidebar_header h2
+	{
+		font-size: 9px;
+		background: none;
+		padding-left: 6px;
+		line-height: 1.1;
+	}
+	
+}
+
+/* Reduces sizes */
+@media (max-width: 640px) {
+
+	#titlewrap
+	{
+		width: 50%;
+	}
+
+	#title h1
+	{
+		padding-top: 10px;
+		font-size: 1em;
+	}
+	
+	#tagline
+	{
+		font-size: 0.6em;
+	}
+	
+	li.sidebar_header
+	{
+		margin: 0 1px 0 0;
+	}
+	
+	#toc_header.sidebar_header h2,
+	#comments_header.sidebar_header h2,
+	#archive_header.sidebar_header h2
+	{
+		font-size: 9px;
+		line-height: 1.1;
+	}
+	
+}
 

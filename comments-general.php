@@ -28,7 +28,7 @@ Template Name: General Comments
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-<div class="post">
+<div class="post general_comments">
 
 <h2>General Comments</h2>
 

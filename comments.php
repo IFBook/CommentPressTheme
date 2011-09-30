@@ -18,7 +18,13 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['
 }
 
 if ( post_password_required() ) { ?>
-	<p class="nocomments">This post is password protected. Enter the password to view comments.</p>
+
+<div class="sidebar_contents_wrapper">
+<div class="comments_container">
+	<h3 class="nocomments">Enter the password to view comments</h3>
+</div><!-- /comments_container -->
+</div><!-- /sidebar_contents_wrapper -->
+
 <?php
 	return;
 }
