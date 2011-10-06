@@ -33,7 +33,7 @@ if ( is_multisite() ) {
 		
 	) {
 	
-		?><li><a href="<?php echo get_bloginfo('wpurl'); ?>/wp-signup.php" title="Create a new document" id="btn_create">Create a new document</a></li>
+		?><li><a href="<?php echo site_url(); ?>/wp-signup.php" title="Create a new document" id="btn_create">Create a new document</a></li>
 		<?php 
 	
 	}

@@ -117,12 +117,12 @@ if ( $my_name != '' ) { ?>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 <li>
-<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link: <?php the_title(); ?>"><?php the_title(); ?></a> on <?php the_time('j F Y'); ?>
+<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link: <?php the_title(); ?>"><?php the_title(); ?></a> on <?php the_time('l, F jS, Y'); ?>
 </li>
 
 <?php endwhile; else: ?>
 
-<p><?php _e('No posts by this author.'); ?></p>
+<p><?php _e('No posts by this author.','commentpress'); ?></p>
 
 <?php endif; ?>
 <!-- End Loop -->

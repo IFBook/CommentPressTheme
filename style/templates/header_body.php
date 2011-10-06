@@ -33,7 +33,7 @@ Separated this out for inclusion in multiple files.
 		
 		?>
 		<div id="page_title">
-		<div id="title"><h1><a href="<?php echo get_option('home'); ?>" title="Home"><?php bloginfo('title'); ?></a></h1></div>
+		<div id="title"><h1><a href="<?php echo home_url(); ?>" title="Home"><?php bloginfo('title'); ?></a></h1></div>
 		<div id="tagline"><?php bloginfo('description'); ?></div>
 		</div>
 	</div>

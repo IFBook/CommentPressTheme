@@ -31,24 +31,22 @@ if (is_home()) {
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <?php if(is_search()) { ?><meta name="robots" content="noindex, nofollow" /><?php } ?>
 
-<!-- rss -->
-<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
-<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> Comments RSS Feed" href="<?php bloginfo('comments_rss2_url'); ?>" />
+<!-- pingbacks -->
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 
 <!-- styles -->
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
 <!--[if IE 6]>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style/css/ie6.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/ie6.css" media="screen" />
 <![endif]-->
 <!--[if gte IE 7]>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style/css/ie7.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/ie7.css" media="screen" />
 <![endif]-->
 <?php if ( is_multisite() ) { if ( 'wp-signup.php' == basename($_SERVER['SCRIPT_FILENAME']) ) { ?>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style/css/signup.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/signup.css" media="screen" />
 <?php }} ?>
 <?php if ( is_multisite() ) { if ( 'wp-activate.php' == basename($_SERVER['SCRIPT_FILENAME']) ) { ?>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style/css/activate.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/activate.css" media="screen" />
 <?php }} ?>
 <?php 
 
@@ -56,7 +54,7 @@ if (is_home()) {
 if( file_exists( TEMPLATEPATH.'/custom.css' )) { 
 
 ?>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/custom.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/custom.css" media="screen" />
 <?php 
 
 } ?>

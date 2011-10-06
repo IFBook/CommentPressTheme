@@ -153,7 +153,7 @@ else {
 		if ( $title_id != get_option('page_on_front') ) {
 	
 		// show home
-		?><li><a href="<?php echo get_bloginfo('wpurl'); ?>" id="btn_home" class="css_btn" title="Home Page">Home Page</a></li><?php
+		?><li><a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="Home Page">Home Page</a></li><?php
 		
 		}
 	

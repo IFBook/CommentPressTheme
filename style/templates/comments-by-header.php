@@ -65,10 +65,10 @@ if (is_home()) {
 <!-- styles -->
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
 <!--[if IE 6]>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style/css/ie6.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/ie6.css" media="screen" />
 <![endif]-->
 <!--[if gte IE 7]>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style/css/ie7.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/ie7.css" media="screen" />
 <![endif]-->
 <?php 
 
@@ -76,14 +76,14 @@ if (is_home()) {
 if( file_exists( TEMPLATEPATH.'/custom.css' )) { 
 
 ?>
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/custom.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/custom.css" media="screen" />
 <?php 
 
 } ?>
 
 <?php wp_head(); ?>
 
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/style/js/cp_js_all_comments.js"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/style/js/cp_js_all_comments.js"></script>
 
 </head>
 

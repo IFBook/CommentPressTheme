@@ -3,12 +3,25 @@
 Commentpress Theme Functions
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 22/03/2009
+LAST MODIFIED	: 06/10/2011
 ---------------------------------------------------------------
 NOTES
 
 ---------------------------------------------------------------
 */
+
+
+
+
+
+/**
+ * Set the content width based on the theme's design and stylesheet.
+ * This seems to be a Wordpress requirement - though rather dumb in the
+ * context of our theme, which has a percentage-based default width.
+ * I have arbitrarily set it to the default content-width when viewing
+ * on a 1280px-wide screen.
+ */
+if ( !isset( $content_width ) ) { $content_width = 733; }
 
 
 
@@ -64,6 +77,13 @@ function cp_setup(
 	
 ) { //-->
 
+	/* Make Commentpress available for translation.
+	 * Translations can be added to the /style/languages/ directory.
+	 * If you're building a theme based on Commentpress, use a find and replace
+	 * to change 'commentpress' to the name of your theme in all the template files.
+	 */
+	load_theme_textdomain( 'commentpress', TEMPLATEPATH . '/style/languages' );
+
 	// allow custom backgrounds
 	add_custom_background();
 	
@@ -76,6 +96,12 @@ function cp_setup(
 
 	// allow custom header images
 	add_custom_image_header( 'cp_header', 'cp_admin_header' );
+	
+	// auto feed links
+	add_theme_support( 'automatic-feed-links' );
+	
+	// This theme styles the visual editor with editor-style.css to match the theme style.
+	add_editor_style();
 
 }
 endif; // cp_setup
@@ -1586,8 +1612,8 @@ function cp_comment_reply_link( $args = array(), $comment = null, $post = null )
 	
 		'add_below' => 'comment', 
 		'respond_id' => 'respond', 
-		'reply_text' => __('Reply'),
-		'login_text' => __('Log in to Reply'), 
+		'reply_text' => __('Reply','commentpress'),
+		'login_text' => __('Log in to Reply','commentpress'), 
 		'depth' => 0, 
 		'before' => '', 
 		'after' => ''
@@ -2021,13 +2047,13 @@ function cp_multipager() {
 	// set default behaviour
 	$defaults = array(
 		
-		'before' => '<div class="multipager">', // . __('Pages: '), 
+		'before' => '<div class="multipager">', // . __('Pages: ','commentpress'), 
 		'after' => '</div>',
 		'link_before' => '', 
 		'link_after' => '',
 		'next_or_number' => 'next', 
-		'nextpagelink' => '<span class="alignright">'.__('Next page').' &raquo;</span>', // <li class="alignright"></li>
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page').'</span>', // <li class="alignleft"></li>
+		'nextpagelink' => '<span class="alignright">'.__('Next page','commentpress').' &raquo;</span>', // <li class="alignright"></li>
+		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page','commentpress').'</span>', // <li class="alignleft"></li>
 		'pagelink' => '%',
 		'more_file' => '', 
 		'echo' => 0
@@ -2207,7 +2233,7 @@ if ( ! function_exists( 'add_commentblock_tinymce_plugin' ) ):
  */
 function add_commentblock_tinymce_plugin($plugin_array) {
 
-	$plugin_array['commentblock'] = get_bloginfo('template_url').'/style/js/tinymce/cp_editor_plugin.js';
+	$plugin_array['commentblock'] = get_template_directory_uri().'/style/js/tinymce/cp_editor_plugin.js';
 	return $plugin_array;
 
 }
@@ -2260,8 +2286,18 @@ function cp_trap_empty_search() {
 }
 endif; // cp_trap_empty_search
 
-// add filter for the above
-add_filter( 'home_template', 'cp_trap_empty_search' );
+// front_page_template filter is deprecated in WP 3.2+
+if ( version_compare( $wp_version, '3.2', '>=' ) ) {
+
+	// add filter for the above
+	add_filter( 'home_template', 'cp_trap_empty_search' );
+
+} else {
+
+	// retain old filter for earlier versions
+	add_filter( 'front_page_template', 'cp_trap_empty_search' );
+
+}
 
 
 
