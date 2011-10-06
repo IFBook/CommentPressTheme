@@ -18,7 +18,7 @@
 
 <div id="content" class="clearfix">
 
-<?php if (have_posts()) : ?>
+<?php if ( isset( $_GET['s'] ) AND !empty( $_GET['s'] ) AND have_posts() ) : ?>
 
 	<div class="post">
 

@@ -2261,7 +2261,7 @@ function cp_trap_empty_search() {
 endif; // cp_trap_empty_search
 
 // add filter for the above
-add_filter( 'front_page_template', 'cp_trap_empty_search' );
+add_filter( 'home_template', 'cp_trap_empty_search' );
 
 
 
