@@ -4,7 +4,8 @@
 	
 		init : function(ed, url) {
 		
-			var commentblockHTML = '<img src="' + url + '/img/trans.gif" class="mceWPmore mceItemNoResize" title="Comment Block" />';
+			var commentblockHTML;
+			commentblockHTML = '<img src="' + url + '/trans.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
 			
 			// add button
 			ed.addButton('commentblock', {
@@ -37,7 +38,7 @@
 		},
 
 		_handleCommentBlock : function(ed, url) {
-			var commentblockHTML = '<img src="' + url + '/trans.gif" class="mceWPmore mceItemNoResize" title="Comment Block" />';
+			var commentblockHTML = '<img src="' + url + '/trans.gif" class="mceCommentBlock mceItemNoResize" title="Comment Block" />';
 
 			// Load plugin specific CSS into editor
 			ed.onInit.add(function() {
@@ -49,7 +50,7 @@
 				if (ed.theme.onResolveName) {
 					ed.theme.onResolveName.add(function(th, o) {
 						if (o.node.nodeName == 'IMG') {
-							if ( ed.dom.hasClass(o.node, 'mceWPmore') )
+							if ( ed.dom.hasClass(o.node, 'mceCommentBlock') )
 								o.name = 'commentblock';
 						}
 
@@ -66,7 +67,7 @@
 			ed.onPostProcess.add(function(ed, o) {
 				if (o.get)
 					o.content = o.content.replace(/<img[^>]+>/g, function(im) {
-						if (im.indexOf('class="mceWPmore') !== -1) {
+						if (im.indexOf('class="mceCommentBlock') !== -1) {
 							im = '<!--commentblock-->';
 						}
 						return im;
@@ -75,7 +76,7 @@
 
 			// Set active buttons if user selected pagebreak or more break
 			ed.onNodeChange.add(function(ed, cm, n) {
-				cm.setActive('commentblock', n.nodeName === 'IMG' && ed.dom.hasClass(n, 'mceWPmore'));
+				cm.setActive('commentblock', n.nodeName === 'IMG' && ed.dom.hasClass(n, 'mceCommentBlock'));
 			});
 		}
 	});

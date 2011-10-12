@@ -306,7 +306,7 @@ function cp_get_header_image(
 		}
 		
 		// if we have an image
-		if ( $attachment ) { 
+		if ( isset( $attachment ) ) { 
 			
 			// show it
 			echo wp_get_attachment_image( $attachment->ID, 'full' );
@@ -2190,13 +2190,13 @@ function add_commentblock_button() {
 	// add only in Rich-text Editor mode
 	if ( get_user_option('rich_editing') == 'true') {
 	
-		add_filter("mce_external_plugins", "add_commentblock_tinymce_plugin");
+		add_filter('mce_external_plugins', 'add_commentblock_tinymce_plugin');
 		add_filter('mce_buttons', 'register_commentblock_button');
 	
 	}
 
 }
-endif; // cp_image_caption_shortcode
+endif; // add_commentblock_button
 
 
 
@@ -2218,7 +2218,7 @@ function register_commentblock_button($buttons) {
 	return $buttons;
 
 }
-endif; // cp_image_caption_shortcode
+endif; // register_commentblock_button
 
 
 
