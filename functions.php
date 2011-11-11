@@ -2104,7 +2104,7 @@ function cp_comment_post_redirect( $link ) {
 		$page_info = $_SERVER['HTTP_REFERER'];
 		
 		// set redirect to comment on subpage
-		return $page_info.'#'.$current_redirect[fragment];
+		return $page_info.'#'.$current_redirect['fragment'];
 		
 	}
 

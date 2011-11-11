@@ -603,7 +603,9 @@ span.commenticonbox a.para_permalink
 	float: left;
 	width: 17px;
 	height: 14px;
-	text-indent: -999px;
+	text-indent: -9999px;
+	text-align: left;
+	cursor: pointer;
 }
 
 	span.commenticonbox a.para_permalink:focus
