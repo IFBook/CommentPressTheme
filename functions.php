@@ -1798,7 +1798,7 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 
 
 <div class="comment-content">
-'.apply_filters('comment_text', get_comment_text() ).'
+'.apply_filters('comment_text', $comment_text ).'
 </div><!-- /comment-content -->
 
 
