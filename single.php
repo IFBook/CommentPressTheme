@@ -28,9 +28,40 @@
 
 
 
-		<h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+		<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 
-		<p class="postname"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a> by <?php the_author_posts_link(); ?></p>
+		<p class="postname"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a> by <?php 
+		
+		// access plugin
+		global $commentpress_obj, $post;
+	
+		// if we have the plugin enabled and it's BP
+		if ( is_object( $commentpress_obj ) AND $commentpress_obj->is_buddypress() ) {
+		
+			// get author details
+			$user = get_userdata( $post->post_author );
+			
+			// for safety, check we got one
+			if ( is_object( $user ) ) {
+			
+				// construct user link
+				echo bp_core_get_userlink( $user->ID );
+			
+			} else {
+			
+				// link to theme author page
+				the_author_posts_link(); 
+	
+			}
+	
+		} else {
+		
+			// link to theme author page
+			the_author_posts_link(); 
+			
+		}
+		
+		?></p>
 
 
 
@@ -90,7 +121,7 @@
 
 	<div class="post">
 	
-		<h2>Post Not Found</h2>
+		<h2 class="post_title">Post Not Found</h2>
 		
 		<p>Sorry, no posts matched your criteria.</p>
 		

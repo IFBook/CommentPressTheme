@@ -27,43 +27,6 @@ if ( !isset( $content_width ) ) { $content_width = 733; }
 
 
 
-if ( ! function_exists( 'cp_remove_adminbar' ) ):
-/** 
- * @description: get an ID for the body tag
- * @todo: 
- *
- */
-function cp_remove_adminbar( 
-	
-) { //-->
-
-	global $wp_version;
-	
-	// in version 3.1 or greater
-	if ( version_compare( $wp_version, "3.0.9999", ">" ) === true ) {
-	
-		// disable admin bar
-		remove_action( 'init', 'wp_admin_bar_init' );
-		
-	}
-	
-	// Disable Admin Bar
-	add_filter('show_admin_bar', '__return_false');
-	 
-	// Remove the Admin Bar option in user profile
-	remove_action('personal_options', '_admin_bar_preferences');
-	
-}
-endif; // cp_adminbar
-
-// CMW: we can now enable the admin bar - fixed via Javascript - enable this 
-// function if the problem persists
-//cp_remove_adminbar();
-
-
-
-
-
 // add after theme setup hook
 add_action( 'after_setup_theme', 'cp_setup' );
 
@@ -77,12 +40,13 @@ function cp_setup(
 	
 ) { //-->
 
-	/* Make Commentpress available for translation.
+	/** 
+	 * Make Commentpress available for translation.
 	 * Translations can be added to the /style/languages/ directory.
 	 * If you're building a theme based on Commentpress, use a find and replace
-	 * to change 'commentpress' to the name of your theme in all the template files.
+	 * to change 'commentpress-theme' to the name of your theme in all the template files.
 	 */
-	load_theme_textdomain( 'commentpress', TEMPLATEPATH . '/style/languages' );
+	load_theme_textdomain( 'commentpress-theme', get_template_directory() . '/style/languages' );
 
 	// allow custom backgrounds
 	add_custom_background();
@@ -102,6 +66,9 @@ function cp_setup(
 	
 	// This theme styles the visual editor with editor-style.css to match the theme style.
 	add_editor_style();
+
+	// testing the use of wp_nav_menu() - first we need to register it
+	register_nav_menu( 'toc', __( 'Table of Contents', 'commentpress-theme' ) );
 
 }
 endif; // cp_setup
@@ -366,7 +333,9 @@ if ( ! function_exists( 'cp_get_body_classes' ) ):
  * @todo: 
  *
  */
-function cp_get_body_classes( 
+function cp_get_body_classes(
+
+	$raw = false
 	
 ) { //-->
 
@@ -401,7 +370,14 @@ function cp_get_body_classes(
 	if ( is_object( $commentpress_obj ) ) {
 	
 		// is this the title page?
-		if ( $post->ID == $commentpress_obj->db->option_get( 'cp_welcome_page' ) ) {
+		if ( 
+			
+			// be more defensive
+			is_object( $post )
+			AND isset( $post->ID )
+			AND $post->ID == $commentpress_obj->db->option_get( 'cp_welcome_page' ) 
+			
+		) {
 		
 			// init layout
 			$layout = '';
@@ -443,10 +419,17 @@ function cp_get_body_classes(
 	}
 	
 
-
+	
 	// construct attribute
-	$_body_classes = ' class="'.$sidebar_class.$layout_class.$page_type.'"';
+	$_body_classes = $sidebar_class.$layout_class.$page_type;
 
+	// if we want them wrapped, do so
+	if ( !$raw ) {
+		
+		// preserve backwards compat for older child themes
+		$_body_classes = ' class="'.$_body_classes.'"';
+
+	}
 
 
 	// --<
@@ -454,6 +437,47 @@ function cp_get_body_classes(
 	
 }
 endif; // cp_get_body_classes
+
+
+
+
+
+
+if ( ! function_exists( 'cp_blog_title' ) ):
+/** 
+ * @description: disable more link jump - from: http://codex.wordpress.org/Customizing_the_Read_More
+ * @todo:
+ *
+ */
+function cp_site_title( $sep = '', $echo = true ){
+
+	// is this multisite?
+	if ( is_multisite() ) {
+	
+		// if we're on a sub-blog
+		if ( !is_main_site() ) {
+			
+			global $current_site;
+			
+			// print?
+			if( $echo ) {
+			
+				// add site name
+				echo ' '.trim($sep).' '.$current_site->site_name;
+				
+			} else {
+			
+				// add site name
+				return ' '.trim($sep).' '.$current_site->site_name;
+				
+			}
+			
+		}
+		
+	}
+	
+}
+endif; // cp_site_title
 
 
 
@@ -815,13 +839,68 @@ endif; // cp_get_comments
 
 
 
+if ( ! function_exists( 'cp_get_user_link' ) ):
+/** 
+ * @description: get user link in vanilla WP scenarios
+ * @todo: 
+ *
+ */
+function cp_get_user_link( 
+
+	&$user
+	
+) { //-->
+
+	/**
+	 * In default single install mode, probably just link to their URL, unless 
+	 * they are	an author, in which case we could link to their author page.
+	 *
+	 * In multisite, probably the same.
+	 *
+	 * When BuddyPress is enabled, always link to their profile
+	 */
+	 
+	 // kick out if not a user
+	 if ( !is_object( $user ) ) { return false; }
+	 
+	 // we're through: the user is on the system
+
+	 // if buddypress... (use an override in child theme)
+	 
+	 // get author url
+	 $url = get_author_posts_url( $user->ID );
+	 //print_r( $url ); die();
+	 
+	 // WP sometimes leaves 'http://' or 'https://' in the field
+	 if (  $url == 'http://'  OR $url == 'https://' ) {
+	 
+	 	// clear
+	 	$url = '';
+	 
+	 }
+	 
+	 // --<
+	 return $url;
+	 
+}
+endif; // cp_get_user_link
+
+
+
+
+
+
+
 if ( ! function_exists( 'cp_format_comment' ) ):
 /** 
  * @description: format comment on comments pages
  * @todo: 
  *
  */
-function cp_format_comment( $comment, $context='all' ) {
+function cp_format_comment( $comment, $context = 'all' ) {
+
+	// declare access to globals
+	global $wpdb, $commentpress_obj, $cp_comment_output;
 
 	// enable Wordpress API on comment
 	//$GLOBALS['comment'] = $comment;
@@ -831,17 +910,21 @@ function cp_format_comment( $comment, $context='all' ) {
 	if ( $context == 'all' ) {
 	
 		// get author
-		if ($comment->comment_author != '') {
+		if ( $comment->comment_author != '' ) {
 		
 			// was it a registered user?
-			if ($comment->user_id != '0') {
+			if ( $comment->user_id != '0' ) {
 			
 				// get user details
 				$user = get_userdata( $comment->user_id );
+				//print_r( $user->display_name ); die();
+				
+				// get user link
+				$user_link = cp_get_user_link( $user );
 				
 				// construct link to user url
-				$_context = ( $user->user_url != '' AND $user->user_url != 'http://' ) ? 
-							'by <a href="'.$user->user_url.'">'.$comment->comment_author.'</a>' : 
+				$_context = ( $user_link != '' AND $user_link != 'http://' ) ? 
+							'by <a href="'.$user_link.'">'.$comment->comment_author.'</a>' : 
 							'by '.$comment->comment_author;
 				
 			} else {
@@ -857,7 +940,7 @@ function cp_format_comment( $comment, $context='all' ) {
 		} else { 
 		
 			// we don't have a name
-			$_context = 'by anonymous';
+			$_context = 'by Anonymous';
 			
 		}
 	
@@ -1056,8 +1139,14 @@ function cp_get_all_comments_page_content() {
 
 	
 	
+	// set default
+	$pagetitle = apply_filters( 
+		'cp_page_all_comments_title', 
+		__( 'All Comments', 'commentpress-theme' )
+	);
+
 	// set title
-	$_page_content = '<h2>All Comments</h2>'."\n\n";
+	$_page_content = '<h2 class="post_title">'.$pagetitle.'</h2>'."\n\n";
 	
 
 
@@ -1066,8 +1155,20 @@ function cp_get_all_comments_page_content() {
 	
 	
 	
+	// set default
+	$booktitle = apply_filters( 
+		'cp_page_all_comments_book_title', 
+		__( 'Comments on the Book', 'commentpress-theme' )
+	);
+
+	// set default
+	$blogtitle = apply_filters( 
+		'cp_page_all_comments_blog_title', 
+		__( 'Comments on the Blog', 'commentpress-theme' )
+	);
+
 	// get title
-	$title = ( $page_or_post == 'page' ) ? 'Comments on the Book': 'Comments on the Blog';
+	$title = ( $page_or_post == 'page' ) ? $booktitle : $blogtitle;
 	
 	// set title
 	$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
@@ -1081,7 +1182,7 @@ function cp_get_all_comments_page_content() {
 	$other_type = ( $page_or_post == 'page' ) ? 'post': 'page';
 	
 	// get title
-	$title = ( $page_or_post == 'page' ) ? 'Comments on the Blog': 'Comments on the Book';
+	$title = ( $page_or_post == 'page' ) ? $blogtitle : $booktitle;
 	
 	// set title
 	$_page_content .= '<p class="comments_hl">'.$title.'</p>'."\n\n";
@@ -1151,7 +1252,12 @@ function cp_get_comments_by_content() {
 		// loop
 		foreach ($_data as $comment) {
 		
-	
+			// test for anonymous comment (usually generated by WP itself in multisite installs)
+			if ( empty( $comment->comment_author ) ) {
+			
+				$comment->comment_author = 'Anonymous';
+			
+			}
 	
 			// show commenter, if not shown
 			if ( $_title != $comment->comment_author ) {
@@ -1177,7 +1283,8 @@ function cp_get_comments_by_content() {
 				//if ( $comment->comment_count > 1 ) { $_comment_count_text = 'comments'; } else { $_comment_count_text = 'comment'; }
 		
 				// show it --  <span>('.$comment->comment_count.' '.$_comment_count_text.')</span>
-				$_page_content .= '<h3>'.$comment->comment_author.'</h3>'."\n\n";
+				// add gravatar
+				$_page_content .= '<h3>'.get_avatar( $comment, $size='24' ).$comment->comment_author.'</h3>'."\n\n";
 	
 				// open comments div
 				$_page_content .= '<div class="item_body">'."\n\n";
@@ -1245,7 +1352,7 @@ function cp_get_comments_by_page_content() {
 	
 	
 	// set title
-	$_page_content = '<h2>Comments by Commenter</h2>'."\n\n";
+	$_page_content = '<h2 class="post_title">Comments by Commenter</h2>'."\n\n";
 
 	// get data
 	$_page_content .= cp_get_comments_by_content();
@@ -1257,6 +1364,194 @@ function cp_get_comments_by_page_content() {
 	
 }
 endif; // cp_get_comments_by_page_content
+
+	
+	
+
+
+
+
+if ( ! function_exists( 'cp_get_comment_activity' ) ):
+/** 
+ * @description: activity sidebar display function
+ * @todo: do we want trackbacks?
+ *
+ */
+function cp_get_comment_activity() {
+
+	// declare access to globals
+	global $wpdb, $commentpress_obj, $post;
+
+	// init page content
+	$_page_content = '';
+	
+	
+	
+	// if we are on a 404, for example
+	if ( !is_object( $post ) ) {
+	
+		// get all comments
+		$just_this_post = '';
+		
+	} else {
+	
+		// init filtered by post
+		$just_this_post = $post->ID;
+		
+		// if we have the plugin enabled...
+		if ( is_object( $commentpress_obj ) ) {
+		
+			//print_r( array( $commentpress_obj->db->is_special_page() ) ); die();
+		
+			// is this a special page?
+			if ( $commentpress_obj->db->is_special_page() ) {
+			
+				// actually, we need to check if this is a "commentable" post/page
+			
+				// no - get all comments
+				$just_this_post = '';
+			
+			}
+		
+		}
+		
+	}
+	
+	/*
+	// get all comments by recency
+	$querystr = "
+	SELECT $wpdb->comments.*, $wpdb->posts.post_title, $wpdb->posts.post_name
+	FROM $wpdb->comments, $wpdb->posts
+	WHERE $wpdb->comments.comment_post_ID = $wpdb->posts.ID 
+	$just_this_post
+	AND $wpdb->comments.comment_type != 'pingback' 
+	AND $wpdb->comments.comment_approved = '1' 
+	ORDER BY $wpdb->comments.comment_date DESC
+	";
+	
+	//echo $querystr; exit();
+	
+	
+	// get data
+	$_data = $wpdb->get_results( $querystr, OBJECT );
+	*/
+	
+	$args = array(
+	
+		'post_id' => $just_this_post,
+		'number' => 10,
+		'status' => 'approve'
+	
+	);
+	
+	$_data = get_comments( $args );
+	
+	
+	//print_r( $_data ); exit();
+	
+	
+	// did we get any?
+	if ( count( $_data ) > 0 ) {
+	
+	
+	
+		// open ul
+		$_page_content .= '<ol class="comment_activity">'."\n\n";
+		
+		// init title
+		$_title = '';
+		
+		// loop
+		foreach ($_data as $comment) {
+		
+			// enable Wordpress API on comment
+			$GLOBALS['comment'] = $comment;
+		
+			// test for anonymous comment (usually generated by WP itself in multisite installs)
+			if ( empty( $comment->comment_author ) ) {
+			
+				$comment->comment_author = 'Anonymous';
+			
+			}
+			
+			
+
+			// was it a registered user?
+			if ( $comment->user_id != '0' ) {
+			
+				// get user details
+				$user = get_userdata( $comment->user_id );
+				//print_r( $user->display_name ); die();
+				
+				// get user link
+				$user_link = cp_get_user_link( $user );
+				
+				// construct author citation
+				$author = '<cite class="fn"><a href="'.$user_link.'">'.esc_html( $comment->comment_author ).'</a></cite>';
+				
+				// construct link to user url
+				$author = ( $user_link != '' AND $user_link != 'http://' ) ? 
+							'<cite class="fn"><a href="'.$user_link.'">'.esc_html( $comment->comment_author ).'</a></cite>' : 
+							 '<cite class="fn">'.esc_html( $comment->comment_author ).'</cite>';
+				
+			} else {
+			
+				// construct link to commenter url
+				$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' ) ? 
+							'<cite class="fn"><a href="'.$comment->comment_author_url.'">'.esc_html( $comment->comment_author ).'</a></cite>' : 
+							 '<cite class="fn">'.esc_html( $comment->comment_author ).'</cite>';
+			
+			}
+				
+			
+			
+			// approved comment?
+			if ($comment->comment_approved == '0') {
+				$comment_text = '<p><em>Comment awaiting moderation</em></p>';
+			} else {
+				$comment_text = get_comment_text( $comment->comment_ID );
+			}
+		
+		
+			
+			// open li
+			$_page_content .= '<li><!-- item li -->'."\n\n";
+	
+			// show the comment
+			$_page_content .= '
+<div class="comment-identifier">
+'.get_avatar( $comment, $size='32' ).'
+'.$author.'		
+<p class="comment_activity_date"><a class="comment_activity_link" href="'.htmlspecialchars( get_comment_link() ).'">'.get_comment_date().' at '.get_comment_time().'</a></p>
+</div><!-- /comment-identifier -->
+
+
+
+<div class="comment-content">
+'.apply_filters('comment_text', $comment_text ).'
+</div><!-- /comment-content -->
+
+<div class="reply"><p><a class="comment_activity_link" href="'.htmlspecialchars( get_comment_link() ).'">'.__( 'See in context', 'commentpress-theme' ).'</a></p></div><!-- /reply -->
+
+';
+
+			// close li
+			$_page_content .= '</li><!-- /item li -->'."\n\n";
+			
+		}
+	
+		// close ul
+		$_page_content .= '</ol><!-- /comment_activity -->'."\n\n";
+	
+	}
+	
+	
+	
+	// --<
+	return $_page_content;
+	
+}
+endif; // cp_get_comment_activity
 
 	
 	
@@ -1505,12 +1800,12 @@ class Walker_Comment_Press extends Walker_Comment {
 				break;
 				
 			case 'ol':
-				echo "<ol class='children'>\n";
+				echo '<ol class="children">'."\n";
 				break;
 				
 			default:
 			case 'ul':
-				echo "<ul class='children'>\n";
+				echo '<ul class="children">'."\n";
 				break;
 		}
 		
@@ -1612,8 +1907,8 @@ function cp_comment_reply_link( $args = array(), $comment = null, $post = null )
 	
 		'add_below' => 'comment', 
 		'respond_id' => 'respond', 
-		'reply_text' => __('Reply','commentpress'),
-		'login_text' => __('Log in to Reply','commentpress'), 
+		'reply_text' => __('Reply','commentpress-theme'),
+		'login_text' => __('Log in to Reply','commentpress-theme'), 
 		'depth' => 0, 
 		'before' => '', 
 		'after' => ''
@@ -1710,15 +2005,46 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 
 
 
+	// was it a registered user?
+	if ( $comment->user_id != '0' ) {
+	
+		// get user details
+		$user = get_userdata( $comment->user_id );
+		//print_r( $user->display_name ); die();
+		
+		// get user link
+		$user_link = cp_get_user_link( $user );
+		//print_r( array( 'u' => $user_link ) ); die();
+		
+		// construct author citation
+		$author = ( $user_link != '' AND $user_link != 'http://' ) ? 
+					'<cite class="fn"><a href="'.$user_link.'">'.get_comment_author().'</a></cite>' : 
+					 '<cite class="fn">'.get_comment_author().'</cite>';
+		
+		//print_r( array( 'a' => $author ) ); die();
+
+	} else {
+	
+		// construct link to commenter url
+		$author = ( $comment->comment_author_url != '' AND $comment->comment_author_url != 'http://' AND $comment->comment_approved != '0' ) ? 
+					'<cite class="fn"><a href="'.$comment->comment_author_url.'">'.get_comment_author().'</a></cite>' : 
+					 '<cite class="fn">'.get_comment_author().'</cite>';
+	
+	}
+		
+	
+	
+	/*
 	if ($comment->comment_approved == '0') {
 		$author = '<cite class="fn">'.get_comment_author().'</cite>';
 	} else {
 		$author = '<cite class="fn">'.get_comment_author_link().'</cite>';
 	}
+	*/
 	
 	
 	
-	if ($comment->comment_approved == '0') {
+	if ( $comment->comment_approved == '0' ) {
 		$comment_text = '<p><em>Comment awaiting moderation</em></p>';
 	} else {
 		$comment_text = get_comment_text();
@@ -1731,9 +2057,20 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 
 	// enable access to post
 	global $post;
+	
+	// can we reply?
+	if ( 
 		
-	// if comments are open...
-	if ( $post->comment_status == 'open' AND $comment->comment_type != 'pingback' ) {
+		// not if comments are closed
+		$post->comment_status == 'open' 
+		
+		// we don't want reply to on pingbacks
+		AND $comment->comment_type != 'pingback' 
+		
+		// nor on unapproved comments
+		AND $comment->comment_approved == '1' 
+		
+	) {
 	
 		// are we threading comments?
 		if ( get_option( 'thread_comments', false ) ) {
@@ -2047,13 +2384,13 @@ function cp_multipager() {
 	// set default behaviour
 	$defaults = array(
 		
-		'before' => '<div class="multipager">', // . __('Pages: ','commentpress'), 
+		'before' => '<div class="multipager">', // . __('Pages: ','commentpress-theme'), 
 		'after' => '</div>',
 		'link_before' => '', 
 		'link_after' => '',
 		'next_or_number' => 'next', 
-		'nextpagelink' => '<span class="alignright">'.__('Next page','commentpress').' &raquo;</span>', // <li class="alignright"></li>
-		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page','commentpress').'</span>', // <li class="alignleft"></li>
+		'nextpagelink' => '<span class="alignright">'.__('Next page','commentpress-theme').' &raquo;</span>', // <li class="alignright"></li>
+		'previouspagelink' => '<span class="alignleft">&laquo; '.__('Previous page','commentpress-theme').'</span>', // <li class="alignleft"></li>
 		'pagelink' => '%',
 		'more_file' => '', 
 		'echo' => 0
@@ -2187,7 +2524,7 @@ function add_commentblock_button() {
 		return;
 	}
 	
-	// add only in Rich-text Editor mode
+	// add only if user can edit in Rich-text Editor mode
 	if ( get_user_option('rich_editing') == 'true') {
 	
 		add_filter('mce_external_plugins', 'add_commentblock_tinymce_plugin');

@@ -49,7 +49,7 @@ if ( $title_page_id != '' ) {
 	$GLOBALS['post'] = $title;
 
 	// show page content
-	?><h2><?php the_title(); ?></h2>
+	?><h2 class="post_title"><?php the_title(); ?></h2>
 	
 	<?php the_content('Read the rest of this entry &raquo;'); ?>
 
@@ -62,20 +62,35 @@ if ( $title_page_id != '' ) {
 
 		<?php while (have_posts()) : the_post(); ?>
 
+		<div class="search_result">
+
 			<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
 
-				<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-				<small><?php the_time('l, F jS, Y') ?> <!-- by <?php the_author() ?> --></small>
-
+				<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+				
+				<div class="search_meta">
+				
+					<p><?php 
+					
+					// get avatar
+					$author_id = get_the_author_meta( 'ID' );
+					echo get_avatar( $author_id, $size='32' );
+					
+					?></p>
+					
+					<p><small><?php the_time('l, F jS, Y') ?> <!-- by <?php the_author() ?> --></small></p>
+	
+					<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+	
+				</div><!-- /post -->
+	
 				<div class="entry">
 					<?php the_excerpt(); ?>
 				</div>
 
-				<!--<p class="readmore"><a href="<?php the_permalink() ?>" rel="bookmark" title="Read more...">Read more...</a></p>-->
-
-				<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
-
 			</div><!-- /post -->
+	
+		</div><!-- /search_result -->
 	
 		<?php endwhile; ?>
 
@@ -83,7 +98,7 @@ if ( $title_page_id != '' ) {
 
 		<div class="post">
 
-			<h2>No blog posts found</h2>
+			<h2 class="post_title">No blog posts found</h2>
 			
 			<p>There are no blog posts yet.<?php
 			

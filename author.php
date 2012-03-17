@@ -51,7 +51,7 @@ if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
 
 <div class="post">
 
-<h2>About <?php echo $my_author->nickname; ?></h2>
+<h2 class="post_title">About <?php echo $my_author->nickname; ?></h2>
 
 
 

@@ -15,6 +15,7 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 	// set our vars
 	var cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
+	var cp_bp_adminbar = CommentpressSettings.cp_bp_adminbar;
 	var cp_comments_open = CommentpressSettings.cp_comments_open;
 	var cp_special_page = CommentpressSettings.cp_special_page;
 	var cp_para_comments_enabled = CommentpressSettings.cp_para_comments_enabled;
@@ -53,15 +54,40 @@ var page_highlight = false;
 
 // get state of header
 var cp_header_minimised = jQuery.cookie( 'cp_header_minimised' );
+if ( cp_header_minimised === undefined || cp_header_minimised === null ) {
+	cp_header_minimised = 'n';
+}
 
 // get state of sidebar
 var cp_sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
+if ( cp_sidebar_minimised === undefined || cp_sidebar_minimised === null ) {
+	cp_sidebar_minimised = 'n';
+}
 
 // get container original top
 var cp_container_top_max = jQuery.cookie( 'cp_container_top_max' );
+if ( cp_container_top_max === undefined || cp_container_top_max === null ) {
+	cp_container_top_max = 108;
+}
 
 // get header offset
 var cp_container_top_min = jQuery.cookie( 'cp_container_top_min' );
+if ( cp_container_top_min === undefined || cp_container_top_min === null ) {
+	cp_container_top_min = 108;
+}
+
+// is the buddypress bar shown?
+if ( cp_bp_adminbar == 'y' ) {
+
+	// amend to height of buddypress bar
+	cp_wp_adminbar_height = 25;
+	
+	// act as if admin bar were there
+	cp_wp_adminbar = 'y';
+	
+	// from here on, things work as if the WP admin bar were functional...
+	
+}
 
 // is the admin bar shown?
 if ( cp_wp_adminbar == 'y' ) {
@@ -103,8 +129,8 @@ function cp_page_setup() {
 		if ( cp_wp_adminbar == 'y' ) {
 		
 			// move down
-			styles += '#header { top: 28px; } ';
-			styles += '#book_header { top: 60px; } ';
+			styles += '#header { top: ' + cp_wp_adminbar_height + 'px; } ';
+			styles += '#book_header { top: ' + (cp_wp_adminbar_height + 32) + 'px; } ';
 		
 		}
 		
@@ -187,6 +213,8 @@ function cp_page_setup() {
 		
 		}
 		
+		// on global activity sidebar, avoid flash of hidden comments
+		styles += '#activity_sidebar .paragraph_wrapper { display: none; } ';
 
 		
 		/*
@@ -253,7 +281,7 @@ function cp_page_setup() {
 
 		
 		// show tabs when JS enabled
-		styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #archive_header.sidebar_header { display: block; } ';
+		styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #activity_header.sidebar_header { display: block; } ';
 		
 
 
@@ -628,13 +656,44 @@ function cp_scroll_to_top( target, speed ) {
  * @todo: 
  *
  */
-function cp_scroll_comments( target, speed ) {
+function cp_scroll_comments( target, speed, flash ) {
+	
+	// preserve compatibility with older calls
+    switch(arguments.length) {
+        case 2: flash = 'noflash';
+        case 3: break;
+        default: throw new Error('illegal argument count')
+    }
 
+	//console.log( 'scroll: ' + flash );
+	
 	// only scroll if not mobile
 	if ( cp_is_mobile == '0' ) {
 	
-		// scroll comment area to para heading
-		jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
+		// either flash at the end or not..
+		if ( flash == 'flash' ) {
+		
+			// scroll to new comment
+			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+				target, 
+				{
+					duration: speed, 
+					axis: 'y',
+					onAfter: function() {
+					
+						// highlight header
+						cp_flash_comment_header( target );
+						
+					}
+				}
+			);
+						
+		} else {
+			
+			// scroll comment area to para heading
+			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
+			
+		}
 		
 	}
 	
@@ -686,6 +745,8 @@ function cp_setup_comment_headers() {
 		// override
 		if ( visible == 'none' ) { opening = true; }
 		
+		//console.log( opening );
+		
 
 
 		// did we get one at all?
@@ -702,6 +763,9 @@ function cp_setup_comment_headers() {
 				
 					// unhighlight paragraphs
 					jQuery.unhighlight_para();
+					
+					// highlight this paragraph
+					jQuery.highlight_para( textblock );
 					
 					// scroll page
 					cp_scroll_page( textblock );
@@ -751,13 +815,16 @@ function cp_setup_comment_headers() {
 					
 			} else {
 			
+				// unhighlight paragraphs
+				jQuery.unhighlight_para();
+				
 				// only scroll if page is not highlighted
-				if ( page_highlight === false ) {
+				//if ( page_highlight === false ) {
 			
 					// scroll to top
 					cp_scroll_to_top( 0, cp_scroll_speed );
 					
-				}
+				//}
 				
 				// toggle page highlight flag
 				page_highlight = !page_highlight;
@@ -884,6 +951,15 @@ function cp_enable_comment_permalink_clicks() {
 		
 		} else {
 	
+			// clear other highlights
+			jQuery.unhighlight_para();
+			
+			// get text sig
+			var text_sig = cp_get_text_sig_by_comment_id( '#'+comment_id );
+	
+			// scroll page to it
+			cp_scroll_page_to_textblock( text_sig );
+			
 			// scroll comments
 			cp_scroll_comments( jQuery('#'+comment_id), cp_scroll_speed );
 			
@@ -898,6 +974,273 @@ function cp_enable_comment_permalink_clicks() {
 
 
 
+
+
+
+/** 
+ * @description: highlight the comment header
+ * @todo: 
+ *
+ */
+function cp_flash_comment_header( comment ) {
+
+	//console.log( 'flash' );
+
+	// get header
+	var comment_header = comment.children( '.comment-identifier' );
+	//console.log( comment_header.css('backgroundColor') );
+	
+	if ( !comment_header ) { return; }
+					
+	// store existing color
+	var bg = comment_header.css('backgroundColor');
+	
+	// animate to highlight
+	comment_header.animate({ backgroundColor: "#819565" }, 100, function () {
+		
+		// animate to white
+		comment_header.animate({ backgroundColor: bg }, 1000, function () {
+			
+			// then do something?
+			//console.log( 'flashed' );
+		
+		});
+		
+	});
+	
+}
+
+
+
+
+
+
+/** 
+ * @description: set up context headers for "activity" tab
+ * @todo: 
+ *
+ */
+function cp_setup_context_headers() {
+
+	// unbind first to allow repeated calls to this function
+	jQuery('h3.activity_heading').unbind( 'click' );
+
+	// set pointer 
+	jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
+
+	/** 
+	 * @description: activity column headings click
+	 * @todo: 
+	 *
+	 */
+	jQuery('h3.activity_heading').click( function() {
+	
+		// get para wrapper
+		var para_wrapper = jQuery(this).next('div.paragraph_wrapper');
+		//console.log( para_wrapper );
+		
+		// toggle next paragraph_wrapper
+		para_wrapper.slideToggle( 'slow' );
+		
+		// --<
+		return false;
+
+	});
+
+}
+
+
+
+
+
+
+/** 
+ * @description: clicking on the "see in context" link
+ * @todo: 
+ *
+ */
+function cp_enable_context_clicks() {
+
+	// allow links to work when not on commentable page
+	if ( cp_special_page == '1' ) {
+		return;
+	}
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.comment_activity_link').unbind( 'click' );
+
+	jQuery('a.comment_activity_link').click( function(e) {
+		
+		// show comments sidebar
+		cp_activate_sidebar( 'comments' );
+	
+		// get comment id
+		var comment_id = this.href.split('#')[1];
+		
+		// get comment
+		var comment = jQuery('#'+comment_id);
+		
+		//console.log( comment );
+
+		// get array of parent paragraph_wrapper divs
+		var para_wrapper_array = comment
+									.parents('div.paragraph_wrapper')
+									.map( function () {
+										return this;
+									});
+
+		// did we get one?
+		if ( para_wrapper_array.length > 0 ) {
+		
+			// get the item
+			var item = jQuery(para_wrapper_array[0]);
+			
+			// show block
+			item.show();
+			
+			// if special page
+			if ( cp_special_page == '1' ) {
+			
+				// get offset
+				var header_offset = cp_get_header_offset();
+		
+				// scroll to comment
+				jQuery.scrollTo(
+					comment, 
+					{
+						duration: cp_scroll_speed, 
+						axis:'y', 
+						offset: header_offset
+					}
+				);
+			
+			} else {
+		
+				// clear other highlights
+				jQuery.unhighlight_para();
+				
+				// highlight para
+				var text_sig = item.attr('id').split('-')[1];
+		
+				// scroll page to it
+				cp_scroll_page_to_textblock( text_sig );
+				
+				// scroll to new comment
+				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					comment, 
+					{
+						duration: cp_scroll_speed, 
+						axis: 'y',
+						onAfter: function() {
+						
+							// highlight header
+							cp_flash_comment_header( comment );
+							
+						}
+					}
+				);
+							
+			}
+			
+		}
+		
+		// --<
+		return false;
+		
+	});
+
+}
+
+
+
+
+
+
+/** 
+ * @description: get text sig by comment id
+ * @todo: 
+ *
+ */
+function cp_get_text_sig_by_comment_id( cid ) {
+
+	// init
+	var text_sig = '';
+
+	// are we passing the full id?
+	if ( cid.match('#comment-' ) ) {
+	
+		// get comment ID
+		var comment_id = parseInt( cid.split('#comment-')[1] );
+		
+	}
+		
+	// get array of parent paragraph_wrapper divs
+	var para_wrapper_array = jQuery('#comment-' + comment_id)
+								.parents('div.paragraph_wrapper')
+								.map( function () {
+									return this;
+								});
+
+	// did we get one?
+	if ( para_wrapper_array.length > 0 ) {
+	
+		// get the item
+		var item = jQuery(para_wrapper_array[0]);
+		
+		// move form to para
+		text_sig = item.attr('id').split('-')[1];
+		
+	}
+	
+	
+	
+	// --<
+	return text_sig; 
+	
+}
+
+
+
+
+
+/** 
+ * @description: scroll to textblock
+ * @todo: 
+ *
+ */
+function cp_scroll_page_to_textblock( text_sig ) {
+
+	// if not the whole page...
+	if( text_sig != '' ) {
+
+		// get text block
+		var textblock = jQuery('#textblock-' + text_sig);
+		
+		// highlight this paragraph
+		jQuery.highlight_para( textblock );
+		
+		// scroll page
+		cp_scroll_page( textblock );
+		
+	} else {
+		
+		// only scroll if page is not highlighted
+		if ( page_highlight === false ) {
+		
+			// scroll to top
+			cp_scroll_to_top( 0, cp_scroll_speed );
+			
+		}
+		
+		// toggle page highlight flag
+		page_highlight = !page_highlight;
+		
+	}
+	
+}
+
+
+			
 
 
 
@@ -992,7 +1335,7 @@ function cp_scroll_to_anchor_on_load() {
 			item.show();
 			
 			// scroll comments
-			cp_scroll_comments( jQuery('#comment-' + comment_id), 0 );
+			cp_scroll_comments( jQuery('#comment-' + comment_id), 0, 'flash' );
 			
 			// if not the whole page...
 			if( text_sig != '' ) {
@@ -1150,6 +1493,11 @@ function cp_scroll_to_comment_on_load() {
  *
  */
 function cp_do_comment_icon_action( text_sig ) {
+
+	// show comments sidebar
+	cp_activate_sidebar( 'comments' );
+
+
 
 	// get para wrapper
 	var para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
@@ -1379,7 +1727,7 @@ function cp_do_comment_icon_action( text_sig ) {
  * @todo: 
  *
  */
-function cp_setup_comment_icons() {
+function cp_setup_para_permalink_icons() {
 
 	// unbind first to allow repeated calls to this function
 	jQuery('a.para_permalink').unbind( 'click' );
@@ -1876,12 +2224,16 @@ jQuery(document).ready( function($) {
 	cp_enable_comment_permalink_clicks();
 	
 	// set up comment icons (paragraph permalinks)
-	cp_setup_comment_icons();
+	cp_setup_para_permalink_icons();
 	
 	// set up user-defined links to paragraphs
 	cp_setup_para_links();
 
-
+	// set up activity links
+	cp_enable_context_clicks();
+	
+	// set up activity headers
+	cp_setup_context_headers();
 
 
 
@@ -1902,14 +2254,14 @@ jQuery(document).ready( function($) {
 	});
 
 	/** 
-	 * @description: clicking on the Archive Header
+	 * @description: clicking on the Activity Header
 	 * @todo: 
 	 *
 	 */
-	$('#archive_header h2 a').click( function() {
+	$('#activity_header h2 a').click( function() {
 	
 		// activate it
-		cp_activate_sidebar('archive')
+		cp_activate_sidebar('activity')
 
 		// --<
 		return false;
@@ -2067,11 +2419,28 @@ jQuery(document).ready( function($) {
 	$('#cp_minimise_all_comments').click( function() {
 	
 		// slide all paragraph comment wrappers up
-		$('div.paragraph_wrapper').slideUp();
+		$('#comments_sidebar div.paragraph_wrapper').slideUp();
 		
 		// unhighlight paragraphs
 		$.unhighlight_para();
 
+	});
+
+	
+
+
+
+	
+	/** 
+	 * @description: clicking on the minimise activities icon
+	 * @todo: 
+	 *
+	 */
+	$('#cp_minimise_all_activity').click( function() {
+	
+		// slide all paragraph comment wrappers up
+		$('#activity_sidebar div.paragraph_wrapper').slideUp();
+		
 	});
 
 	

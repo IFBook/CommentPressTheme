@@ -22,7 +22,7 @@
 
 	<div class="post">
 
-	<h2>Search Results for &#8216;<?php the_search_query(); ?>&#8217;</h2>
+	<h3 class="post_title">Search Results for &#8216;<?php the_search_query(); ?>&#8217;</h3>
 
 	<?php while (have_posts()) : the_post(); ?>
 
@@ -30,14 +30,24 @@
 
 			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			
-			<div  class="search_meta">
+			<div class="search_meta">
 			
+				<p><?php 
+				
+				// get avatar
+				$author_id = get_the_author_meta( 'ID' );
+				echo get_avatar( $author_id, $size='32' );
+				
+				?></p>
+				
 				<p><?php the_time('l, F jS, Y') ?></p>
 				
 				<p><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
 			
 			</div>
 
+			<?php the_excerpt() ?>
+		
 		</div><!-- /search_result -->
 
 	<?php endwhile; ?>

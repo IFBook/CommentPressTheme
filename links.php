@@ -26,7 +26,7 @@ Template Name: Links
 
 <div class="post">
 
-<h2>Links:</h2>
+<h2 class="post_title">Links:</h2>
 
 <ul>
 <?php wp_list_bookmarks(); ?>

@@ -100,6 +100,6 @@ NOTES
 <?php
 
 // include comment form
-include( TEMPLATEPATH . '/style/templates/comment_form.php');
+include( get_template_directory() . '/style/templates/comment_form.php');
 
 ?>

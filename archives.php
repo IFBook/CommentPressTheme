@@ -1,14 +1,15 @@
-<?php
+<?php 
 /*
-Template Name: Table of Contents
+Template Name: Archive
 */
-?>
-
-<?php get_header(); ?>
 
 
 
-<!-- toc.php -->
+get_header(); ?>
+
+
+
+<!-- archives.php -->
 
 <div id="wrapper">
 
@@ -26,7 +27,27 @@ Template Name: Table of Contents
 
 <div class="post">
 
-<h2 class="post_title">TOC</h2>
+
+
+<?php the_post(); ?>
+
+<h2 class="post_title"><?php the_title(); ?></h2>
+
+
+
+<div class="archives_search_form">
+<?php get_search_form(); ?>
+</div>
+
+
+
+<h3>Archives by Month</h3>
+
+<ul>
+	<?php wp_get_archives('type=monthly'); ?>
+</ul>
+
+
 
 </div><!-- /post -->
 
