@@ -1,13 +1,3 @@
-<!-- sidebar.php -->
-
-<div id="sidebar">
-
-<div id="sidebar_inner">
-
-
-
-<ul id="sidebar_tabs">
-
 <?php
 
 
@@ -36,11 +26,8 @@ $cp_toc_title = apply_filters(
 
 
 
-?><li id="comments_header" class="sidebar_header">
-<h2><a href="#comments_sidebar"><?php echo $cp_comments_title; ?></a></h2>
-<?php
-
-
+// init
+$_min = '';
 
 // declare access to globals
 global $commentpress_obj;
@@ -49,67 +36,71 @@ global $commentpress_obj;
 if ( is_object( $commentpress_obj ) ) {
 
 	// show the minimise all button
-	echo $commentpress_obj->get_minimise_all_button( 'comments' );
+	$_min = $commentpress_obj->get_minimise_all_button( 'comments' );
 
 }
 
 
+
+
+?><!-- sidebar.php -->
+
+<div id="sidebar">
+
+<div id="sidebar_inner">
+
+
+
+<ul id="sidebar_tabs">
+
+<li id="comments_header" class="sidebar_header">
+<h2><a href="#comments_sidebar"><?php echo $cp_comments_title; ?></a></h2>
+<?php
+
+// show the minimise all button
+echo $_min;
 
 ?>
 </li>
 
 <?php 
 
-// if we have the plugin enabled...
-if ( is_object( $commentpress_obj ) ) {
-
-	// is this multisite?
-	if ( 
+// do we want to show activity tab?
+if ( cp_show_activity_tab() ) {
 	
-		( is_multisite() 
-		AND is_main_site() 
-		AND $commentpress_obj->is_buddypress_special_page() )
-		OR !is_object( $post )
-		
-	) {
+	// set default link name
+	$cp_activity_title = apply_filters(
 	
-		// ignore activity
+		// filter name
+		'cp_tab_title_activity', 
 		
-	} else {
+		// default value
+		__( 'Activity', 'commentpress-theme' )
+		
+	);
 	
-		// set default link name
-		$cp_activity_title = apply_filters(
-		
-			// filter name
-			'cp_tab_title_activity', 
-			
-			// default value
-			__( 'Activity', 'commentpress-theme' )
-			
-		);
-		
-		?>
-		<li id="activity_header" class="sidebar_header">
-		<h2><a href="#activity_sidebar"><?php echo $cp_activity_title; ?></a></h2>
-		<?php
-		
-		// if we have the plugin enabled...
-		if ( is_object( $commentpress_obj ) ) {
-		
-			// show the minimise all button
-			echo $commentpress_obj->get_minimise_all_button( 'activity' );
-		
-		}
-		
-		?>
-		</li>
-		<?php
+	?>
+	<li id="activity_header" class="sidebar_header">
+	<h2><a href="#activity_sidebar"><?php echo $cp_activity_title; ?></a></h2>
+	<?php
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// show the minimise all button
+		echo $commentpress_obj->get_minimise_all_button( 'activity' );
 	
 	}
+	
+	?>
+	</li>
+	<?php
 
+} else {
+
+	// ignore activity
+		
 }
-
-
 
 ?>
 <li id="toc_header" class="sidebar_header">
@@ -151,20 +142,13 @@ if ( is_object( $commentpress_obj ) ) {
 		// always include TOC
 		include( get_template_directory() . '/style/templates/toc_sidebar.php' );
 		
-		// is this multisite?
-		if ( 
-		
-			( is_multisite() 
-			AND is_main_site() 
-			AND $commentpress_obj->is_buddypress_special_page() )
-			OR !is_object( $post )
-			
-		) {
-		
-		} else {
+		// do we want to show activity tab?
+		if ( cp_show_activity_tab() ) {
 			
 			// get activity sidebar
 			include (get_template_directory() . '/style/templates/activity_sidebar.php');
+			
+		} else {
 			
 		}
 		

@@ -23,6 +23,7 @@ body
 	background: #9AAB84;
 	color: #222;
 	font-family: Georgia, serif;
+	font-size: 100%;
 }
 
 a 
@@ -498,6 +499,7 @@ Main Wrapper
 /* Main wrapper contains all page content and wrappers */
 #main_wrapper 
 {
+	position: relative;
 }
 
 
@@ -519,6 +521,79 @@ Main Wrapper
 
 
 
+
+
+
+/* Page header */
+ul#content-tabs
+{
+	top: 0;
+	position: absolute;
+	height: 32px;
+	z-index: 900;
+	margin: 0 0 0 1%;
+}
+
+ul#content-tabs li
+{
+	float: left;
+	color: #444;
+	border: 5px solid #B5BFB2;
+	height: 27px;
+	background: #fff;
+	margin: 0 6px 0 0;
+	z-index: 901;
+}
+
+	ul#content-tabs li.default-content-tab
+	{
+		border-bottom: 0;
+		height: 32px;
+	}
+
+	ul#content-tabs li h2
+	{
+		font-family: Helvetica,Arial,sans-serif;
+		text-transform: uppercase;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 1.1;
+		width: auto;
+		padding: 8px 6px 0 26px;
+		background: #fff url(../images/icons/information.jpg) no-repeat;
+		background-position: -4px -2px;
+	}
+	
+	ul#content-tabs li#content_header h2
+	{
+		background: #fff url(../images/icons/document.jpg) no-repeat;
+		background-position: -3px -2px;
+	}
+	
+	ul#content-tabs li h2:hover
+	{
+		overflow: hidden !important; /* hides Mozilla outlines */
+		background-position: -4px -32px !important;
+	}
+	
+	ul#content-tabs li#content_header h2:hover
+	{
+		overflow: hidden !important; /* hides Mozilla outlines */
+		background-position: -3px -32px !important;
+	}
+	
+	ul#content-tabs li h2 a
+	{
+		color: #761D19;
+	}	
+
+#main_wrapper.with-content-tabs
+{
+	padding-top: 32px;
+}
+
+	
+	
 
 
 
@@ -570,6 +645,11 @@ Main Wrapper
 	.post div.textblock
 	{
 		padding: 7px 7px 0 7px;
+	}
+	
+	.post span.textblock
+	{
+		display: inline-block;
 	}
 	
 	.post div.textblock p,
@@ -674,6 +754,22 @@ blockquote span.commenticonbox
 {
 	margin-left: -50px;	
 	margin-right: 30px;
+}
+
+/* comment icon in span */
+span.textblock span.commenticonbox 
+{
+	padding-top: 7px;
+}
+
+span.textblock.selected_para span.commenticonbox 
+{
+	padding-top: 7px;
+}
+
+span.textblock.selected_para 
+{
+	margin-left: -7px;	
 }
 
 /* comment icon in lists */
@@ -803,10 +899,14 @@ span.wp-caption
 {
 	clear: both;
 	padding: 5px 0;
-	margin: 15px 0;
+	margin: 15px 0 0 0;
 	list-style-type: none;
 	border-top: 1px solid #B5BFB2;
 	border-bottom: 1px dotted #B5BFB2;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 80%;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 div.multipager .multipager_sep
@@ -829,15 +929,57 @@ div.multipager .multipager_sep
 #content .post div.multipager a:active,
 #content .post div.multipager a:visited
 {
-	font-family: Helvetica,Arial,sans-serif;
+	font-weight: normal;
 	color: #666;
-	font-weight: bold;
-	font-size: 70%;
-	text-transform: uppercase;
 	text-decoration: none;
 }
 
+#content .post div.multipager a:hover
+{
+	color: #761D19;
+}
 
+#content div.multipager.multipager_all
+{
+	margin: 0 0 15px 0;
+	border: none;
+	text-align: center;
+	color: #666;
+	padding-top: 15px;
+	line-height: 2;
+}
+
+#content div.multipager.multipager_all span
+{
+	color: #666;
+	font-weight: normal;
+}
+
+#content div.multipager.multipager_all span.multipager_link
+{
+	margin-left: 0.2em; 
+	margin-right: 0.2em;
+	padding: 0.5em 0.7em;
+	border: 1px solid #ddd;
+}
+
+#content div.multipager.multipager_all a
+{
+	text-decoration: none; 
+}
+
+#content div.multipager.multipager_all a span.multipager_link
+{
+	background: #E8E8E8; 
+	color: #000; 
+	border: none;
+}
+
+#content div.multipager.multipager_all a:hover span.multipager_link 
+{
+	color: #fff;
+	background: #761D19;
+}
 
 
 
@@ -986,7 +1128,7 @@ Sidebar
 		#toc_header.sidebar_header
 		{
 			display: none;
-			margin-right: 0:
+			margin-right: 0;
 		}
 		
 		body.cp_sidebar_toc #toc_header.sidebar_header
@@ -1880,6 +2022,82 @@ Footer
 		line-height: 1.4;
 	}
 	
+	
+	
+	
+	
+/* 
+---------------------------------------------------------------------
+'Archive' Page
+---------------------------------------------------------------------
+*/
+
+#content .post .archives_by_month ul 
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 90%;
+	list-style: none;
+	padding: 0;
+	margin: 0 7px 30px 7px;
+	border-bottom: 1px solid #B5BFB2;
+}
+
+	#content .post .archives_by_month ul ul
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0 0 0 10px;
+	}
+	
+	/* style six levels deep */
+	#content .post .archives_by_month ul ul ul,
+	#content .post .archives_by_month ul ul ul ul,
+	#content .post .archives_by_month ul ul ul ul ul,
+	#content .post .archives_by_month ul ul ul ul ul ul
+	{
+		list-style: none;
+		margin: 0;
+		padding: 0 0 0 20px;
+	}
+	
+	/* remove list style */
+	#content .post .archives_by_month ul li,
+	#content .post .archives_by_month ul ul li
+	#content .post .archives_by_month ul ul ul li,
+	#content .post .archives_by_month ul ul ul ul li,
+	#content .post .archives_by_month ul ul ul ul ul li,
+	#content .post .archives_by_month ul ul ul ul ul ul li
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#content .post .archives_by_month ul a
+	{
+		display: block;
+		font-size: 1em;
+		color: #761D19;
+		cursor: pointer;
+		padding: 10px 5px;
+		margin: 0 0 0 0;
+		line-height: 1;
+		border-top: 1px solid #B5BFB2;
+		text-decoration: none;
+	}
+	
+		#content .post .archives_by_month ul a:hover
+		{
+			background: #EFEFEF;
+			text-decoration: none;
+			color: #761D19;
+		}
+		
+		#content .post .archives_by_month ul a:visited
+		{
+			color: #761D19;
+		}
+		
 	
 	
 	

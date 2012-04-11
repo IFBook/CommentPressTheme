@@ -32,7 +32,7 @@
 <?php }} ?>
 <?php 
 
-// add custom css file for user-defined theme mods
+// add custom css file for user-defined theme mods (legacy)
 if( file_exists( get_template_directory().'/custom.css' )) { 
 
 ?>

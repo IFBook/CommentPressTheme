@@ -18,6 +18,10 @@
 
 <div id="content" class="clearfix">
 
+<div class="post">
+
+
+
 <?php
 
 // init id
@@ -64,39 +68,33 @@ if ( $title_page_id != '' ) {
 
 		<div class="search_result">
 
-			<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
-
-				<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+			
+			<div class="search_meta">
+			
+				<?php 
 				
-				<div class="search_meta">
+				// get avatar
+				$author_id = get_the_author_meta( 'ID' );
+				echo get_avatar( $author_id, $size='32' );
 				
-					<p><?php 
-					
-					// get avatar
-					$author_id = get_the_author_meta( 'ID' );
-					echo get_avatar( $author_id, $size='32' );
-					
-					?></p>
-					
-					<p><small><?php the_time('l, F jS, Y') ?> <!-- by <?php the_author() ?> --></small></p>
-	
-					<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
-	
-				</div><!-- /post -->
-	
-				<div class="entry">
-					<?php the_excerpt(); ?>
-				</div>
+				?>
+				
+				<cite class="fn"><?php cp_echo_post_author() ?></cite>
+				
+				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+				
+			</div>
 
-			</div><!-- /post -->
-	
+			<?php the_excerpt() ?>
+		
+			<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+		
 		</div><!-- /search_result -->
 	
 		<?php endwhile; ?>
 
 	<?php else : ?>
-
-		<div class="post">
 
 			<h2 class="post_title">No blog posts found</h2>
 			
@@ -116,11 +114,13 @@ if ( $title_page_id != '' ) {
 
 			<?php get_search_form(); ?>
 
-		</div><!-- /post -->
-
 	<?php endif; ?>
 
 <?php } ?>
+
+
+
+</div><!-- /post -->
 
 </div><!-- /content -->
 

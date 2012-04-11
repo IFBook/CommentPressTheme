@@ -148,6 +148,7 @@ Post-related styles
 .post h2.post_title
 {
 	font-size: 2em;
+	margin: 15px 0 5px 0;
 }
 
 .post h2 a:link,
@@ -281,7 +282,7 @@ Post-related styles
 
 .post p,
 .post ul,
-.post ol,
+.post ol
 {
 	padding: 7px 7px 11px 7px;
 }
@@ -542,7 +543,8 @@ a.comment-edit-link:hover
 	color: #761D19;
 }
 
-.comment-identifier img
+.comment-identifier > a img,
+.comment-identifier > img
 {
 	float: left;
 	margin: 5px 0 0 5px;
@@ -558,6 +560,12 @@ a.comment-edit-link:hover
 	font-style: normal;
 	font-family: Helvetica, Arial, sans-serif;
 	color: #222;
+}
+
+.comment-identifier cite img
+{
+	display: none;
+	vertical-align: middle;
 }
 
 .comment-identifier cite a,
@@ -623,6 +631,9 @@ a#cancel-comment-reply-link:visited
 	font-size: 70%;
 	color: #666;
 	text-decoration: none;
+	display: block;
+	padding: 4px 0 4px 4px;
+	border-bottom: 1px dashed #B5BFB2;
 }
 
 /* hover colour */
@@ -888,36 +899,60 @@ ul#group_list li
 
 
 /* Search Results Page */
-.search_result
+#content .search_result
 {
-	padding: 7px;
+	padding: 7px 0 45px 0;
 }
 
-.search_result h3
+#content .search_result h3
 {
 	font-size: 2em;
 	margin: 15px 0 5px 0;
-	padding: 0;
+	padding: 0 7px;
 }
 
-.search_meta
+#content div.search_meta
 {
-	margin: 0 5px;
+	padding: 7px;
 	font-size: 70%;
 	color: #777;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
-.search_meta img.avatar
+#content div.search_meta img.avatar
 {
 	float: left;
-	margin: 0 5px;
+	margin: 0 7px 0 0;
 }
 
-.search_meta p
+#content div.search_meta p
 {
 	margin: 0;
 	padding: 0;
+}
+
+#content p.search_meta
+{
+	font-size: 70%;
+	color: #777;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#content .search_meta cite 
+{
+	font-family: Helvetica,Arial,sans-serif;
+	display: block;
+	padding: 2px 5px;
+	font-size: 1.1em;
+	font-weight: normal;
+	font-style: normal;
+	color: #761D19;
+}
+
+#content .search_meta a
+{
+	color: #761D19;
+	text-decoration: none;
 }
 
 
@@ -932,6 +967,40 @@ ul.image_link h4
 	font-weight: 200;
 	color: #555;
 	margin: 20px 0 10px 0;
+}
+
+
+
+
+
+
+/* Version alert */
+#content div.alert p
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1em;
+	font-weight: normal;
+	color: #f00;
+	margin: 10px 0;
+	padding: 0;
+}
+
+#content div.alert p a
+{
+	display: block;
+	padding: 10px;
+	background: #EFEFEF;
+	border-top: 1px solid #B5BFB2;
+	border-bottom: 1px solid #B5BFB2;
+	line-height: 1;
+	color: #761D19;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+#content div.alert p a:hover
+{
+	color: #222;
 }
 
 

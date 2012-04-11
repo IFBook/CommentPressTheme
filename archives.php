@@ -41,11 +41,15 @@ get_header(); ?>
 
 
 
+<div class="archives_by_month">
+
 <h3>Archives by Month</h3>
 
 <ul>
 	<?php wp_get_archives('type=monthly'); ?>
 </ul>
+
+</div>
 
 
 

@@ -45,8 +45,6 @@
 	
 	?>
 
-	<?php wp_footer() ?>
-
 </div><!-- /footer_inner -->
 
 </div><!-- /footer -->
@@ -54,6 +52,10 @@
 
 
 </div><!-- /container -->
+
+
+
+<?php wp_footer() ?>
 
 
 
