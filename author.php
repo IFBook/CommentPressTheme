@@ -51,16 +51,25 @@ if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
 
 <div class="post">
 
+<?php if ( $my_author->display_name != '' ) { ?>
+<h2 class="post_title">About <?php echo $my_author->display_name; ?></h2>
+<?php } else { ?>
 <h2 class="post_title">About <?php echo $my_author->nickname; ?></h2>
+<?php } ?>
 
+<p><?php echo get_avatar( $my_author->user_email, $size='128' ); ?></p>
 
 
 <dl>
 
+<?php 
+
+/*
+
+?>
+
 <dt>Gravatar</dt>
 <dd><?php echo get_avatar( $my_author->user_email, $size='128' ); ?></dd>
-
-<?php 
 
 // get full name
 $my_name = cp_get_full_name( $my_author->first_name, $my_author->last_name );
@@ -75,7 +84,11 @@ if ( $my_name != '' ) { ?>
 <dd><?php echo $my_author->display_name; ?></dd>
 <?php } ?>
 
-<?php if ( $my_author->description != '' ) { ?>
+<?php
+
+*/
+
+if ( $my_author->description != '' ) { ?>
 <dt>Profile</dt>
 <dd><?php echo nl2br( $my_author->description ); ?></dd>
 <?php } ?>
@@ -109,7 +122,12 @@ if ( $my_name != '' ) { ?>
 
 
 
+<?php if ( $my_author->display_name != '' ) { ?>
+<h3>Posts by <?php echo $my_author->display_name; ?></h3>
+<?php } else { ?>
 <h3>Posts by <?php echo $my_author->nickname; ?></h3>
+<?php } ?>
+
 
 <ul>
 
@@ -122,7 +140,7 @@ if ( $my_name != '' ) { ?>
 
 <?php endwhile; else: ?>
 
-<p><?php _e('No posts by this author.','commentpress'); ?></p>
+<p><?php _e( 'No posts by this author.','commentpress-theme' ); ?></p>
 
 <?php endif; ?>
 <!-- End Loop -->
