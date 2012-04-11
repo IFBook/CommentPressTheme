@@ -79,7 +79,7 @@ function cp_setup(
 	// auto feed links
 	add_theme_support( 'automatic-feed-links' );
 	
-	// This theme styles the visual editor with editor-style.css to match the theme style.
+	// style the visual editor with editor-style.css to match the theme style
 	add_editor_style();
 
 	// testing the use of wp_nav_menu() - first we need to register it
@@ -3079,5 +3079,35 @@ endif; // cp_amend_password_form
 add_filter( 'the_password_form', 'cp_amend_password_form' );
 
 
+
+
+
+if ( ! function_exists( 'commentpress_widgets_init' ) ):
+/**
+ * Register our widgets
+ */
+function commentpress_widgets_init() {
+
+	// define an area where a widget may be placed
+	register_sidebar( array(
+		'name' => __( 'Page Footer', 'commentpress-theme' ),
+		'id' => 'cp-license-1',
+		'description' => __( 'An optional widget area for your page footer', 'commentpress-theme' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => "</div>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+	
+	// widget definitions
+	require( get_template_directory() . '/style/widgets/widgets.php' );
+
+	// and the widget
+	register_widget( 'Commentpress_License_Widget' );
+
+}
+endif; // commentpress_widgets_init
+
+add_action( 'widgets_init', 'commentpress_widgets_init' );
 
 ?>
