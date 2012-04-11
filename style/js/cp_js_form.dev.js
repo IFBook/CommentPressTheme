@@ -78,7 +78,6 @@ addComment = {
 		
 
 
-		
 		// sanity check
 		if ( !comm_e || !respond_e || !cancel_e || !parent_e ) {
 		

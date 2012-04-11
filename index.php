@@ -18,6 +18,10 @@
 
 <div id="content" class="clearfix">
 
+<div class="post">
+
+
+
 <?php
 
 // init id
@@ -49,7 +53,7 @@ if ( $title_page_id != '' ) {
 	$GLOBALS['post'] = $title;
 
 	// show page content
-	?><h2><?php the_title(); ?></h2>
+	?><h2 class="post_title"><?php the_title(); ?></h2>
 	
 	<?php the_content('Read the rest of this entry &raquo;'); ?>
 
@@ -62,28 +66,37 @@ if ( $title_page_id != '' ) {
 
 		<?php while (have_posts()) : the_post(); ?>
 
-			<div <?php post_class() ?> id="post-<?php the_ID(); ?>">
+		<div class="search_result">
 
-				<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-				<small><?php the_time('l, F jS, Y') ?> <!-- by <?php the_author() ?> --></small>
+			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+			
+			<div class="search_meta">
+			
+				<?php 
+				
+				// get avatar
+				$author_id = get_the_author_meta( 'ID' );
+				echo get_avatar( $author_id, $size='32' );
+				
+				?>
+				
+				<cite class="fn"><?php cp_echo_post_author() ?></cite>
+				
+				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+				
+			</div>
 
-				<div class="entry">
-					<?php the_excerpt(); ?>
-				</div>
-
-				<!--<p class="readmore"><a href="<?php the_permalink() ?>" rel="bookmark" title="Read more...">Read more...</a></p>-->
-
-				<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
-
-			</div><!-- /post -->
+			<?php the_excerpt() ?>
+		
+			<p class="search_meta"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+		
+		</div><!-- /search_result -->
 	
 		<?php endwhile; ?>
 
 	<?php else : ?>
 
-		<div class="post">
-
-			<h2>No blog posts found</h2>
+			<h2 class="post_title">No blog posts found</h2>
 			
 			<p>There are no blog posts yet.<?php
 			
@@ -101,11 +114,13 @@ if ( $title_page_id != '' ) {
 
 			<?php get_search_form(); ?>
 
-		</div><!-- /post -->
-
 	<?php endif; ?>
 
 <?php } ?>
+
+
+
+</div><!-- /post -->
 
 </div><!-- /content -->
 

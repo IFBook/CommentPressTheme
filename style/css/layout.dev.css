@@ -22,12 +22,19 @@ body
 {
 	background: #9AAB84;
 	color: #222;
+	font-family: Georgia, serif;
+	font-size: 100%;
 }
 
 a 
 {
 	color:#222;
 	text-decoration: none;
+}
+
+#content p a
+{
+	text-decoration: underline;
 }
 
 /* prevents outlines - we set them explicitly for elements that require them */
@@ -296,6 +303,12 @@ Header
 					background: transparent url(../images/buttons/home.jpg);
 				}
 
+				a#btn_grouphome
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/members.jpg);
+				}
+
 				a#btn_general
 				{
 					width: 33px;
@@ -311,13 +324,19 @@ Header
 				a#btn_members
 				{
 					width: 33px;
-					background: transparent url(../images/buttons/members.jpg);
+					background: transparent url(../images/buttons/person.jpg);
 				}
 			
 				a#btn_blog
 				{
 					width: 33px;
 					background: transparent url(../images/buttons/blog.jpg);
+				}
+			
+				a#btn_archive
+				{
+					width: 33px;
+					background: transparent url(../images/buttons/archive.jpg);
 				}
 			
 				a#btn_header_min
@@ -480,6 +499,7 @@ Main Wrapper
 /* Main wrapper contains all page content and wrappers */
 #main_wrapper 
 {
+	position: relative;
 }
 
 
@@ -504,6 +524,79 @@ Main Wrapper
 
 
 
+/* Page header */
+ul#content-tabs
+{
+	top: 0;
+	position: absolute;
+	height: 32px;
+	z-index: 900;
+	margin: 0 0 0 1%;
+}
+
+ul#content-tabs li
+{
+	float: left;
+	color: #444;
+	border: 5px solid #B5BFB2;
+	height: 27px;
+	background: #fff;
+	margin: 0 6px 0 0;
+	z-index: 901;
+}
+
+	ul#content-tabs li.default-content-tab
+	{
+		border-bottom: 0;
+		height: 32px;
+	}
+
+	ul#content-tabs li h2
+	{
+		font-family: Helvetica,Arial,sans-serif;
+		text-transform: uppercase;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 1.1;
+		width: auto;
+		padding: 8px 6px 0 26px;
+		background: #fff url(../images/icons/information.jpg) no-repeat;
+		background-position: -4px -2px;
+	}
+	
+	ul#content-tabs li#content_header h2
+	{
+		background: #fff url(../images/icons/document.jpg) no-repeat;
+		background-position: -3px -2px;
+	}
+	
+	ul#content-tabs li h2:hover
+	{
+		overflow: hidden !important; /* hides Mozilla outlines */
+		background-position: -4px -32px !important;
+	}
+	
+	ul#content-tabs li#content_header h2:hover
+	{
+		overflow: hidden !important; /* hides Mozilla outlines */
+		background-position: -3px -32px !important;
+	}
+	
+	ul#content-tabs li h2 a
+	{
+		color: #761D19;
+	}	
+
+#main_wrapper.with-content-tabs
+{
+	padding-top: 32px;
+}
+
+	
+	
+
+
+
 /* Contains post */
 #content 
 {
@@ -522,6 +615,11 @@ Main Wrapper
 		overflow: hidden;
 	}
 	
+	.search_result .post 
+	{
+		padding: 25px 0 0 0;
+	}
+	
 	.full_width .post 
 	{
 		/* For Title Page, to allow Book Cover image */
@@ -529,6 +627,11 @@ Main Wrapper
 		margin: 0;
 		text-align: center;
 		overflow: hidden;
+	}
+	
+	body.blog #content 
+	{
+		padding: 7px 0 60px 0;
 	}
 	
 	.general_comments 
@@ -544,6 +647,11 @@ Main Wrapper
 		padding: 7px 7px 0 7px;
 	}
 	
+	.post span.textblock
+	{
+		display: inline-block;
+	}
+	
 	.post div.textblock p,
 	.post div.textblock ul,
 	.post div.textblock ol,
@@ -556,6 +664,11 @@ Main Wrapper
 	.archive_item
 	{
 		padding: 40px 0 10px 0;
+	}
+	
+	div.archives_search_form
+	{
+		padding: 0 0 1em 0;
 	}
 	
 	.postmetadata
@@ -641,6 +754,22 @@ blockquote span.commenticonbox
 {
 	margin-left: -50px;	
 	margin-right: 30px;
+}
+
+/* comment icon in span */
+span.textblock span.commenticonbox 
+{
+	padding-top: 7px;
+}
+
+span.textblock.selected_para span.commenticonbox 
+{
+	padding-top: 7px;
+}
+
+span.textblock.selected_para 
+{
+	margin-left: -7px;	
 }
 
 /* comment icon in lists */
@@ -770,10 +899,14 @@ span.wp-caption
 {
 	clear: both;
 	padding: 5px 0;
-	margin: 15px 0;
+	margin: 15px 0 0 0;
 	list-style-type: none;
 	border-top: 1px solid #B5BFB2;
 	border-bottom: 1px dotted #B5BFB2;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 80%;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 div.multipager .multipager_sep
@@ -796,15 +929,57 @@ div.multipager .multipager_sep
 #content .post div.multipager a:active,
 #content .post div.multipager a:visited
 {
-	font-family: Helvetica,Arial,sans-serif;
+	font-weight: normal;
 	color: #666;
-	font-weight: bold;
-	font-size: 70%;
-	text-transform: uppercase;
 	text-decoration: none;
 }
 
+#content .post div.multipager a:hover
+{
+	color: #761D19;
+}
 
+#content div.multipager.multipager_all
+{
+	margin: 0 0 15px 0;
+	border: none;
+	text-align: center;
+	color: #666;
+	padding-top: 15px;
+	line-height: 2;
+}
+
+#content div.multipager.multipager_all span
+{
+	color: #666;
+	font-weight: normal;
+}
+
+#content div.multipager.multipager_all span.multipager_link
+{
+	margin-left: 0.2em; 
+	margin-right: 0.2em;
+	padding: 0.5em 0.7em;
+	border: 1px solid #ddd;
+}
+
+#content div.multipager.multipager_all a
+{
+	text-decoration: none; 
+}
+
+#content div.multipager.multipager_all a span.multipager_link
+{
+	background: #E8E8E8; 
+	color: #000; 
+	border: none;
+}
+
+#content div.multipager.multipager_all a:hover span.multipager_link 
+{
+	color: #fff;
+	background: #761D19;
+}
 
 
 
@@ -953,7 +1128,7 @@ Sidebar
 		#toc_header.sidebar_header
 		{
 			display: none;
-			margin-right: 0:
+			margin-right: 0;
 		}
 		
 		body.cp_sidebar_toc #toc_header.sidebar_header
@@ -978,28 +1153,27 @@ Sidebar
 
 
 		
-		/* Archive Header */
-		#archive_header.sidebar_header,
-		body.blog_post #archive_header.sidebar_header
+		/* Activity Header */
+		#activity_header.sidebar_header,
+		body.blog_post #activity_header.sidebar_header
 		{
-			display: none;
 		}
 		
-		body.cp_sidebar_archive #archive_header.sidebar_header
+		body.cp_sidebar_activity #activity_header.sidebar_header
 		{
 			display: block;
 			height: 27px;
 		}
 
-		#archive_header.sidebar_header h2
+		#activity_header.sidebar_header h2
 		{
 			background: #fff url(../images/icons/archive.jpg) no-repeat;
 			background-position: -4px -4px;
 		}
 	
-		#archive_header.sidebar_header h2:hover,
-		#archive_header.sidebar_header h2:focus,
-		#archive_header.sidebar_header h2:active
+		#activity_header.sidebar_header h2:hover,
+		#activity_header.sidebar_header h2:focus,
+		#activity_header.sidebar_header h2:active
 		{
 			overflow: hidden !important; /* hides Mozilla outlines */
 			background-position: -4px -34px !important;
@@ -1039,7 +1213,9 @@ Sidebar
 			display: none;
 		}
 	
-		#cp_minimise_all_comments
+		/* minimiser buttons */
+		#cp_minimise_all_comments,
+		#cp_minimise_all_activity
 		{
 			display: block;
 			width: 15px;
@@ -1051,7 +1227,8 @@ Sidebar
 			background-position: -4px -4px;
 		}
 		
-		#cp_minimise_all_comments:hover
+		#cp_minimise_all_comments:hover,
+		#cp_minimise_all_activity:hover
 		{
 			overflow: hidden !important; /* hides Mozilla outlines */
 			background-position: -4px -34px !important;
@@ -1062,7 +1239,7 @@ Sidebar
 
 		/* General Sidebar stuff */
 		#toc_sidebar,
-		#archive_sidebar,
+		#activity_sidebar,
 		#comments_sidebar
 		{
 			width: 100%;
@@ -1073,7 +1250,7 @@ Sidebar
 			
 		#toc_sidebar .sidebar_header,
 		#comments_sidebar .sidebar_header,
-		#archive_sidebar .sidebar_header
+		#activity_sidebar .sidebar_header
 		{
 			float: none;
 			display: none;
@@ -1187,45 +1364,45 @@ body.cp_sidebar_toc #toc_sidebar
 
 /*
 ---------------------------------------------------------------------
-Blog Archives sidebar
+Activity sidebar
 ---------------------------------------------------------------------
 */
-#archive_sidebar
+#activity_sidebar
 {
 }
 	
-body.cp_sidebar_archive #archive_sidebar
+body.cp_sidebar_activity #activity_sidebar
 {
 	z-index: 2010;
 }
 	
-	#archive_sidebar .sidebar_minimiser ul
+	#activity_sidebar .sidebar_minimiser ul
 	{
 		margin: 10px;
 		padding: 0;
 		border-bottom: 1px solid #ddd;
 	}
 	
-	#archive_sidebar .sidebar_minimiser ul li ul
+	#activity_sidebar .sidebar_minimiser ul li ul
 	{
 		padding: 0 0 0 0;
 		margin: 0 0 0 0;
 	}
 	
-	#archive_sidebar .sidebar_minimiser ul li
+	#activity_sidebar .sidebar_minimiser ul li
 	{
 		padding: 0;
 		margin: 0;
 		border-top: 1px solid #ddd;
 	}
 	
-	#archive_sidebar .sidebar_minimiser ul li ul li
+	#activity_sidebar .sidebar_minimiser ul li ul li
 	{
 		padding: 0;
 		margin: 0 0 0 20px;
 	}
 	
-	#archive_sidebar .sidebar_minimiser ul li a
+	#activity_sidebar .sidebar_minimiser ul li a
 	{
 		font-family: Helvetica, Arial, sans-serif;
 		font-weight: normal;
@@ -1236,15 +1413,15 @@ body.cp_sidebar_archive #archive_sidebar
 		margin: 0;
 	}
 	
-	#archive_sidebar .sidebar_minimiser ul li a:link,
-	#archive_sidebar .sidebar_minimiser ul li a:active,
-	#archive_sidebar .sidebar_minimiser ul li a:visited
+	#activity_sidebar .sidebar_minimiser ul li a:link,
+	#activity_sidebar .sidebar_minimiser ul li a:active,
+	#activity_sidebar .sidebar_minimiser ul li a:visited
 	{
 		color: #666;
 		text-decoration: none;
 	}	
 
-	#archive_sidebar .sidebar_minimiser ul li a:hover
+	#activity_sidebar .sidebar_minimiser ul li a:hover
 	{
 		background: #EFEFEF;
 		text-decoration: none;
@@ -1546,6 +1723,156 @@ body.cp_sidebar_comments #comments_sidebar
 
 
 
+
+/* 
+---------------------------------------------------------------------
+New Activity Sidebar
+---------------------------------------------------------------------
+*/
+
+ol.comment_activity
+{
+	margin: 0;
+}
+
+ol.comment_activity .comment-content
+{
+	padding-bottom: 10px;
+}
+
+ol.comment_activity .reply p
+{
+	padding: 0;
+}
+
+ol.comment_activity .reply p a,
+a.comment_activity_link:link, 
+a.comment_activity_link:hover, 
+a.comment_activity_link:active, 
+a.comment_activity_link:visited 
+{
+	display: block;
+	padding: 0 5px;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 70%;
+	color: #666;
+	text-decoration: none;
+}
+
+ol.comment_activity .reply p a
+{
+	padding: 5px;
+}
+
+/*
+h3.activity_heading
+{
+	float: none;
+	font-size: 120%;
+	height: auto;
+	width: auto;
+	font-weight: normal;
+	color: #761D19;
+	font-family: Georgia, serif;
+	text-decoration: none;
+	border: none;
+	background: transparent;
+	padding: 10px;
+	padding-top: 20px;
+	margin: 0;
+}
+*/
+
+h3.activity_heading 
+{
+	padding: 6px 0 6px 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 80%;
+	color: #761D19;
+	text-decoration: none;
+	background: #EFEFEF;
+	border-bottom: 1px solid #B5BFB2;
+}
+
+
+
+
+
+
+
+/* 
+---------------------------------------------------------------------
+New Look TOC Sidebar for posts
+---------------------------------------------------------------------
+*/
+
+.post-identifier
+{
+	margin: 0 0 0 0;
+	border-bottom: 1px solid #B5BFB2;
+	padding-bottom: 5px;
+	background: #EFEFEF;
+}
+
+.post-identifier img
+{
+	float: left;
+	margin: 5px 0 0 5px;
+	padding: 0 5px 0 0;
+	vertical-align: bottom;
+}
+
+.post-identifier cite
+{
+	font-family: Helvetica,Arial,sans-serif;
+	display: block;
+	padding: 5px;
+	font-size: 80%;
+	font-weight: normal;
+	font-style: normal;
+	color: #761D19;
+}
+
+#toc_sidebar .sidebar_minimiser .post-identifier cite a,
+#toc_sidebar .sidebar_minimiser .post-identifier cite a:link,
+#toc_sidebar .sidebar_minimiser .post-identifier cite a:hover,
+#toc_sidebar .sidebar_minimiser .post-identifier cite a:active,
+#toc_sidebar .sidebar_minimiser .post-identifier cite a:visited
+{
+	display: inline;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	font-size: 100%;
+	color: #761D19;
+	text-decoration: none;
+	background: transparent;
+	padding: 0;
+	margin: 0;
+}
+
+.post_activity_date
+{
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 70%;
+	color: #666;
+}
+
+#toc_sidebar .sidebar_minimiser ul li a.post_activity_link
+{
+	font-size: 140%;
+	padding: 10px;
+}
+
+#toc_sidebar .sidebar_minimiser ul li a.post_activity_link:hover
+{
+	color: #761D19;
+}
+
+
+
+
+
 /* 
 ---------------------------------------------------------------------
 Footer
@@ -1636,11 +1963,19 @@ Footer
 		cursor: pointer;
 		padding: 5px 0;
 		margin: 0 0 0 0;
+		line-height: 1;
+		border-top: 1px solid #B5BFB2;
 	}
 	
 		#content .post ul.all_comments_listing h3:hover
 		{
 			background: #EFEFEF;
+		}
+		
+		#content .post ul.all_comments_listing h3 img.avatar
+		{
+			margin: 0 4px;
+			vertical-align: middle;
 		}
 		
 	#content .post ul.all_comments_listing h3 span
@@ -1652,6 +1987,7 @@ Footer
 	#content .post ul.all_comments_listing div.item_body 
 	{
 		padding: 0;
+		border-top: 1px solid #B5BFB2;
 	}
 	
 	#content .post ul.all_comments_listing div.item_body div.comment_wrapper
@@ -1686,6 +2022,82 @@ Footer
 		line-height: 1.4;
 	}
 	
+	
+	
+	
+	
+/* 
+---------------------------------------------------------------------
+'Archive' Page
+---------------------------------------------------------------------
+*/
+
+#content .post .archives_by_month ul 
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 90%;
+	list-style: none;
+	padding: 0;
+	margin: 0 7px 30px 7px;
+	border-bottom: 1px solid #B5BFB2;
+}
+
+	#content .post .archives_by_month ul ul
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0 0 0 10px;
+	}
+	
+	/* style six levels deep */
+	#content .post .archives_by_month ul ul ul,
+	#content .post .archives_by_month ul ul ul ul,
+	#content .post .archives_by_month ul ul ul ul ul,
+	#content .post .archives_by_month ul ul ul ul ul ul
+	{
+		list-style: none;
+		margin: 0;
+		padding: 0 0 0 20px;
+	}
+	
+	/* remove list style */
+	#content .post .archives_by_month ul li,
+	#content .post .archives_by_month ul ul li
+	#content .post .archives_by_month ul ul ul li,
+	#content .post .archives_by_month ul ul ul ul li,
+	#content .post .archives_by_month ul ul ul ul ul li,
+	#content .post .archives_by_month ul ul ul ul ul ul li
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#content .post .archives_by_month ul a
+	{
+		display: block;
+		font-size: 1em;
+		color: #761D19;
+		cursor: pointer;
+		padding: 10px 5px;
+		margin: 0 0 0 0;
+		line-height: 1;
+		border-top: 1px solid #B5BFB2;
+		text-decoration: none;
+	}
+	
+		#content .post .archives_by_month ul a:hover
+		{
+			background: #EFEFEF;
+			text-decoration: none;
+			color: #761D19;
+		}
+		
+		#content .post .archives_by_month ul a:visited
+		{
+			color: #761D19;
+		}
+		
 	
 	
 	
@@ -1832,6 +2244,8 @@ a.download_link
 
 
 
+
+
 /* You might find the following useful */
 
 /* Use this br class to clear your floated columns */
@@ -1866,7 +2280,7 @@ br.dirtyLittleTrick
 	
 	#toc_header.sidebar_header h2,
 	#comments_header.sidebar_header h2,
-	#archive_header.sidebar_header h2
+	#activity_header.sidebar_header h2
 	{
 		font-size: 10px;
 		line-height: 1.1;
@@ -1901,7 +2315,7 @@ br.dirtyLittleTrick
 	
 	#toc_header.sidebar_header h2,
 	#comments_header.sidebar_header h2,
-	#archive_header.sidebar_header h2
+	#activity_header.sidebar_header h2
 	{
 		font-size: 9px;
 		background: none;
@@ -1937,7 +2351,7 @@ br.dirtyLittleTrick
 	
 	#toc_header.sidebar_header h2,
 	#comments_header.sidebar_header h2,
-	#archive_header.sidebar_header h2
+	#activity_header.sidebar_header h2
 	{
 		font-size: 9px;
 		line-height: 1.1;

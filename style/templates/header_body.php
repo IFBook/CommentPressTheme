@@ -42,7 +42,7 @@ Separated this out for inclusion in multiple files.
 		<?php get_search_form(); ?>
 	</div><!-- /book_search -->
 	
-	<?php include (TEMPLATEPATH . '/style/templates/user_links.php'); ?>
+	<?php include (get_template_directory() . '/style/templates/user_links.php'); ?>
 	
 </div><!-- /book_header -->
 
@@ -50,7 +50,7 @@ Separated this out for inclusion in multiple files.
 
 <div id="header">
 
-	<?php include (TEMPLATEPATH . '/style/templates/navigation.php'); ?>
+	<?php include (get_template_directory() . '/style/templates/navigation.php'); ?>
 
 </div><!-- /header -->
 

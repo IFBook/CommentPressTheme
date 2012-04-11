@@ -16,6 +16,10 @@ global $commentpress_obj;
 
 <?php
 
+// set default link names
+$previous_title = apply_filters( 'cp_nav_previous_link_title', __( 'Older Entries', 'commentpress-theme' ) );
+$next_title = apply_filters( 'cp_nav_next_link_title', __( 'Newer Entries', 'commentpress-theme' ) );
+
 // is it a page?
 if ( is_page() ) {
 
@@ -53,11 +57,11 @@ elseif ( is_single() ) {
 }
 
 
-// is this the homepage?
+// is this the blog home?
 elseif ( is_home() ) {
 
-	$nl = get_next_posts_link('&laquo; Older Entries');
-	$pl = get_previous_posts_link('Newer Entries &raquo;');
+	$nl = get_next_posts_link('&laquo; '.$previous_title);
+	$pl = get_previous_posts_link($next_title.' &raquo;');
 	
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -79,8 +83,8 @@ elseif ( is_home() ) {
 // archives?
 elseif ( is_day() || is_month() || is_year() ) {
 
-	$nl = get_next_posts_link('&laquo; Older Entries');
-	$pl = get_previous_posts_link('Newer Entries &raquo;');
+	$nl = get_next_posts_link('&laquo; '.$previous_title);
+	$pl = get_previous_posts_link($next_title.' &raquo;');
 	
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -102,8 +106,8 @@ elseif ( is_day() || is_month() || is_year() ) {
 // search?
 elseif ( is_search() ) {
 
-	$nl = get_next_posts_link('&laquo; Older Entries');
-	$pl = get_previous_posts_link('Newer Entries &raquo;');
+	$nl = get_next_posts_link('&laquo; '.$previous_title);
+	$pl = get_previous_posts_link($next_title.' &raquo;');
 	
 	// did we get either?
 	if ( $nl != '' OR $pl != '' ) { ?>
@@ -144,20 +148,70 @@ else {
 	
 	// do we have the plugin?
 	if ( is_object( $commentpress_obj ) ) {
-	
+		
+		// NOTE: we need to account for situations where no CommentPress special pages exist
+		
 		// get title id and url
 		$title_id = $commentpress_obj->db->option_get( 'cp_welcome_page' );
 		$title_url = $commentpress_obj->get_page_url( 'cp_welcome_page' );
 		
-		// is it different to home?
-		if ( $title_id != get_option('page_on_front') ) {
-	
-		// show home
-		?><li><a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="Home Page">Home Page</a></li><?php
+		// use as link to main blog in multisite
+		if ( is_multisite() ) {
+			
+			// set default link name
+			$site_title = apply_filters( 'cp_nav_network_home_title', __( 'Site Home Page', 'commentpress-theme' ) );
+
+			// show home
+			?><li><a href="<?php echo network_home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo $site_title; ?>"><?php echo $site_title; ?></a></li><?php
 		
+			// link to group in multisite groupblog
+			if ( $commentpress_obj->is_groupblog() ) {
+				
+				global $wpdb;
+				$blog_id = (int)$wpdb->blogid;
+			
+				// check if this blog is a group blog...
+				$group_id = get_groupblog_group_id( $blog_id );
+				
+				// when this blog is a groupblog
+				if ( !empty( $group_id ) ) {
+
+					$group = groups_get_group( array( 'group_id' => $group_id ) );
+					$group_url = bp_get_group_permalink( $group );
+					
+					// set default link name
+					$group_title = apply_filters( 'cp_nav_group_home_title', __( 'Group Home Page', 'commentpress-theme' ) );
+		
+					?><li><a href="<?php echo $group_url; ?>" id="btn_grouphome" class="css_btn" title="<?php echo $group_title; ?>"><?php echo $group_title; ?></a></li><?php
+					
+				}
+				
+			}
+			
+		} else {
+			
+			// use if blog home is not CP welcome page
+			if ( $title_id != get_option('page_on_front') ) {
+		
+				// set default link name
+				$home_title = apply_filters( 'cp_nav_blog_home_title', __( 'Home Page', 'commentpress-theme' ) );
+	
+				// show home
+				?><li><a href="<?php echo home_url(); ?>" id="btn_home" class="css_btn" title="<?php echo $home_title; ?>"><?php echo $home_title; ?></a></li><?php
+			
+			}
+			
 		}
 	
-		?><li><a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="Title Page">Title Page</a></li><?php
+		// do we have a title page url?
+		if ( !empty( $title_url ) ) {
+	
+			// set default link name
+			$title_title = apply_filters( 'cp_nav_title_page_title', __( 'Title Page', 'commentpress-theme' ) );
+	
+			?><li><a href="<?php echo $title_url; ?>" id="btn_cover" class="css_btn" title="<?php echo $title_title; ?>"><?php echo $title_title; ?></a></li><?php
+		
+		}
 	
 		// show link to general comments page if we have one
 		echo $commentpress_obj->get_page_link( 'cp_general_comments_page' );
@@ -170,6 +224,9 @@ else {
 		
 		// show link to book blog page if we have one
 		echo $commentpress_obj->get_page_link( 'cp_blog_page' );
+		
+		// show link to book blog archive page if we have one
+		echo $commentpress_obj->get_page_link( 'cp_blog_archive_page' );
 		
 	}
 		

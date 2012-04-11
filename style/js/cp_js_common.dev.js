@@ -15,12 +15,15 @@ if ( 'undefined' !== typeof CommentpressSettings ) {
 
 	// set our vars
 	var cp_wp_adminbar = CommentpressSettings.cp_wp_adminbar;
+	var cp_bp_adminbar = CommentpressSettings.cp_bp_adminbar;
 	var cp_comments_open = CommentpressSettings.cp_comments_open;
 	var cp_special_page = CommentpressSettings.cp_special_page;
 	var cp_para_comments_enabled = CommentpressSettings.cp_para_comments_enabled;
 	var cp_tinymce = CommentpressSettings.cp_tinymce;
 	var cp_promote_reading = CommentpressSettings.cp_promote_reading;
 	var cp_is_mobile = CommentpressSettings.cp_is_mobile;
+	var cp_is_touch = CommentpressSettings.cp_is_touch;
+	var cp_is_tablet = CommentpressSettings.cp_is_tablet;
 	var cp_cookie_path = CommentpressSettings.cp_cookie_path;
 	var cp_multipage_page = CommentpressSettings.cp_multipage_page;
 	var cp_template_dir = CommentpressSettings.cp_template_dir;
@@ -53,15 +56,40 @@ var page_highlight = false;
 
 // get state of header
 var cp_header_minimised = jQuery.cookie( 'cp_header_minimised' );
+if ( cp_header_minimised === undefined || cp_header_minimised === null ) {
+	cp_header_minimised = 'n';
+}
 
 // get state of sidebar
 var cp_sidebar_minimised = jQuery.cookie( 'cp_sidebar_minimised' );
+if ( cp_sidebar_minimised === undefined || cp_sidebar_minimised === null ) {
+	cp_sidebar_minimised = 'n';
+}
 
 // get container original top
 var cp_container_top_max = jQuery.cookie( 'cp_container_top_max' );
+if ( cp_container_top_max === undefined || cp_container_top_max === null ) {
+	cp_container_top_max = 108;
+}
 
 // get header offset
 var cp_container_top_min = jQuery.cookie( 'cp_container_top_min' );
+if ( cp_container_top_min === undefined || cp_container_top_min === null ) {
+	cp_container_top_min = 108;
+}
+
+// is the buddypress bar shown?
+if ( cp_bp_adminbar == 'y' ) {
+
+	// amend to height of buddypress bar
+	cp_wp_adminbar_height = 25;
+	
+	// act as if admin bar were there
+	cp_wp_adminbar = 'y';
+	
+	// from here on, things work as if the WP admin bar were functional...
+	
+}
 
 // is the admin bar shown?
 if ( cp_wp_adminbar == 'y' ) {
@@ -103,8 +131,8 @@ function cp_page_setup() {
 		if ( cp_wp_adminbar == 'y' ) {
 		
 			// move down
-			styles += '#header { top: 28px; } ';
-			styles += '#book_header { top: 60px; } ';
+			styles += '#header { top: ' + cp_wp_adminbar_height + 'px; } ';
+			styles += '#book_header { top: ' + (cp_wp_adminbar_height + 32) + 'px; } ';
 		
 		}
 		
@@ -187,6 +215,8 @@ function cp_page_setup() {
 		
 		}
 		
+		// on global activity sidebar, avoid flash of hidden comments
+		styles += '#activity_sidebar .paragraph_wrapper { display: none; } ';
 
 		
 		/*
@@ -253,7 +283,17 @@ function cp_page_setup() {
 
 		
 		// show tabs when JS enabled
-		styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #archive_header.sidebar_header { display: block; } ';
+		styles += 'ul#sidebar_tabs, #toc_header.sidebar_header, body.blog_post #activity_header.sidebar_header { display: block; } ';
+		
+		
+		
+		// don't set height of sidebar when mobile (but allow tablets)
+		if ( cp_is_mobile == '1' && cp_is_tablet == '0' ) {
+		
+			// override css
+			styles += '.sidebar_contents_wrapper { height: auto; } ';
+		
+		}
 		
 
 
@@ -403,7 +443,7 @@ function cp_setup_page_layout() {
 
 				// set content width to auto so it resizes properly
 				if ( cp_is_signup_page == '0' ) {
-					content.css("width" ,'auto');
+					content.css( 'width', 'auto' );
 				}
 
 
@@ -419,7 +459,7 @@ function cp_setup_page_layout() {
 				//console.log(w);
 				
 				// set element width
-				book_nav.css("width" , book_nav_w + '%');
+				book_nav.css( 'width', book_nav_w + '%' );
 
 				
 
@@ -435,7 +475,7 @@ function cp_setup_page_layout() {
 				//console.log(w);
 				
 				// set element width
-				sidebar.css("width" , sidebar_w + '%');
+				sidebar.css( 'width', sidebar_w + '%' );
 
 				
 
@@ -449,7 +489,7 @@ function cp_setup_page_layout() {
 				var sidebar_l = parseFloat( Math.ceil( ( 1000000 * parseFloat( left ) / ww ) ) / 10000 );
 
 				// set element left
-				sidebar.css("left" , sidebar_l + '%');
+				sidebar.css( 'left', sidebar_l + '%' );
 				
 
 
@@ -571,8 +611,8 @@ function cp_scroll_page( target ) {
 
 	} else {
 	
-		// only scroll if not mobile
-		if ( cp_is_mobile == '0' ) {
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 	
 			// scroll page
 			jQuery.scrollTo(
@@ -608,8 +648,8 @@ function cp_scroll_to_top( target, speed ) {
 
 	} else {
 	
-		// only scroll if not mobile
-		if ( cp_is_mobile == '0' ) {
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 		
 			// scroll
 			jQuery.scrollTo( target, speed );
@@ -628,13 +668,44 @@ function cp_scroll_to_top( target, speed ) {
  * @todo: 
  *
  */
-function cp_scroll_comments( target, speed ) {
-
-	// only scroll if not mobile
-	if ( cp_is_mobile == '0' ) {
+function cp_scroll_comments( target, speed, flash ) {
 	
-		// scroll comment area to para heading
-		jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
+	// preserve compatibility with older calls
+    switch(arguments.length) {
+        case 2: flash = 'noflash';
+        case 3: break;
+        default: throw new Error('illegal argument count')
+    }
+
+	//console.log( 'scroll: ' + flash );
+	
+	// only scroll if not mobile (but allow tablets)
+	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+	
+		// either flash at the end or not..
+		if ( flash == 'flash' ) {
+		
+			// scroll to new comment
+			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+				target, 
+				{
+					duration: speed, 
+					axis: 'y',
+					onAfter: function() {
+					
+						// highlight header
+						cp_flash_comment_header( target );
+						
+					}
+				}
+			);
+						
+		} else {
+			
+			// scroll comment area to para heading
+			jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo( target, {duration: speed} );
+			
+		}
 		
 	}
 	
@@ -664,7 +735,10 @@ function cp_setup_comment_headers() {
 	 * @todo: 
 	 *
 	 */
-	jQuery('a.comment_block_permalink').click( function() {
+	jQuery('a.comment_block_permalink').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// get text_sig
 		var text_sig = jQuery(this).parent().attr( 'id' ).split('para_heading-')[1];
@@ -691,6 +765,9 @@ function cp_setup_comment_headers() {
 		// did we get one at all?
 		if( typeof( text_sig ) != 'undefined' ) {
 		
+			//console.log( opening );
+			//alert( 'comment_block_permalink click' );
+	
 			// if not the whole page...
 			if( text_sig != '' ) {
 	
@@ -702,6 +779,9 @@ function cp_setup_comment_headers() {
 				
 					// unhighlight paragraphs
 					jQuery.unhighlight_para();
+					
+					// highlight this paragraph
+					jQuery.highlight_para( textblock );
 					
 					// scroll page
 					cp_scroll_page( textblock );
@@ -751,13 +831,16 @@ function cp_setup_comment_headers() {
 					
 			} else {
 			
+				// unhighlight paragraphs
+				jQuery.unhighlight_para();
+				
 				// only scroll if page is not highlighted
-				if ( page_highlight === false ) {
+				//if ( page_highlight === false ) {
 			
 					// scroll to top
 					cp_scroll_to_top( 0, cp_scroll_speed );
 					
-				}
+				//}
 				
 				// toggle page highlight flag
 				page_highlight = !page_highlight;
@@ -783,7 +866,7 @@ function cp_setup_comment_headers() {
 				var has_form = jQuery( '#para_wrapper-' + text_sig ).find('#respond' )[0];
 			
 				// if we have a comment list
-				if ( comment_list[0] ) {
+				if ( comment_list.length > 0 && comment_list[0] ) {
 				
 					//console.log( 'has' );
 					
@@ -823,7 +906,7 @@ function cp_setup_comment_headers() {
 		
 		// are comments on paragraphs allowed?
 		if ( cp_para_comments_enabled == '1' ) {
-			
+		
 			// toggle next paragraph_wrapper
 			para_wrapper.slideToggle( 'slow', function() {
 			
@@ -861,7 +944,10 @@ function cp_enable_comment_permalink_clicks() {
 	// unbind first to allow repeated calls to this function
 	jQuery('a.comment_permalink').unbind( 'click' );
 
-	jQuery('a.comment_permalink').click( function(e) {
+	jQuery('a.comment_permalink').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// get comment id
 		var comment_id = this.href.split('#')[1];
@@ -884,6 +970,15 @@ function cp_enable_comment_permalink_clicks() {
 		
 		} else {
 	
+			// clear other highlights
+			jQuery.unhighlight_para();
+			
+			// get text sig
+			var text_sig = cp_get_text_sig_by_comment_id( '#'+comment_id );
+	
+			// scroll page to it
+			cp_scroll_page_to_textblock( text_sig );
+			
 			// scroll comments
 			cp_scroll_comments( jQuery('#'+comment_id), cp_scroll_speed );
 			
@@ -898,6 +993,287 @@ function cp_enable_comment_permalink_clicks() {
 
 
 
+
+
+
+/** 
+ * @description: highlight the comment header
+ * @todo: 
+ *
+ */
+function cp_flash_comment_header( comment ) {
+
+	//console.log( 'flash' );
+
+	// get header
+	var comment_header = comment.children( '.comment-identifier' );
+	//console.log( comment_header.css('backgroundColor') );
+	
+	if ( !comment_header ) { return; }
+					
+	// store existing color
+	var bg = comment_header.css('backgroundColor');
+	
+	// animate to highlight
+	comment_header.animate({ backgroundColor: "#819565" }, 100, function () {
+		
+		// animate to white
+		comment_header.animate({ backgroundColor: bg }, 1000, function () {
+			
+			// then do something?
+			//console.log( 'flashed' );
+		
+		});
+		
+	});
+	
+}
+
+
+
+
+
+
+/** 
+ * @description: set up context headers for "activity" tab
+ * @todo: 
+ *
+ */
+function cp_setup_context_headers() {
+
+	// unbind first to allow repeated calls to this function
+	jQuery('h3.activity_heading').unbind( 'click' );
+
+	// set pointer 
+	jQuery('h3.activity_heading').css( 'cursor', 'pointer' );
+
+	/** 
+	 * @description: activity column headings click
+	 * @todo: 
+	 *
+	 */
+	jQuery('h3.activity_heading').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get para wrapper
+		var para_wrapper = jQuery(this).next('div.paragraph_wrapper');
+		//console.log( para_wrapper );
+		
+		// set width to prevent rendering error
+		para_wrapper.css( 'width', jQuery(this).parent().css( 'width' ) );
+		
+		// toggle next paragraph_wrapper
+		para_wrapper.slideToggle( 'slow', function() {
+		
+			// when finished, reset width to auto
+			para_wrapper.css( 'width', 'auto' );
+		
+		} );
+		
+		// --<
+		return false;
+
+	});
+
+}
+
+
+
+
+
+
+/** 
+ * @description: clicking on the "see in context" link
+ * @todo: 
+ *
+ */
+function cp_enable_context_clicks() {
+
+	// allow links to work when not on commentable page
+	if ( cp_special_page == '1' ) {
+		return;
+	}
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.comment_on_post').unbind( 'click' );
+
+	jQuery('a.comment_on_post').click( function( event ) {
+		
+		// override event
+		event.preventDefault();
+	
+		// show comments sidebar
+		cp_activate_sidebar( 'comments' );
+	
+		// get comment id
+		var comment_id = this.href.split('#')[1];
+		
+		// get comment
+		var comment = jQuery('#'+comment_id);
+		
+		//console.log( comment );
+
+		// get array of parent paragraph_wrapper divs
+		var para_wrapper_array = comment
+									.parents('div.paragraph_wrapper')
+									.map( function () {
+										return this;
+									});
+
+		// did we get one?
+		if ( para_wrapper_array.length > 0 ) {
+		
+			// get the item
+			var item = jQuery(para_wrapper_array[0]);
+			
+			// show block
+			item.show();
+			
+			// if special page
+			if ( cp_special_page == '1' ) {
+			
+				// get offset
+				var header_offset = cp_get_header_offset();
+		
+				// scroll to comment
+				jQuery.scrollTo(
+					comment, 
+					{
+						duration: cp_scroll_speed, 
+						axis:'y', 
+						offset: header_offset
+					}
+				);
+			
+			} else {
+		
+				// clear other highlights
+				jQuery.unhighlight_para();
+				
+				// highlight para
+				var text_sig = item.attr('id').split('-')[1];
+		
+				// scroll page to it
+				cp_scroll_page_to_textblock( text_sig );
+				
+				// scroll to new comment
+				jQuery('#comments_sidebar .sidebar_contents_wrapper').scrollTo(
+					comment, 
+					{
+						duration: cp_scroll_speed, 
+						axis: 'y',
+						onAfter: function() {
+						
+							// highlight header
+							cp_flash_comment_header( comment );
+							
+						}
+					}
+				);
+							
+			}
+			
+		}
+		
+		// --<
+		return false;
+		
+	});
+
+}
+
+
+
+
+
+
+/** 
+ * @description: get text sig by comment id
+ * @todo: 
+ *
+ */
+function cp_get_text_sig_by_comment_id( cid ) {
+
+	// init
+	var text_sig = '';
+
+	// are we passing the full id?
+	if ( cid.match('#comment-' ) ) {
+	
+		// get comment ID
+		var comment_id = parseInt( cid.split('#comment-')[1] );
+		
+	}
+		
+	// get array of parent paragraph_wrapper divs
+	var para_wrapper_array = jQuery('#comment-' + comment_id)
+								.parents('div.paragraph_wrapper')
+								.map( function () {
+									return this;
+								});
+
+	// did we get one?
+	if ( para_wrapper_array.length > 0 ) {
+	
+		// get the item
+		var item = jQuery(para_wrapper_array[0]);
+		
+		// move form to para
+		text_sig = item.attr('id').split('-')[1];
+		
+	}
+	
+	
+	
+	// --<
+	return text_sig; 
+	
+}
+
+
+
+
+
+/** 
+ * @description: scroll to textblock
+ * @todo: 
+ *
+ */
+function cp_scroll_page_to_textblock( text_sig ) {
+
+	// if not the whole page...
+	if( text_sig != '' ) {
+
+		// get text block
+		var textblock = jQuery('#textblock-' + text_sig);
+		
+		// highlight this paragraph
+		jQuery.highlight_para( textblock );
+		
+		// scroll page
+		cp_scroll_page( textblock );
+		
+	} else {
+		
+		// only scroll if page is not highlighted
+		if ( page_highlight === false ) {
+		
+			// scroll to top
+			cp_scroll_to_top( 0, cp_scroll_speed );
+			
+		}
+		
+		// toggle page highlight flag
+		page_highlight = !page_highlight;
+		
+	}
+	
+}
+
+
+			
 
 
 
@@ -992,7 +1368,7 @@ function cp_scroll_to_anchor_on_load() {
 			item.show();
 			
 			// scroll comments
-			cp_scroll_comments( jQuery('#comment-' + comment_id), 0 );
+			cp_scroll_comments( jQuery('#comment-' + comment_id), 0, 'flash' );
 			
 			// if not the whole page...
 			if( text_sig != '' ) {
@@ -1078,6 +1454,14 @@ function cp_scroll_to_anchor_on_load() {
 		
 	}
 
+	// do we have a link to the comment form?
+	if ( url.match( '#respond' ) ) {
+		
+		// same as clicking on the "whole page" heading
+		jQuery('h3#para_heading- a.comment_block_permalink').click();
+	
+	}
+
 }
 
 
@@ -1096,7 +1480,7 @@ function cp_scroll_to_comment_on_load() {
 	var url = document.location.toString();
 	
 	// do we have a comment permalink?
-	if ( url.match('#comment-' ) ) {
+	if ( url.match( '#comment-' ) ) {
 	
 		// get comment ID
 		var comment_id = url.split('#comment-')[1];
@@ -1116,8 +1500,8 @@ function cp_scroll_to_comment_on_load() {
 			
 		} else {
 		
-			// only scroll if not mobile
-			if ( cp_is_mobile == '0' ) {
+			// only scroll if not mobile (but allow tablets)
+			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
 			
 				// scroll to new comment
 				jQuery.scrollTo(
@@ -1135,8 +1519,6 @@ function cp_scroll_to_comment_on_load() {
 
 	}
 
-
-
 }
 
 
@@ -1150,6 +1532,11 @@ function cp_scroll_to_comment_on_load() {
  *
  */
 function cp_do_comment_icon_action( text_sig ) {
+
+	// show comments sidebar
+	cp_activate_sidebar( 'comments' );
+
+
 
 	// get para wrapper
 	var para_wrapper = jQuery('#para_heading-' + text_sig).next('div.paragraph_wrapper');
@@ -1379,7 +1766,7 @@ function cp_do_comment_icon_action( text_sig ) {
  * @todo: 
  *
  */
-function cp_setup_comment_icons() {
+function cp_setup_para_permalink_icons() {
 
 	// unbind first to allow repeated calls to this function
 	jQuery('a.para_permalink').unbind( 'click' );
@@ -1389,7 +1776,10 @@ function cp_setup_comment_icons() {
 	 * @todo: 
 	 *
 	 */
-	jQuery('a.para_permalink').click( function(e) {
+	jQuery('a.para_permalink').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// get text signature
 		var text_sig = jQuery(this).attr('id');
@@ -1495,8 +1885,13 @@ function cp_open_header() {
 		
 			}, function() {
 			
-				// fit column
-				jQuery.set_sidebar_height();
+				// don't set height when mobile device (but allow tablets - needs testing)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+			
+					// fit column
+					jQuery.set_sidebar_height();
+					
+				}
 				
 				// when done
 				cp_header_animating = false;
@@ -1520,8 +1915,13 @@ function cp_open_header() {
 				// when done
 				cp_header_animating = false;
 
-				// fit column
-				jQuery.set_sidebar_height();
+				// don't set height when mobile device (but allow tablets)
+				if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+			
+					// fit column
+					jQuery.set_sidebar_height();
+				
+				}
 				
 			}
 			
@@ -1613,8 +2013,13 @@ function cp_close_header() {
 		
 		}, function() {
 		
-			// fit column
-			jQuery.set_sidebar_height();
+			// don't set height when mobile device (but allow tablets)
+			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+		
+				// fit column
+				jQuery.set_sidebar_height();
+				
+			}
 			
 			// when done
 			cp_header_animating = false;
@@ -1634,8 +2039,13 @@ function cp_close_header() {
 			// when done
 			cp_header_animating = false;
 	
-			// fit column
-			jQuery.set_sidebar_height();
+			// don't set height when mobile device (but allow tablets)
+			if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+		
+				// fit column
+				jQuery.set_sidebar_height();
+				
+			}
 			
 		});
 		
@@ -1712,7 +2122,10 @@ function cp_setup_para_links() {
 	 * @todo: 
 	 *
 	 */
-	jQuery('a.cp_para_link').click( function(e) {
+	jQuery('a.cp_para_link').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// get text signature
 		var text_sig = jQuery(this).attr('href').split('#')[1];
@@ -1774,16 +2187,16 @@ function cp_get_sidebar_top_border() {
  */
 function cp_activate_sidebar( sidebar ) {
 
-	// get visibility of TOC
+	// get "visibility" of the requested sidebar
 	var ontop = jQuery('#' + sidebar + '_sidebar').css('z-index');
 	
-	// is it hidden
+	// is it hidden (ie, does it have a lower z-index)
 	if ( ontop == '2001' ) {
 	
 		// hide all
 		jQuery('.sidebar_container').css('z-index','2001');
 
-		// show toc
+		// show it
 		jQuery('#' + sidebar + '_sidebar').css('z-index','2010');
 		
 		var s_top = cp_get_sidebar_top();
@@ -1792,7 +2205,7 @@ function cp_activate_sidebar( sidebar ) {
 		// set all tabs to min height
 		jQuery('.sidebar_header').css( 'height', ( s_top - s_top_border ) + 'px' );
 		
-		// set toc tab to max height
+		// set our tab to max height
 		jQuery('#' + sidebar + '_header.sidebar_header').css( 'height', s_top + 'px' );
 		
 		// set flag
@@ -1800,8 +2213,57 @@ function cp_activate_sidebar( sidebar ) {
 		
 	}
 	
-	// just to make sure...
-	jQuery.set_sidebar_height();
+	// don't set height when mobile device (but allow tablets)
+	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+		// just to make sure...
+		jQuery.set_sidebar_height();
+		
+	} else {
+		
+		// hide all
+		jQuery('.sidebar_container').css('visibility','hidden');
+
+		// show it
+		jQuery('#' + sidebar + '_sidebar').css('visibility','visible');
+		
+		/*
+		// set to height of tallest
+		var containers = jQuery('.sidebar_contents_wrapper');
+		//console.log( containers );
+		
+		// did we get any?
+		if ( containers.length > 0 ) {
+		
+			// init
+			var tallest = 0;
+			
+			// find height of each
+			containers.each( function(i) {
+			
+				// get height
+				var this_height = jQuery(this).height()
+				
+				// is it taller?
+				if ( this_height > tallest ) {
+					tallest = this_height;
+				}
+			
+			});
+			//console.log( tallest );
+			//alert( tallest );
+			
+			// set it to that height
+			jQuery('.sidebar_contents_wrapper').height( tallest );
+				
+			// then make it auto
+			// BUT, this won't allow it to expand in future...
+			//jQuery('#' + sidebar + '_sidebar .sidebar_contents_wrapper').css('height','auto');
+			
+		}
+		*/
+
+	}
 
 }
 
@@ -1822,8 +2284,13 @@ jQuery(document).ready( function($) {
 	// get global book_header top
 	cp_book_header_height = $('#book_header').height();
 	
-	// set sidebar height
-	$.set_sidebar_height();
+	// don't set height when mobile device (but allow tablets)
+	if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+
+		// set sidebar height
+		$.set_sidebar_height();
+		
+	}
 
 
 
@@ -1876,12 +2343,16 @@ jQuery(document).ready( function($) {
 	cp_enable_comment_permalink_clicks();
 	
 	// set up comment icons (paragraph permalinks)
-	cp_setup_comment_icons();
+	cp_setup_para_permalink_icons();
 	
 	// set up user-defined links to paragraphs
 	cp_setup_para_links();
 
-
+	// set up activity links
+	cp_enable_context_clicks();
+	
+	// set up activity headers
+	cp_setup_context_headers();
 
 
 
@@ -1891,8 +2362,11 @@ jQuery(document).ready( function($) {
 	 * @todo:
 	 *
 	 */
-	$('#toc_header h2 a').click( function() {
+	$('#toc_header h2 a').click( function( event ) {
 		
+		// override event
+		event.preventDefault();
+	
 		// activate it
 		cp_activate_sidebar('toc')
 
@@ -1902,14 +2376,17 @@ jQuery(document).ready( function($) {
 	});
 
 	/** 
-	 * @description: clicking on the Archive Header
+	 * @description: clicking on the Activity Header
 	 * @todo: 
 	 *
 	 */
-	$('#archive_header h2 a').click( function() {
+	$('#activity_header h2 a').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// activate it
-		cp_activate_sidebar('archive')
+		cp_activate_sidebar('activity')
 
 		// --<
 		return false;
@@ -1921,7 +2398,10 @@ jQuery(document).ready( function($) {
 	 * @todo: 
 	 *
 	 */
-	$('#comments_header h2 a').click( function() {
+	$('#comments_header h2 a').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// activate it
 		cp_activate_sidebar('comments')
@@ -1941,8 +2421,11 @@ jQuery(document).ready( function($) {
 	 * @todo: 
 	 *
 	 */
-	$('a.para_permalink').click( function(e) {
+	$('a.para_permalink').click( function( event ) {
 
+		// override event
+		event.preventDefault();
+	
 		// --<
 		return false;
 		
@@ -1958,8 +2441,11 @@ jQuery(document).ready( function($) {
 	 * @todo: 
 	 *
 	 */
-	$('a.comment_block_permalink').click( function(e) {
+	$('a.comment_block_permalink').click( function( event ) {
 
+		// override event
+		event.preventDefault();
+	
 		// --<
 		return false;
 		
@@ -2005,7 +2491,10 @@ jQuery(document).ready( function($) {
 	 * @todo: 
 	 *
 	 */
-	$('#btn_header_min').click( function() {
+	$('#btn_header_min').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// call function
 		cp_setup_header_minimiser();
@@ -2028,7 +2517,10 @@ jQuery(document).ready( function($) {
 	 * @todo: 
 	 *
 	 */
-	$('#cp_minimise_comments').click( function() {
+	$('#cp_minimise_comments').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// toggle next div
 		$(this).parent().next().slideToggle();
@@ -2064,10 +2556,13 @@ jQuery(document).ready( function($) {
 	 * @todo: 
 	 *
 	 */
-	$('#cp_minimise_all_comments').click( function() {
+	$('#cp_minimise_all_comments').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
 	
 		// slide all paragraph comment wrappers up
-		$('div.paragraph_wrapper').slideUp();
+		$('#comments_sidebar div.paragraph_wrapper').slideUp();
 		
 		// unhighlight paragraphs
 		$.unhighlight_para();
@@ -2080,11 +2575,31 @@ jQuery(document).ready( function($) {
 
 	
 	/** 
+	 * @description: clicking on the minimise activities icon
+	 * @todo: 
+	 *
+	 */
+	$('#cp_minimise_all_activity').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// slide all paragraph comment wrappers up
+		$('#activity_sidebar div.paragraph_wrapper').slideUp();
+		
+	});
+
+	
+
+
+
+	
+	/** 
 	 * @description: chapter page headings click
 	 * @todo: 
 	 *
 	 */
-	$("#toc_sidebar .sidebar_contents_wrapper ul#toc_list li a").click( function(e) {
+	$("#toc_sidebar .sidebar_contents_wrapper ul#toc_list li a").click( function( event ) {
 	
 		// are our chapters pages?
 		if ( cp_toc_chapter_is_page == '0' ) {
@@ -2103,6 +2618,9 @@ jQuery(document).ready( function($) {
 
 				}
 			
+				// override event
+				event.preventDefault();
+			
 				// --<
 				return false;
 				
@@ -2117,6 +2635,74 @@ jQuery(document).ready( function($) {
 
 
 
+	/** 
+	 * @description: workflow tabs and content logic
+	 * @todo: move to plugin?
+	 *
+	 */
+
+	// store content min-height on load
+	var content_min_height = $('#content').css( 'min-height' );
+	
+	// store content padding-bottom on load
+	var content_padding_bottom = $('#content').css( 'padding-bottom' );
+	
+	// hide workflow content
+	$('#literal .post').css( 'display', 'none' );
+	$('#original .post').css( 'display', 'none' );
+	
+	/** 
+	 * @description: clicking on the workflow tabs
+	 * @todo: 
+	 *
+	 */
+	$('#content-tabs li h2 a').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// hide others and show corresponding item
+
+		// get href
+		var target_id = this.href.split('#')[1];
+		//console.log( target_id );
+		
+		// hide all
+		$('.post').css( 'display', 'none' );
+		
+		// remove content min-height
+		$('.workflow-wrapper').css( 'min-height', '0' );
+		
+		// remove bottom padding
+		$('.workflow-wrapper').css( 'padding-bottom', '0' );
+		
+		// set min-height of target
+		$('#' + target_id + '.workflow-wrapper').css( 'min-height', content_min_height );
+		
+		// set padding-bottom of target
+		$('#' + target_id + '.workflow-wrapper').css( 'padding-bottom', content_padding_bottom );
+		
+		// show it
+		$('#' + target_id + ' .post').css( 'display', 'block' );
+		
+		
+		
+		// amend css of list items to mimic tabs
+		$('#content-tabs li').removeClass( 'default-content-tab' );
+		$(this).parent().parent().addClass( 'default-content-tab' );
+		
+		
+		
+		// --<
+		return false;
+		
+	});
+
+	
+
+
+
+	
 	// scroll the page on load
 	if ( cp_special_page == '1' ) {
 		cp_scroll_to_comment_on_load();
