@@ -79,7 +79,7 @@ if ( is_multisite() ) {
 		// set default link name
 		$dashboard_title = apply_filters( 
 			'cp_user_links_dashboard_title', 
-			__( 'Create a new document', 'commentpress-theme' )
+			__( 'Dashboard', 'commentpress-theme' )
 		);
 
 		?>
