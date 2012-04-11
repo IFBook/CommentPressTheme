@@ -31,25 +31,7 @@ $_page_content = cp_get_comments_by_page_content();
 <head profile="http://gmpg.org/xfn/11">
 
 <!-- title -->
-<title><?php 
-
-echo bloginfo('name');
-
-if (is_home()) {
-	echo ' &raquo; Book Blog';
-} elseif (is_404()) {
-	echo ' &raquo; Not Found';
-} elseif (is_category()) {
-	echo ' &raquo; Category: '; wp_title('');
-} elseif (is_search()) {
-	echo ' &raquo; Search Results';
-} elseif ( is_day() || is_month() || is_year() ) {
-	echo ' &raquo; Archives: '; wp_title('');
-} else {
-	wp_title('&raquo;',true,'left');
-}
-
-?></title>
+<title><?php wp_title( '|', true, 'right' ); bloginfo( 'name' ); cp_site_title( '|' ) ?></title>
 
 <!-- meta -->
 <meta http-equiv="content-type" content="<?php bloginfo('html_type') ?>; charset=<?php bloginfo('charset') ?>" />
@@ -73,7 +55,7 @@ if (is_home()) {
 <?php 
 
 // add custom css file for user-defined theme mods
-if( file_exists( TEMPLATEPATH.'/custom.css' )) { 
+if( file_exists( get_template_directory().'/custom.css' )) { 
 
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/custom.css" media="screen" />
@@ -95,14 +77,14 @@ if( file_exists( TEMPLATEPATH.'/custom.css' )) {
 $_body_id = cp_get_body_id();
 
 // get body classes
-$_body_classes = cp_get_body_classes();
+$_body_classes = cp_get_body_classes( true );
 
 // BODY starts here
-?><body<?php echo $_body_id; echo $_body_classes; ?>>
+?><body<?php echo $_body_id; ?> <?php body_class( $_body_classes ); ?>>
 
 
 
-<?php include (TEMPLATEPATH . '/style/templates/header_body.php'); ?>
+<?php include (get_template_directory() . '/style/templates/header_body.php'); ?>
 
 
 

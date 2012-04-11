@@ -329,7 +329,7 @@ blockquote
 	margin-left: 0;
 	margin-right: 0;
 	padding: 1px 15px;
-	background: transparent url(../images/icons/quote.png) no-repeat;
+	background: transparent url(style/images/icons/quote.png) no-repeat;
 	font-style: italic;
 }
 

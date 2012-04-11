@@ -33,8 +33,41 @@ if ( is_multisite() ) {
 		
 	) {
 	
-		?><li><a href="<?php echo site_url(); ?>/wp-signup.php" title="Create a new document" id="btn_create">Create a new document</a></li>
-		<?php 
+		// test whether we have BuddyPress
+		if ( defined( 'BP_VERSION' ) ) {
+		
+			// different behaviour when logged in or not
+			if ( is_user_logged_in() ) {
+		
+				// set default link name
+				$new_site_title = apply_filters( 
+					'cp_user_links_new_site_title', 
+					__( 'Create a new document', 'commentpress-theme' )
+				);
+		
+				// BP uses its own signup page at /blogs/create/ but doesn't redirect to it
+				?><li><a href="<?php echo site_url(); ?>/blogs/create/" title="<?php echo $new_site_title; ?>" id="btn_create"><?php echo $new_site_title; ?></a></li>
+				<?php 
+			
+			} else {
+			
+				// not directly allowed - done through signup form
+			
+			}
+
+		} else {
+			
+			// set default link name
+			$new_site_title = apply_filters( 
+				'cp_user_links_new_site_title', 
+				__( 'Create a new document', 'commentpress-theme' )
+			);
+	
+			// standard WP multisite
+			?><li><a href="<?php echo site_url(); ?>/wp-signup.php" title="<?php echo $new_site_title; ?>" id="btn_create"><?php echo $new_site_title; ?></a></li>
+			<?php 
+		
+		}
 	
 	}
 
@@ -43,8 +76,14 @@ if ( is_multisite() ) {
 	// if logged in
 	if ( is_user_logged_in() ) {
 	
+		// set default link name
+		$dashboard_title = apply_filters( 
+			'cp_user_links_dashboard_title', 
+			__( 'Create a new document', 'commentpress-theme' )
+		);
+
 		?>
-		<li><a href="<?php echo admin_url(); ?>" title="Dashboard" id="btn_dash">Dashboard</a></li>
+		<li><a href="<?php echo admin_url(); ?>" title="<?php echo $dashboard_title; ?>" id="btn_dash"><?php echo $dashboard_title; ?></a></li>
 		<?php
 		
 	}

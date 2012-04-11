@@ -20,7 +20,7 @@
 
 <div class="post">
 
-<h2>Page Not Found</h2>
+<h2 class="post_title">Page Not Found</h2>
 
 <?php get_search_form(); ?>
 

@@ -4,7 +4,7 @@ Template Name: Comments by Commenter
 */
 ?>
 
-<?php include( TEMPLATEPATH . '/style/templates/comments-by-header.php' ); ?>
+<?php include( get_template_directory() . '/style/templates/comments-by-header.php' ); ?>
 
 <!-- all-comments.php -->
 

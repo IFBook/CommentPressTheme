@@ -145,6 +145,12 @@ Post-related styles
 	padding-right: 7px;
 }
 
+.post h2.post_title
+{
+	font-size: 2em;
+	margin: 15px 0 5px 0;
+}
+
 .post h2 a:link,
 .post h2 a:hover,
 .post h2 a:visited
@@ -169,7 +175,10 @@ Post-related styles
 	padding-right: 7px;
 }
 
-.post h3 a:link
+.post h3 a:link,
+.post h3 a:hover,
+.post h3 a:active,
+.post h3 a:visited
 {
 	font-weight: normal;
 	text-decoration: none;
@@ -273,7 +282,7 @@ Post-related styles
 
 .post p,
 .post ul,
-.post ol,
+.post ol
 {
 	padding: 7px 7px 11px 7px;
 }
@@ -487,7 +496,7 @@ Comment container & form styles
 ---------------------------------------------------------------------
 */
 
-.comments_container > h3
+div#comments_sidebar .comments_container > h3
 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
@@ -499,7 +508,7 @@ Comment container & form styles
 }
 
 	/* comment_block_permalink */
-	.comments_container > h3 a
+	div#comments_sidebar .comments_container > h3 a
 	{
 		display: block;
 		padding: 6px 0 6px 20px;
@@ -513,6 +522,7 @@ h3.nocomments
 	font-size: 90%;
 	text-transform: uppercase;
 	padding: 10px 0 6px 20px;
+	font-family: Helvetica,Arial,sans-serif;
 }
 
 a.comment-edit-link:link,
@@ -533,7 +543,8 @@ a.comment-edit-link:hover
 	color: #761D19;
 }
 
-.comment-identifier img
+.comment-identifier > a img,
+.comment-identifier > img
 {
 	float: left;
 	margin: 5px 0 0 5px;
@@ -546,8 +557,15 @@ a.comment-edit-link:hover
 	display: block;
 	padding: 5px;
 	font-size: 80%;
-	font-weight: bold;
-	color: #761D19;
+	font-style: normal;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #222;
+}
+
+.comment-identifier cite img
+{
+	display: none;
+	vertical-align: middle;
 }
 
 .comment-identifier cite a,
@@ -555,7 +573,8 @@ a.comment-edit-link:hover
 .comment-identifier cite a:active,
 .comment-identifier cite a:visited
 {
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	color: #761D19;
 	text-decoration: none;
 }
@@ -612,6 +631,9 @@ a#cancel-comment-reply-link:visited
 	font-size: 70%;
 	color: #666;
 	text-decoration: none;
+	display: block;
+	padding: 4px 0 4px 4px;
+	border-bottom: 1px dashed #B5BFB2;
 }
 
 /* hover colour */
@@ -690,17 +712,17 @@ Comment content styles
 ---------------------------------------------------------------------
 */
 
-.comments_container .comment-content 
+div#comments_sidebar .comments_container .comment-content 
 {
 	font-size: 90%;
 }
 
-.comments_container .comment-content h1,
-.comments_container .comment-content h2,
-.comments_container .comment-content h3,
-.comments_container .comment-content h4,
-.comments_container .comment-content h5,
-.comments_container .comment-content h6
+div#comments_sidebar .comments_container .comment-content h1,
+div#comments_sidebar .comments_container .comment-content h2,
+div#comments_sidebar .comments_container .comment-content h3,
+div#comments_sidebar .comments_container .comment-content h4,
+div#comments_sidebar .comments_container .comment-content h5,
+div#comments_sidebar .comments_container .comment-content h6
 {
 	float: none;
 	font-size: 100%;
@@ -716,41 +738,41 @@ Comment content styles
 	margin: 0;
 }
 
-.comments_container .comment-content h1
+div#comments_sidebar .comments_container .comment-content h1
 {
 	font-size: 140%;
 	padding: 8px 0 8px 0;
 }
 
-.comments_container .comment-content h2
+div#comments_sidebar .comments_container .comment-content h2
 {
 	font-size: 130%;
 	padding: 6px 0 8px 0;
 }
 
-.comments_container .comment-content h3
+div#comments_sidebar .comments_container .comment-content h3
 {
 	font-size: 120%;
 	padding: 4px 0 8px 0;
 }
 
-.comments_container .comment-content h4
+div#comments_sidebar .comments_container .comment-content h4
 {
 	font-size: 110%;
 	padding: 2px 0 8px 0;
 }
 
-.comments_container .comment-content h5
+div#comments_sidebar .comments_container .comment-content h5
 {
 	font-size: 100%;
 }
 
-.comments_container .comment-content h6
+div#comments_sidebar .comments_container .comment-content h6
 {
 	font-size: 90%;
 }
 
-.comments_container .comment-content blockquote
+div#comments_sidebar .comments_container .comment-content blockquote
 {
 	margin: 0 0 8px 0;
 	padding: 4px 8px 1px 8px;
@@ -760,42 +782,42 @@ Comment content styles
 }
 
 /* create alternately coloured blockquotes */
-.comments_container .comment-content blockquote blockquote,
-.comments_container .comment-content blockquote blockquote blockquote blockquote
+div#comments_sidebar .comments_container .comment-content blockquote blockquote,
+div#comments_sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote
 {
 	background: #fff;
 }
 
-.comments_container .comment-content blockquote blockquote blockquote,
-.comments_container .comment-content blockquote blockquote blockquote blockquote blockquote
+div#comments_sidebar .comments_container .comment-content blockquote blockquote blockquote,
+div#comments_sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote blockquote
 {
 	background: #eee;
 }
 
-.comments_container .comment-content blockquote cite:before
+div#comments_sidebar .comments_container .comment-content blockquote cite:before
 {
 	content: "\00BB \0020";
 }
 
-.comments_container .comment-content blockquote cite
+div#comments_sidebar .comments_container .comment-content blockquote cite
 {
 	font-style: italic;
 }
 
-.comments_container .comment-content table
+div#comments_sidebar .comments_container .comment-content table
 {
 	color: #333;
 	border: 1px solid #ccc;
 	margin: 0 0 8px 0;
 }
 
-.comments_container .comment-content table th
+div#comments_sidebar .comments_container .comment-content table th
 {
 	font-weight: bold;
 }
 
-.comments_container .comment-content table th,
-.comments_container .comment-content table td
+div#comments_sidebar .comments_container .comment-content table th,
+div#comments_sidebar .comments_container .comment-content table td
 {
 	text-align: center;
 	padding: 5px;
@@ -803,58 +825,58 @@ Comment content styles
 	background: #eee;
 }
 
-.comments_container .comment-content table tr.alternate th,
-.comments_container .comment-content table tr.alternate td
+div#comments_sidebar .comments_container .comment-content table tr.alternate th,
+div#comments_sidebar .comments_container .comment-content table tr.alternate td
 {
 	background: #fff;
 }
 
-.comments_container .comment-content p,
-.comments_container .comment-content dl
+div#comments_sidebar .comments_container .comment-content p,
+div#comments_sidebar .comments_container .comment-content dl
 {
 	line-height: 1.2;
 	padding: 0 0 8px 0;
 }
 
-.comments_container .comment-content ul,
-.comments_container .comment-content ol
+div#comments_sidebar .comments_container .comment-content ul,
+div#comments_sidebar .comments_container .comment-content ol
 {
 	margin: 0 0 0 20px;
 }
 
-.comments_container .comment-content > ul,
-.comments_container .comment-content > ol
+div#comments_sidebar .comments_container .comment-content > ul,
+div#comments_sidebar .comments_container .comment-content > ol
 {
 	margin: 0 0 8px 20px;
 }
 
-.comments_container .comment-content ul li
+div#comments_sidebar .comments_container .comment-content ul li
 {
 	list-style-type: disc;
 }
 
-.comments_container .comment-content ol li
+div#comments_sidebar .comments_container .comment-content ol li
 {
 	list-style-type: decimal;
 }
 
-.comments_container .comment-content ul li,
-.comments_container .comment-content ol li
+div#comments_sidebar .comments_container .comment-content ul li,
+div#comments_sidebar .comments_container .comment-content ol li
 {
 	margin: 2px 0;
 	line-height: 1.2;
 }
 
-.comments_container .comment-content address,
-.comments_container .comment-content pre, 
-.comments_container .comment-content xmp, 
-.comments_container .comment-content plaintext, 
-.comments_container .comment-content listing
+div#comments_sidebar .comments_container .comment-content address,
+div#comments_sidebar .comments_container .comment-content pre, 
+div#comments_sidebar .comments_container .comment-content xmp, 
+div#comments_sidebar .comments_container .comment-content plaintext, 
+div#comments_sidebar .comments_container .comment-content listing
 {
 	padding: 0 0 8px 0;
 }
 
-.comments_container .comment-content a
+div#comments_sidebar .comments_container .comment-content a
 {
 	text-decoration: underline;
 }
@@ -877,24 +899,63 @@ ul#group_list li
 
 
 /* Search Results Page */
-.search_result h3
+#content .search_result
 {
-	font-size: 1.1em;
+	padding: 7px 0 45px 0;
+}
+
+#content .search_result h3
+{
+	font-size: 2em;
 	margin: 15px 0 5px 0;
-	padding: 0;
+	padding: 0 7px;
 }
 
-.search_meta
+#content div.search_meta
 {
-	margin: 0 5px;
-	font-size: 80%;
+	padding: 7px;
+	font-size: 70%;
+	color: #777;
+	font-family: Helvetica, Arial, sans-serif;
 }
 
-.search_meta p
+#content div.search_meta img.avatar
+{
+	float: left;
+	margin: 0 7px 0 0;
+}
+
+#content div.search_meta p
 {
 	margin: 0;
 	padding: 0;
 }
+
+#content p.search_meta
+{
+	font-size: 70%;
+	color: #777;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#content .search_meta cite 
+{
+	font-family: Helvetica,Arial,sans-serif;
+	display: block;
+	padding: 2px 5px;
+	font-size: 1.1em;
+	font-weight: normal;
+	font-style: normal;
+	color: #761D19;
+}
+
+#content .search_meta a
+{
+	color: #761D19;
+	text-decoration: none;
+}
+
+
 
 
 
@@ -906,6 +967,40 @@ ul.image_link h4
 	font-weight: 200;
 	color: #555;
 	margin: 20px 0 10px 0;
+}
+
+
+
+
+
+
+/* Version alert */
+#content div.alert p
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1em;
+	font-weight: normal;
+	color: #f00;
+	margin: 10px 0;
+	padding: 0;
+}
+
+#content div.alert p a
+{
+	display: block;
+	padding: 10px;
+	background: #EFEFEF;
+	border-top: 1px solid #B5BFB2;
+	border-bottom: 1px solid #B5BFB2;
+	line-height: 1;
+	color: #761D19;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+#content div.alert p a:hover
+{
+	color: #222;
 }
 
 

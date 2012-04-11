@@ -1,4 +1,49 @@
-<!-- sidebar.php -->
+<?php
+
+
+
+// set default link name
+$cp_comments_title = apply_filters(
+
+	// filter name
+	'cp_tab_title_comments', 
+	
+	// default value
+	__( 'Comments', 'commentpress-theme' )
+	
+);
+
+// set default link name
+$cp_toc_title = apply_filters(
+
+	// filter name
+	'cp_tab_title_toc', 
+	
+	// default value
+	__( 'Contents', 'commentpress-theme' )
+	
+);
+
+
+
+// init
+$_min = '';
+
+// declare access to globals
+global $commentpress_obj;
+
+// if we have the plugin enabled...
+if ( is_object( $commentpress_obj ) ) {
+
+	// show the minimise all button
+	$_min = $commentpress_obj->get_minimise_all_button( 'comments' );
+
+}
+
+
+
+
+?><!-- sidebar.php -->
 
 <div id="sidebar">
 
@@ -9,33 +54,59 @@
 <ul id="sidebar_tabs">
 
 <li id="comments_header" class="sidebar_header">
-<h2><a href="#comments_sidebar">Comments</a></h2>
+<h2><a href="#comments_sidebar"><?php echo $cp_comments_title; ?></a></h2>
 <?php
 
-// declare access to globals
-global $commentpress_obj;
-
-// if we have the plugin enabled...
-if ( is_object( $commentpress_obj ) ) {
-
-	// show the minimise all button
-	echo $commentpress_obj->get_minimise_all_button( 'comments' );
-
-	// show the minimise button
-	echo $commentpress_obj->get_minimise_button( 'comments' );
-
-}
+// show the minimise all button
+echo $_min;
 
 ?>
 </li>
 
-<li id="archive_header" class="sidebar_header">
-<h2><a href="#archive_sidebar">Archives</a></h2>
-</li>
+<?php 
 
+// do we want to show activity tab?
+if ( cp_show_activity_tab() ) {
+	
+	// set default link name
+	$cp_activity_title = apply_filters(
+	
+		// filter name
+		'cp_tab_title_activity', 
+		
+		// default value
+		__( 'Activity', 'commentpress-theme' )
+		
+	);
+	
+	?>
+	<li id="activity_header" class="sidebar_header">
+	<h2><a href="#activity_sidebar"><?php echo $cp_activity_title; ?></a></h2>
+	<?php
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// show the minimise all button
+		echo $commentpress_obj->get_minimise_all_button( 'activity' );
+	
+	}
+	
+	?>
+	</li>
+	<?php
+
+} else {
+
+	// ignore activity
+		
+}
+
+?>
 <li id="toc_header" class="sidebar_header">
-<h2><a href="#toc_sidebar">Contents</a></h2>
+<h2><a href="#toc_sidebar"><?php echo $cp_toc_title; ?></a></h2>
 </li>
+<?php ?>
 
 </ul>
 
@@ -58,28 +129,36 @@ if ( is_object( $commentpress_obj ) ) {
 	if ( $sidebar_flag == 'comments' ) {
 			
 		// get comments sidebar
-		include (TEMPLATEPATH . '/style/templates/comments_sidebar.php');
+		include (get_template_directory() . '/style/templates/comments_sidebar.php');
+		
+		// get activity sidebar
+		include (get_template_directory() . '/style/templates/activity_sidebar.php');
+		
+		// get TOC
+		include( get_template_directory() . '/style/templates/toc_sidebar.php' );
+		
+	} else {
+	
+		// always include TOC
+		include( get_template_directory() . '/style/templates/toc_sidebar.php' );
+		
+		// do we want to show activity tab?
+		if ( cp_show_activity_tab() ) {
+			
+			// get activity sidebar
+			include (get_template_directory() . '/style/templates/activity_sidebar.php');
+			
+		} else {
+			
+		}
 		
 	}
-	
-
-
-	// test for Archive Sidebar (everything else)
-	if ( $sidebar_flag == 'archive' OR is_single() ) {
-	
-		// get archive sidebar
-		include (TEMPLATEPATH . '/style/templates/archive_sidebar.php');
-		
-	}
-	
-	
-	
-	// always include TOC
-	include( TEMPLATEPATH . '/style/templates/toc_sidebar.php' );
 	
 
 
 } else {
+
+
 
 
 
@@ -90,7 +169,7 @@ if ( is_object( $commentpress_obj ) ) {
 
 <div class="sidebar_header">
 
-<h2>Table of Contents</h2>
+<h2><?php echo $cp_toc_title; ?></h2>
 
 </div>
 

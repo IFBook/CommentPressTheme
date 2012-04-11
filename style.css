@@ -2,6 +2,7 @@
 Theme Name: Commentpress
 Theme URI: http://www.futureofthebook.org/commentpress/
 Description: The default theme for Commentpress
+Tags: buddypress, groupblog, two-columns, sticky-post, threaded-comments, paragraph-comments
 Version: 3.2.1
 License: GNU General Public License
 License URI: license.txt
@@ -10,5 +11,5 @@ Author URI: http://www.haystack.co.uk
 */
 
 @import "style/css/reset.css";
-@import "style/css/typography.css";
-@import "style/css/layout.css";
+@import "style/css/typography.dev.css";
+@import "style/css/layout.dev.css";

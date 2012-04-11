@@ -49,7 +49,7 @@ if (!empty($_SERVER['SCRIPT_FILENAME']) && 'comments_by_para.php' == basename($_
 <?php
 
 // include comment form
-include( TEMPLATEPATH . '/style/templates/comment_form.php');
+include( get_template_directory() . '/style/templates/comment_form.php');
 
 ?>
 

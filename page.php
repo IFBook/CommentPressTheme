@@ -54,7 +54,7 @@
 	if ( $hide == 'show' ) {
 
 	?>
-	<h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+	<h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 	<?php
 	
 	}
@@ -124,7 +124,7 @@
 
 <div class="post">
 
-	<h2>Page Not Found</h2>
+	<h2 class="post_title">Page Not Found</h2>
 	
 	<p>Sorry, but you are looking for something that isn't here.</p>
 	

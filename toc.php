@@ -26,7 +26,7 @@ Template Name: Table of Contents
 
 <div class="post">
 
-<h2>TOC</h2>
+<h2 class="post_title">TOC</h2>
 
 </div><!-- /post -->
 

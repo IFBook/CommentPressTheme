@@ -41,7 +41,7 @@ if ( is_object( $commentpress_obj ) ) {
 	if ( $commentpress_obj->db->is_special_page() ) {
 
 		// include 'comments in page' template
-		include(TEMPLATEPATH . '/style/templates/comments_in_page.php');
+		include(get_template_directory() . '/style/templates/comments_in_page.php');
 		return;
 		
 	}
@@ -50,7 +50,7 @@ if ( is_object( $commentpress_obj ) ) {
 	if ( $commentpress_obj->comments_by_paragraph() ) {
 
 		// include comments split by paragraph template
-		include(TEMPLATEPATH . '/style/templates/comments_by_para.php');
+		include(get_template_directory() . '/style/templates/comments_by_para.php');
 		return;
 		
 	}
@@ -157,6 +157,6 @@ if ( is_object( $commentpress_obj ) ) {
 <?php
 
 // include comment form
-include( TEMPLATEPATH . '/style/templates/comment_form.php');
+include( get_template_directory() . '/style/templates/comment_form.php');
 
 ?>

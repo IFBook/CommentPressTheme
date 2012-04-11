@@ -6,21 +6,6 @@
 
 <div class="sidebar_header">
 
-<?php
-
-// declare access to globals
-global $commentpress_obj;
-
-// if we have the plugin enabled...
-if ( is_object( $commentpress_obj ) ) {
-
-	// show the minimise button
-	//echo $commentpress_obj->get_minimise_button( 'toc' );
-
-}
-
-?>
-
 <h2>Table of Contents</h2>
 
 </div>
@@ -32,6 +17,9 @@ if ( is_object( $commentpress_obj ) ) {
 <div class="sidebar_contents_wrapper">
 
 <?php 
+
+// declare access to globals
+global $commentpress_obj;
 
 // if we have the plugin enabled...
 if ( is_object( $commentpress_obj ) ) {
