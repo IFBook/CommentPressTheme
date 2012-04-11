@@ -4,42 +4,46 @@
 
 <div id="footer_inner">
 
-	<?php
+	<?php 
 	
-	// compat with wplicense plugin
-	if ( function_exists( 'isLicensed' ) AND isLicensed() ) {
+	if ( ! dynamic_sidebar( 'cp-license-1' ) ) {
 	
-		// show the license (buggy, use wp_footer() instead)
-		//licenseHtml( $display = true );
+		// compat with wplicense plugin
+		if ( function_exists( 'isLicensed' ) AND isLicensed() ) {
 		
-	} else {
-		
-		// show copyright 
-		?>
-	
-		<p>Website content &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. All rights reserved.</p>
-		
-		<?php 
-		
-		/*
-		// legacy backlink, leave out for now
-		if ( 
-		
-			"http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
-			"http://www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
-			$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
-			"www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" 
+			// show the license (buggy, use wp_footer() instead)
+			//licenseHtml( $display = true );
 			
-		) { 
+		} else {
+			
+			// show copyright 
+			?>
 		
-		?>
-		
-		<p>This site is powered by <a href="http://www.futureofthebook.org/commentpress/">Commentpress</a></p>
-		
-		<?php 
-		
+			<p>Website content &copy; <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a> <?php echo date('Y'); ?>. All rights reserved.</p>
+			
+			<?php 
+			
+			/*
+			// legacy backlink, leave out for now
+			if ( 
+			
+				"http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
+				"http://www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
+				$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" || 
+				"www.".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] == home_url()."/" 
+				
+			) { 
+			
+			?>
+			
+			<p>This site is powered by <a href="http://www.futureofthebook.org/commentpress/">Commentpress</a></p>
+			
+			<?php 
+			
+			}
+			*/
+			
 		}
-		*/
 		
 	}
 	
