@@ -132,7 +132,8 @@ div.generic-button a
 
 
 /* Buddypress search in top bar */
-#book_search input#search-submit 
+#book_search input#search-submit,
+#book_search input#searchsubmit 
 {
 	margin: 1px 0 0 5px;
 	line-height: 10px;
