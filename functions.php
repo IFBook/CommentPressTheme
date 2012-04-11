@@ -53,6 +53,7 @@ function cp_setup(
 	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'cp_header_image_height', 67 ) );
 
 	// add_custom_background function is deprecated in WP 3.4+
+	global $wp_version;
 	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
 		
 		// -------------------------
