@@ -1531,7 +1531,7 @@ function cp_scroll_to_comment_on_load() {
  * @todo: 
  *
  */
-function cp_do_comment_icon_action( text_sig ) {
+function cp_do_comment_icon_action( text_sig, mode ) {
 
 	// show comments sidebar
 	cp_activate_sidebar( 'comments' );
@@ -1629,13 +1629,23 @@ function cp_do_comment_icon_action( text_sig ) {
 
 				// move comment form
 				addComment.moveFormToPara( para_num, text_sig, post_id );
+				
+				// if mode is for markers
+				if ( mode == 'marker' ) {
+				
+					// scroll comments to header
+					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+	
+				} else {
 			
-				// scroll comments to comment form
-				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+					// scroll comments to comment form
+					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				
+				}
 			
 			} else {
 			
-				// scroll comments to comment form
+				// scroll comments to header
 				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
 			
 			}
@@ -1650,12 +1660,22 @@ function cp_do_comment_icon_action( text_sig ) {
 			// are comments open?
 			if ( cp_comments_open == 'y' ) {
 
-				// scroll comments to comment form
-				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				// if mode is for markers
+				if ( mode == 'marker' ) {
+				
+					// scroll comments to header
+					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+	
+				} else {
+			
+					// scroll comments to comment form
+					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				
+				}
 			
 			} else {
 			
-				// scroll comments to comment form
+				// scroll comments to header
 				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
 			
 			}
@@ -1670,12 +1690,22 @@ function cp_do_comment_icon_action( text_sig ) {
 			// are comments open?
 			if ( cp_comments_open == 'y' ) {
 
-				// scroll comments to comment form
-				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				// if mode is for markers
+				if ( mode == 'marker' ) {
+				
+					// scroll comments to header
+					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+	
+				} else {
+			
+					// scroll comments to comment form
+					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				
+				}
 			
 			} else {
 			
-				// scroll comments to comment form
+				// scroll comments to header
 				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
 			
 			}
@@ -1690,12 +1720,22 @@ function cp_do_comment_icon_action( text_sig ) {
 			// are comments open?
 			if ( cp_comments_open == 'y' ) {
 
-				// scroll comments to comment form
-				cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				// if mode is for markers
+				if ( mode == 'marker' ) {
+				
+					// scroll comments to header
+					cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+	
+				} else {
+			
+					// scroll comments to comment form
+					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+				
+				}
 			
 			} else {
 			
-				// scroll comments to comment form
+				// scroll comments to header
 				cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
 			
 			}
@@ -1737,8 +1777,18 @@ function cp_do_comment_icon_action( text_sig ) {
 				// are comments open?
 				if ( cp_comments_open == 'y' ) {
 
-					// scroll comments to comment form
-					cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+					// if mode is for markers
+					if ( mode == 'marker' ) {
+					
+						// scroll comments to header
+						cp_scroll_comments( jQuery('#para_heading-' + text_sig), cp_scroll_speed );
+		
+					} else {
+				
+						// scroll comments to comment form
+						cp_scroll_comments( jQuery('#respond'), cp_scroll_speed );
+					
+					}
 				
 				} else {
 				
@@ -1782,15 +1832,130 @@ function cp_setup_para_permalink_icons() {
 		event.preventDefault();
 	
 		// get text signature
-		var text_sig = jQuery(this).attr('id');
+		var text_sig = jQuery(this).attr('href').substring(1);
+		//console.log( text_sig );
 		
 		// use function
-		cp_do_comment_icon_action( text_sig );
+		cp_do_comment_icon_action( text_sig, 'auto' );
 		
 		// --<
 		return false;
 		
 	});
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.para_permalink').unbind( 'hover' );
+
+	/** 
+	 * @description: clicking on the little comment icon
+	 * @todo: 
+	 *
+	 */
+	jQuery('a.para_permalink').hover( 
+	
+		function( event ) {
+			
+			// get text signature
+			var text_sig = jQuery(this).attr('href');
+			//console.log( 'span.para_marker a'.text_sig );
+			
+			jQuery('span.para_marker a' + text_sig).addClass( 'js-hover' );
+			
+		},
+	
+		function( event ) {
+			
+			// get text signature
+			var text_sig = jQuery(this).attr('href');
+			//console.log( text_sig );
+			
+			jQuery('span.para_marker a' + text_sig).removeClass( 'js-hover' );
+			
+		}
+	
+	);
+
+}
+
+
+
+
+
+	
+/** 
+ * @description: set up clicks on comment icons attached to comment-blocks in post/page
+ * @todo: 
+ *
+ */
+function cp_setup_para_marker_icons() {
+
+	// unbind first to allow repeated calls to this function
+	jQuery('span.para_marker a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on the little comment icon
+	 * @todo: 
+	 *
+	 */
+	jQuery('span.para_marker a').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var text_sig = jQuery(this).attr('href');
+		//console.log( text_sig );
+		
+		// remove leading #
+		text_sig = text_sig.substring(1);
+		
+		// use function
+		cp_do_comment_icon_action( text_sig, 'marker' );
+		
+		// --<
+		return false;
+		
+	});
+
+	// unbind first to allow repeated calls to this function
+	jQuery('span.para_marker a').unbind( 'hover' );
+
+	/** 
+	 * @description: clicking on the little comment icon
+	 * @todo: 
+	 *
+	 */
+	jQuery('span.para_marker a').hover( 
+	
+		function( event ) {
+			
+			// get text signature
+			var text_sig = jQuery(this).attr('href');
+			//console.log( 'span.para_marker a'.text_sig );
+			
+			// get target item
+			var target = jQuery(this).parent().next().children('.comment_count');
+			//console.log( target );
+			
+			target.addClass( 'js-hover' );
+			
+		},
+	
+		function( event ) {
+			
+			// get text signature
+			var text_sig = jQuery(this).attr('href');
+			//console.log( text_sig );
+			
+			// get target item
+			var target = jQuery(this).parent().next().children('.comment_count');
+			//console.log( target );
+			
+			target.removeClass( 'js-hover' );
+			
+		}
+	
+	);
 
 }
 
@@ -2128,11 +2293,11 @@ function cp_setup_para_links() {
 		event.preventDefault();
 	
 		// get text signature
-		var text_sig = jQuery(this).attr('href').split('#')[1];
+		var text_sig = jQuery(this).attr('href').substring(1);
 		//console.log(text_sig);
 		
 		// use function
-		cp_do_comment_icon_action( text_sig );
+		cp_do_comment_icon_action( text_sig, 'auto' );
 		
 		// --<
 		return false;
@@ -2342,8 +2507,11 @@ jQuery(document).ready( function($) {
 	// enable animations on clicking comment permalinks
 	cp_enable_comment_permalink_clicks();
 	
-	// set up comment icons (paragraph permalinks)
+	// set up comment icons (these used to be paragraph permalinks - now 'add comment')
 	cp_setup_para_permalink_icons();
+	
+	// set up paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
+	cp_setup_para_marker_icons();
 	
 	// set up user-defined links to paragraphs
 	cp_setup_para_links();
