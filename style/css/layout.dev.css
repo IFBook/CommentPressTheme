@@ -607,7 +607,17 @@ ul#content-tabs li
 	background: #fff;
 }
 
-	.post 
+	.post,
+	body.right-bubbles .post
+	{
+		/* To accomodate our right aligned speech bubbles */
+		padding: 45px 70px;
+		margin: 0;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	body.left-bubbles .post
 	{
 		/* To accomodate our left aligned speech bubbles */
 		padding: 45px 0;
@@ -647,9 +657,10 @@ ul#content-tabs li
 		padding: 7px 7px 0 7px;
 	}
 	
+	/* line-by-line textblock formatting */
 	.post span.textblock
 	{
-		display: inline-block;
+		/* display: inline-block; */
 	}
 	
 	.post div.textblock p,
@@ -697,10 +708,21 @@ Paragraph Comment Icon
 ---------------------------------------------------------------------
 */
 
-span.commenticonbox 
+/* right-aligned bubbles */
+.post span.commenticonbox,
+body.right-bubbles .post span.commenticonbox 
 {
 	position: absolute;
-	margin-left: -35px;	
+	margin-top: 0;	
+	padding-right: 20px;
+	right: 25px;
+}
+
+/* left-aligned bubbles */
+body.left-bubbles .post span.commenticonbox 
+{
+	position: absolute;
+	margin-left: -40px;
 	padding-right: 15px;
 }
 
@@ -782,6 +804,48 @@ span.textblock.selected_para
 	margin: 0;
 	padding: 0;
 }
+
+
+
+/* left-aligned paragraph marker */
+.post span.para_marker 
+{
+	position: absolute;
+	margin-left: -40px;
+	padding-right: 15px;
+}
+
+	.post span.para_marker span
+	{
+		font-size: 70%;
+	}
+	
+	#content .post span.para_marker a
+	{
+		text-decoration: none;
+	}
+	
+	/* enable visual cue for rollovers */
+	#content .post span.para_marker a.js-hover
+	{
+		color: #761D19;
+	}
+	
+	#content .post span.para_marker a.js-hover span
+	{
+		font-size: 90%;
+		font-weight: bold;
+	}
+	
+	/* both ways */
+	span.commenticonbox small.comment_count.js-hover
+	{
+		margin-top: -2px;
+		font-size: 80%;
+		font-weight: bold;
+		color: #761D19;
+	}
+	
 
 
 
@@ -1426,6 +1490,12 @@ body.cp_sidebar_activity #activity_sidebar
 		background: #EFEFEF;
 		text-decoration: none;
 	}	
+	
+	#activity_sidebar .comments_container .comment-content 
+	{
+		font-size: 90%;
+	}
+
 
 
 
