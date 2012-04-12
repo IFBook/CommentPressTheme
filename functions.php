@@ -2764,6 +2764,7 @@ function cp_multipager() {
 	
 	// get page links
 	$page_links = wp_link_pages( $defaults );
+	//print_r( $page_links ); die();
 	
 	// add separator when there are two links
 	$page_links = str_replace( 
