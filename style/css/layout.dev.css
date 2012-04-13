@@ -758,32 +758,31 @@ span.commenticonbox a.para_permalink
 		background: transparent url("../images/icons/comment.png") no-repeat;
 	}
 	
-span.commenticonbox small.comment_count
-{
-	font-size: 10px; 
-	position: absolute; 
-	float: right;
-	padding: 0 0 0 3px;
-}
-
-	span.commenticonbox small.zero_comments
+	span.commenticonbox small.comment_count
 	{
-		visibility: hidden;
+		font-size: 10px; 
+		position: absolute; 
+		float: right;
+		padding: 0 0 0 3px;
 	}
 	
-/* comment icon in blockquote */
-blockquote span.commenticonbox 
-{
-	margin-left: -50px;	
-	margin-right: 30px;
-}
-
-/* comment icon in span */
-span.textblock span.commenticonbox 
-{
-	padding-top: 7px;
-}
-
+		span.commenticonbox small.zero_comments
+		{
+			visibility: hidden;
+		}
+		
+	/* comment icon in blockquote */
+	.post blockquote span.commenticonbox 
+	{
+		right: 25px;
+	}
+	
+	/* comment icon in span */
+	span.textblock span.commenticonbox 
+	{
+		padding-top: 7px;
+	}
+	
 span.textblock.selected_para span.commenticonbox 
 {
 	padding-top: 7px;
@@ -813,6 +812,7 @@ span.textblock.selected_para
 	position: absolute;
 	margin-left: -40px;
 	padding-right: 15px;
+	font-style: normal;
 }
 
 	.post span.para_marker span
@@ -846,6 +846,12 @@ span.textblock.selected_para
 		color: #761D19;
 	}
 	
+	/* para marker in blockquote */
+	.post blockquote span.para_marker 
+	{
+		margin-left: -55px;	
+	}
+
 
 
 
