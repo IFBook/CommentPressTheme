@@ -1008,6 +1008,32 @@ ul.image_link h4
 
 
 
+/* License Plugin Compatibility */
+#footer .license-wrap
+{
+	font-size: 90%;
+	font-weight: normal;
+}
+
+#footer .widget.license-widget h3.widget-title
+{
+	color: #761D19;
+	padding-bottom: 4px;
+}
+
+
+
+
+/* WP-License Plugin Compatibility */
+#footer .wp_license
+{
+	font-size: 90%;
+	font-weight: normal;
+}
+
+
+
+
 /* Font stack options
 
 	The following represents a list of font stacks, as recommended by Nathan Ford in
