@@ -1027,6 +1027,7 @@ ul.image_link h4
 /* WP-License Plugin Compatibility */
 #footer .wp_license
 {
+	text-align: center;
 	font-size: 90%;
 	font-weight: normal;
 }
