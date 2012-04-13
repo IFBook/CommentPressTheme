@@ -3158,4 +3158,24 @@ add_action( 'widgets_init', 'commentpress_license_widget_compat', 100 );
 
 
 
+if ( ! function_exists( 'commentpress_wplicense_compat' ) ):
+/**
+ * Remove license from footer - wp_footer() is not inside #footer
+ */
+function commentpress_wplicense_compat() {
+	
+	// let's not have the default footer
+	remove_action('wp_footer', 'cc_showLicenseHtml');
+
+}
+endif; // commentpress_wplicense_compat
+
+// do this late, so license ought to be declared by then
+add_action( 'init', 'commentpress_wplicense_compat', 100 );
+
+
+
+
+
+
 ?>

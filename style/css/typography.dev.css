@@ -1016,6 +1016,12 @@ ul.image_link h4
 	font-weight: normal;
 }
 
+#footer .widget.license-widget h3.widget-title
+{
+	color: #761D19;
+	padding-bottom: 4px;
+}
+
 
 
 
