@@ -2816,7 +2816,7 @@ function cp_add_tinymce_nextpage_button( $buttons ) {
 		$tmp_buttons[] = 'wp_page';
 		
 		// recombine
-		$mce_buttons = array_merge( $tmp_buttons, array_slice( $buttons, $pos + 1 ) );
+		$buttons = array_merge( $tmp_buttons, array_slice( $buttons, $pos + 1 ) );
 		
 	}
 	
