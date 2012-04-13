@@ -1011,7 +1011,6 @@ ul.image_link h4
 /* License Plugin Compatibility */
 #footer .license-wrap
 {
-	font-family: Helvetica, Arial, sans-serif;
 	font-size: 90%;
 	font-weight: normal;
 }
@@ -1026,10 +1025,10 @@ ul.image_link h4
 
 
 /* WP-License Plugin Compatibility */
-#footer .wp_license img
+#footer .wp_license
 {
-	float: left;
-	margin: 0 6px 3px 0;
+	font-size: 90%;
+	font-weight: normal;
 }
 
 
