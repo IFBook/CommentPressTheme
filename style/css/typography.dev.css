@@ -1008,6 +1008,19 @@ ul.image_link h4
 
 
 
+/* License Plugin Compatibility */
+#footer .license-wrap
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 90%;
+	font-weight: normal;
+}
+
+
+
+
+
+
 /* Font stack options
 
 	The following represents a list of font stacks, as recommended by Nathan Ford in

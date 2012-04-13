@@ -8,10 +8,10 @@ class Commentpress_License_Widget extends WP_Widget {
 	function __construct() {
 		$widget_ops = array(
 			'classname' => 'commentpress_widget', 
-			'description' => __( 'Use this widget to place HTML in the page footer - for example, copyright or licensing information', 'commentpress-theme' )
+			'description' => __( 'This widget is supplied by the Commentpress theme for placing HTML in the page footer - for example, copyright or licensing information', 'commentpress-theme' )
 		);
 		$control_ops = array('width' => 400, 'height' => 350);
-		parent::__construct('text', __('License', 'commentpress-theme'), $widget_ops, $control_ops);
+		parent::__construct('text', __('Page Footer', 'commentpress-theme'), $widget_ops, $control_ops);
 	}
 
 	function widget( $args, $instance ) {
