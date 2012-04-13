@@ -1025,6 +1025,14 @@ ul.image_link h4
 
 
 
+/* WP-License Plugin Compatibility */
+#footer .wp_license img
+{
+	float: left;
+	margin: 0 6px 3px 0;
+}
+
+
 
 
 /* Font stack options
