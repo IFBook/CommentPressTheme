@@ -3111,4 +3111,71 @@ endif; // commentpress_widgets_init
 
 add_action( 'widgets_init', 'commentpress_widgets_init' );
 
+
+
+
+
+
+if ( ! function_exists( 'commentpress_license_image_css' ) ):
+/**
+ * Amend display of license plugin image
+ */
+function commentpress_license_image_css() {
+
+	// give a bit more room to the image
+	return 'display: block; float: left; margin: 0 6px 3px 0;';
+
+}
+endif; // commentpress_license_image_css
+
+add_action( 'license_img_style', 'commentpress_license_image_css' );
+
+
+
+
+
+
+if ( ! function_exists( 'commentpress_license_widget_compat' ) ):
+/**
+ * Remove license from footer when widget not active - wp_footer() is not inside #footer
+ */
+function commentpress_license_widget_compat() {
+
+	// if the widget is not active, (i.e. the plugin is installed but the widget has not been 
+	// dragged to a sidebar), then DO NOT display the license in the footer as a default
+	if (!is_active_widget(false, false, 'license-widget', true) ) {
+		remove_action( 'wp_footer', 'license_print_license_html' );			
+	}
+
+}
+endif; // commentpress_license_widget_compat
+
+// do this late, so license ought to be declared by then
+add_action( 'widgets_init', 'commentpress_license_widget_compat', 100 );
+
+
+
+
+
+
+if ( ! function_exists( 'commentpress_wplicense_compat' ) ):
+/**
+ * Remove license from footer - wp_footer() is not inside #footer
+ */
+function commentpress_wplicense_compat() {
+	
+	// let's not have the default footer
+	remove_action('wp_footer', 'cc_showLicenseHtml');
+
+}
+endif; // commentpress_wplicense_compat
+
+// do this late, so license ought to be declared by then
+add_action( 'init', 'commentpress_wplicense_compat', 100 );
+
+
+
+
+
+
 ?>

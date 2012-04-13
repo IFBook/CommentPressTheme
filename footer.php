@@ -6,13 +6,16 @@
 
 	<?php 
 	
+	// are we using the page footer widget?
 	if ( ! dynamic_sidebar( 'cp-license-1' ) ) {
+		
+		// no - make other provision here
 	
 		// compat with wplicense plugin
 		if ( function_exists( 'isLicensed' ) AND isLicensed() ) {
 		
-			// show the license (buggy, use wp_footer() instead)
-			//licenseHtml( $display = true );
+			// show the license from wpLicense
+			cc_showLicenseHtml();
 			
 		} else {
 			
