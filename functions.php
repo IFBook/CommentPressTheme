@@ -1725,7 +1725,7 @@ function cp_get_comment_activity( $scope = 'all' ) {
 			$is_on_current_post = '';
 
 			// on current post?
-			if ( is_object( $post ) AND $comment->comment_post_ID == $post->ID) {
+			if ( is_singular() AND is_object( $post ) AND $comment->comment_post_ID == $post->ID ) {
 				
 				// access paging globals
 				global $multipage, $page;
