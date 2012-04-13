@@ -1585,8 +1585,8 @@ function cp_is_commentable() {
 
 	
 	
-	// not if there's not post object
-	if ( !is_object( $post ) ) { return false; }
+	// not if we're not on a page/post and especially not if there's no post object
+	if ( !is_singular() OR !is_object( $post ) ) { return false; }
 	
 	
 	
