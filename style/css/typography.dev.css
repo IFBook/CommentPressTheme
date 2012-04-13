@@ -940,7 +940,7 @@ ul#group_list li
 {
 	font-family: Helvetica,Arial,sans-serif;
 	display: block;
-	padding: 2px 5px;
+	padding: 2px 0;
 	font-size: 1.1em;
 	font-weight: normal;
 	font-style: normal;
