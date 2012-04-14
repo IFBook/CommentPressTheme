@@ -3092,7 +3092,7 @@ function commentpress_widgets_init() {
 	// define an area where a widget may be placed
 	register_sidebar( array(
 		'name' => __( 'Page Footer', 'commentpress-theme' ),
-		'id' => 'cp-license-1',
+		'id' => 'cp-license',
 		'description' => __( 'An optional widget area for your page footer', 'commentpress-theme' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => "</div>",
