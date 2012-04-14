@@ -1585,8 +1585,8 @@ function cp_is_commentable() {
 
 	
 	
-	// not if there's not post object
-	if ( !is_object( $post ) ) { return false; }
+	// not if we're not on a page/post and especially not if there's no post object
+	if ( !is_singular() OR !is_object( $post ) ) { return false; }
 	
 	
 	
@@ -3092,8 +3092,8 @@ function commentpress_widgets_init() {
 	// define an area where a widget may be placed
 	register_sidebar( array(
 		'name' => __( 'Page Footer', 'commentpress-theme' ),
-		'id' => 'cp-license-1',
-		'description' => __( 'An optional widget area for your page footer', 'commentpress-theme' ),
+		'id' => 'cp-license',
+		'description' => __( 'An optional widget area in the page footer of Commentpress theme', 'commentpress-theme' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => "</div>",
 		'before_title' => '<h3 class="widget-title">',
