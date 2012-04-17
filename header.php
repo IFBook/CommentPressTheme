@@ -18,6 +18,8 @@
 
 <!-- styles -->
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
+<!-- Added by Jack Dougherty for print styling with print.css file -->
+<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_directory'); ?>/print.css" media="print" />
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/style/css/ie6.css" media="screen" />
 <![endif]-->
