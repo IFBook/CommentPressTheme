@@ -27,9 +27,9 @@ if ( $my_author->user_url != '' AND $my_author->user_url != 'http://' ) {
 
 
 
-?>
+get_header(); 
 
-<?php get_header(); ?>
+?>
 
 
 
