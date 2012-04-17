@@ -2,9 +2,20 @@
 /*
 Template Name: Comments by Commenter
 */
+
+
+
+// get page content --> I prefer to do this before the page is sent
+// to the browser: the markup is generated before anything is displayed
+$_page_content = cp_get_comments_by_page_content();
+
+
+
+get_header(); 
+
 ?>
 
-<?php include( get_template_directory() . '/style/templates/comments-by-header.php' ); ?>
+
 
 <!-- all-comments.php -->
 

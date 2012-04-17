@@ -1768,7 +1768,7 @@ body.cp_sidebar_comments #comments_sidebar
 	.post ol.children li,
 	.post ul.children li
 	{
-		padding: 5px 0 0 20px;
+		padding: 0 0 0 20px;
 		margin: 0;
 	}
 	
