@@ -125,10 +125,10 @@ Updated by Christian Wach for Commentpress
 		display: block !important;
 	}
 
-	/* footer temporarily disabled; need to find way to control its placement on page */
+	/* footer enabled */
 	#footer
 	{
-		display: none;
+		border-top: 2px solid #aaa;
 	}
 	
 	img
