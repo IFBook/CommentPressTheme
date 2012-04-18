@@ -147,13 +147,12 @@ Updated by Christian Wach for Commentpress
 	
 	table
 	{
-		border: 1px solid #aaa;
-		border-bottom: none;
 	}
 	
-	table tr
+	table th,
+	table td
 	{
-		border-bottom: 1px solid #aaa;
+		border: 1px solid #aaa;
 	}
 	
 	ul, 
@@ -161,6 +160,11 @@ Updated by Christian Wach for Commentpress
 	dl
 	{
 		page-break-before: avoid;
-	} 
+	}
+	
+	dt
+	{
+		font-weight: bold;
+	}
 
 }
