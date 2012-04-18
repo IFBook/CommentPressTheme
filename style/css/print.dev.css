@@ -139,6 +139,8 @@ Updated by Christian Wach for Commentpress
 	
 	blockquote
 	{
+		margin-left: 1em;
+		padding-left: 1em;
 		border-left: 1px solid #aaa;
 		font-style: italic;
 	}
