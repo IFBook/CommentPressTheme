@@ -96,13 +96,13 @@ add_action( 'after_setup_theme', 'cp_setup' );
 
 
 
-if ( ! function_exists( 'cp_enqueue_buddypress_styles' ) ):
+if ( ! function_exists( 'cp_enqueue_theme_styles' ) ):
 /** 
- * @description: add buddypress styles
+ * @description: add front-end styles
  * @todo:
  *
  */
-function cp_enqueue_buddypress_styles() {
+function cp_enqueue_theme_styles() {
 
 	// init
 	$dev = '';
@@ -112,14 +112,62 @@ function cp_enqueue_buddypress_styles() {
 		$dev = '.dev';
 	}
 	
-	// add css
-	wp_enqueue_style( 'cp_buddypress_css', get_template_directory_uri() . '/style/css/bp-overrides'.$dev.'.css' );
+	// if BuddyPress is enabled...
+	if ( defined( 'BP_VERSION' ) ) {
 
+		// add BuddyPress css
+		wp_enqueue_style( 
+			
+			'cp_buddypress_css', 
+			get_template_directory_uri() . '/style/css/bp-overrides'.$dev.'.css'
+			
+		);
+	
+	}
+	
 }
-endif; // cp_enqueue_buddypress_styles
+endif; // cp_enqueue_theme_styles
 
 // add a filter for the above
-add_filter( 'wp_enqueue_scripts', 'cp_enqueue_buddypress_styles', 40 );
+add_filter( 'wp_enqueue_scripts', 'cp_enqueue_theme_styles', 40 );
+
+
+
+
+
+
+if ( ! function_exists( 'cp_enqueue_print_styles' ) ):
+/** 
+ * @description: add front-end print styles
+ * @todo:
+ *
+ */
+function cp_enqueue_print_styles() {
+
+	// init
+	$dev = '';
+	
+	// check for dev
+	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
+		$dev = '.dev';
+	}
+	
+	// add child print css
+	wp_enqueue_style( 
+		
+		'cp_print_css', 
+		get_template_directory_uri() . '/style/css/print'.$dev.'.css',
+		false,
+		false,
+		'print'
+		
+	);
+	
+}
+endif; // cp_enqueue_print_styles
+
+// add a filter for the above, very late so it (hopefully) is last in the queue
+add_filter( 'wp_enqueue_scripts', 'cp_enqueue_print_styles', 100 );
 
 
 
@@ -1944,21 +1992,21 @@ function cp_get_comments_by_para() {
 						case 'tag' :
 							
 							// set block identifier
-							$block_name = 'paragraph';
+							$block_name = __( 'paragraph', 'commentpress-theme' );
 						
 							break;
 							
 						case 'block' :
 							
 							// set block identifier
-							$block_name = 'block';
+							$block_name = __( 'block', 'commentpress-theme' );
 						
 							break;
 							
 						case 'line' :
 							
 							// set block identifier
-							$block_name = 'line';
+							$block_name = __( 'line', 'commentpress-theme' );
 						
 							break;
 							
@@ -1967,7 +2015,7 @@ function cp_get_comments_by_para() {
 				} else {
 				
 					// set block identifier
-					$block_name = 'paragraph';
+					$block_name = __( 'paragraph', 'commentpress-theme' );
 				
 				}
 				
@@ -1976,20 +2024,44 @@ function cp_get_comments_by_para() {
 				
 			}
 			
-			// init s
-			$s = 's';
+			// count comments
+			$comment_count = count( $_comments );
 			
-			// if just one comment
-			if ( count( $_comments ) == 1 ) { $s = ''; }
+			// define heading text
+			$heading_text = sprintf( _n(
+				
+				// singular
+				'<span>%d</span> Comment on ', 
+				
+				// plural
+				'<span>%d</span> Comments on ', 
+				
+				// number
+				$comment_count, 
+				
+				// domain
+				'commentpress-theme'
 			
-			// construct heading
-			$heading_text = '<span>'. count( $_comments ) . '</span> Comment'.$s.' on '.$paragraph_text;
+			// substitution
+			), $comment_count );
+			
+			// append para text
+			$heading_text .= $paragraph_text;
+			
+			// init no comment class
+			$no_comments_class = '';
+			
+			// override if there are no comments (for print stylesheet to hide them)
+			if ( $comment_count == 0 ) { $no_comments_class = ' class="no_comments"'; }
 			
 			// show heading
-			echo '<h3 id="para_heading-'.$text_sig.'"><a class="comment_block_permalink" title="Permalink for comments on '.$paragraph_text.'" href="#para_heading-'.$text_sig.'">'.$heading_text.'</a></h3>'."\n\n";
+			echo '<h3 id="para_heading-'.$text_sig.'"'.$no_comments_class.'><a class="comment_block_permalink" title="Permalink for comments on '.$paragraph_text.'" href="#para_heading-'.$text_sig.'">'.$heading_text.'</a></h3>'."\n\n";
 
+			// override if there are no comments (for print stylesheet to hide them)
+			if ( $comment_count == 0 ) { $no_comments_class = ' no_comments'; }
+			
 			// open paragraph wrapper
-			echo '<div id="para_wrapper-'.$text_sig.'" class="paragraph_wrapper">'."\n\n";
+			echo '<div id="para_wrapper-'.$text_sig.'" class="paragraph_wrapper'.$no_comments_class.'">'."\n\n";
 
 			// have we already used this text signature?
 			if( in_array( $text_sig, $used_text_sigs ) ) {
