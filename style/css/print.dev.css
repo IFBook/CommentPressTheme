@@ -106,6 +106,12 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
+	/* release vertical constraint on comment wrapper */
+	.sidebar_contents_wrapper
+	{
+		height: auto;
+	}
+	
 	/* prioritise comment content */
 	div#comments_sidebar .comments_container .comment-content
 	{
