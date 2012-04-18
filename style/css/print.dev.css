@@ -5,6 +5,11 @@ Updated by Christian Wach for Commentpress
 */
 
 @media print {
+
+	*
+	{
+		height: auto !important;
+	}
 	
 	/* Set sensible defaults */
 	body 
@@ -134,8 +139,29 @@ Updated by Christian Wach for Commentpress
 	/* footer enabled */
 	#footer
 	{
+		border: none;
 		border-top: 2px solid #aaa;
 		padding-top: 1em;
+		color: #aaa;
+	}
+	
+	#footer_inner 
+	{
+		padding: 0;
+	}
+	
+	/* guessing tags */
+	#footer p,
+	#footer ul li,
+	#footer ol li
+	{
+		color: #aaa;
+	}
+	
+	#footer a
+	{
+		color: #aaa;
+		text-decoration: none;
 	}
 	
 	img
