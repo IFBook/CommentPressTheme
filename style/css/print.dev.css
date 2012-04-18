@@ -67,7 +67,8 @@ Updated by Christian Wach for Commentpress
 	div.reply,
 	img.avatar,
 	a.comment-edit-link,
-	.no_comments
+	.no_comments,
+	.multipager
 	{
 		display: none; 
 	}
