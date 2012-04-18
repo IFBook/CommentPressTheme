@@ -62,6 +62,7 @@ Updated by Christian Wach for Commentpress
 	div#activity_sidebar,
 	div#toc_sidebar,
 	#respond_wrapper,
+	#respond,
 	div.reply_to_para,
 	div.reply,
 	img.avatar,
@@ -134,6 +135,23 @@ Updated by Christian Wach for Commentpress
 	pre 
 	{
 		page-break-inside: avoid;
+	}
+	
+	blockquote
+	{
+		border-left: 1px solid #aaa;
+		font-style: italic;
+	}
+	
+	table
+	{
+		border: 1px solid #aaa;
+		border-bottom: none;
+	}
+	
+	table tr
+	{
+		border-bottom: 1px solid #aaa;
 	}
 	
 	ul, 
