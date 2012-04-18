@@ -138,7 +138,7 @@ add_filter( 'wp_enqueue_scripts', 'cp_enqueue_theme_styles', 40 );
 
 if ( ! function_exists( 'cp_enqueue_print_styles' ) ):
 /** 
- * @description: add front-end styles
+ * @description: add front-end print styles
  * @todo:
  *
  */
@@ -166,7 +166,7 @@ function cp_enqueue_print_styles() {
 }
 endif; // cp_enqueue_print_styles
 
-// add a filter for the above, very late so it (hopefully) is last
+// add a filter for the above, very late so it (hopefully) is last in the queue
 add_filter( 'wp_enqueue_scripts', 'cp_enqueue_print_styles', 100 );
 
 

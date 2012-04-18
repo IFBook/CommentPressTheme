@@ -119,6 +119,12 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
+	/* All Comments */
+	ul.all_comments_listing div.item_body
+	{
+		display: block !important;
+	}
+
 	/* footer temporarily disabled; need to find way to control its placement on page */
 	#footer
 	{
