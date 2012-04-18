@@ -481,7 +481,7 @@ function cp_get_body_classes(
 			// set key
 			$key = '_cp_page_layout';
 			
-			//if the custom field already has a value...
+			// if the custom field already has a value...
 			if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 			
 				// get it
@@ -1483,6 +1483,7 @@ function cp_get_comments_by_content() {
 				//if ( $comment->comment_count > 1 ) { $_comment_count_text = 'comments'; } else { $_comment_count_text = 'comment'; }
 		
 				// show it --  <span>('.$comment->comment_count.' '.$_comment_count_text.')</span>
+				
 				// add gravatar
 				$_page_content .= '<h3>'.get_avatar( $comment, $size='24' ).$comment->comment_author.'</h3>'."\n\n";
 	
@@ -2737,7 +2738,7 @@ function cp_multipage_comment_link( $link, $comment, $args ) {
 			// set key
 			$key = '_cp_comment_page';
 			
-			//if the custom field already has a value...
+			// if the custom field already has a value...
 			if ( get_comment_meta( $comment->comment_ID, $key, true ) != '' ) {
 			
 				// get the page number

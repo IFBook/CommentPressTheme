@@ -73,7 +73,7 @@ if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 	// set key
 	$key = '_cp_title_visibility';
 	
-	//if the custom field already has a value...
+	// if the custom field already has a value...
 	if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
 	
 		// get it

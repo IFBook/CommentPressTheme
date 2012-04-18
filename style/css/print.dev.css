@@ -5,6 +5,11 @@ Updated by Christian Wach for Commentpress
 */
 
 @media print {
+
+	*
+	{
+		height: auto !important;
+	}
 	
 	/* Set sensible defaults */
 	body 
@@ -68,7 +73,8 @@ Updated by Christian Wach for Commentpress
 	img.avatar,
 	a.comment-edit-link,
 	.no_comments,
-	.multipager
+	.multipager,
+	p.edit_link
 	{
 		display: none; 
 	}
@@ -106,6 +112,18 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
+	.running_header_bottom
+	{
+		text-align: center;
+		padding-bottom: 1em;
+	}
+	
+	/* release vertical constraint on comment wrapper */
+	.sidebar_contents_wrapper
+	{
+		height: auto;
+	}
+	
 	/* prioritise comment content */
 	div#comments_sidebar .comments_container .comment-content
 	{
@@ -125,10 +143,32 @@ Updated by Christian Wach for Commentpress
 		display: block !important;
 	}
 
-	/* footer temporarily disabled; need to find way to control its placement on page */
+	/* footer enabled */
 	#footer
 	{
-		display: none;
+		border: none;
+		border-top: 2px solid #aaa;
+		padding-top: 1em;
+		color: #aaa;
+	}
+	
+	#footer_inner 
+	{
+		padding: 0;
+	}
+	
+	/* guessing tags */
+	#footer p,
+	#footer ul li,
+	#footer ol li
+	{
+		color: #aaa;
+	}
+	
+	#footer a
+	{
+		color: #aaa;
+		text-decoration: none;
 	}
 	
 	img
