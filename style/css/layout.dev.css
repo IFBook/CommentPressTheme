@@ -1559,9 +1559,10 @@ body.cp_sidebar_comments #comments_sidebar
 	{
 		padding: 0 0 5px 0;
 	}
-	
-		.comment-author-admin .comment-identifier,
-		.bypostauthor .comment-identifier
+		
+		/* set another colour for authors and admin */
+		.comment-author-admin > div > div > .comment-identifier,
+		.bypostauthor > div > div > .comment-identifier
 		{
 			background: #D2DCCF;
 		}
