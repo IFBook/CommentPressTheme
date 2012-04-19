@@ -1,6 +1,17 @@
-<!-- comments_sidebar.php -->
+<?php
 
-<div id="comments_sidebar" class="sidebar_container">
+// declare access to globals
+global $post;
+
+// init no comment class
+$no_comments_class = '';
+
+// override if there are no comments (for print stylesheet to hide title)
+if ( $post->comment_count == 0 ) { $no_comments_class = ' no_comments'; }
+
+?><!-- comments_sidebar.php -->
+
+<div id="comments_sidebar" class="sidebar_container<?php echo $no_comments_class; ?>">
 
 
 

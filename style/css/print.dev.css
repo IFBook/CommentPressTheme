@@ -118,6 +118,12 @@ Updated by Christian Wach for Commentpress
 		padding-bottom: 1em;
 	}
 	
+	/* show divider */
+	#comments_sidebar
+	{
+		border-bottom: 2px solid #aaa;
+	}
+	
 	/* release vertical constraint on comment wrapper */
 	.sidebar_contents_wrapper
 	{
@@ -147,7 +153,6 @@ Updated by Christian Wach for Commentpress
 	#footer
 	{
 		border: none;
-		border-top: 2px solid #aaa;
 		padding-top: 1em;
 		color: #aaa;
 	}
