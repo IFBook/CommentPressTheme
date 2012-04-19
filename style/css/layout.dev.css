@@ -2109,7 +2109,9 @@ Footer
 ---------------------------------------------------------------------
 */
 
-#content .post .archives_by_month ul 
+#content .post .archives_by_month ul,
+#content .post .categories ul,
+#content .post .tags ul 
 {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 90%;
@@ -2119,7 +2121,9 @@ Footer
 	border-bottom: 1px solid #B5BFB2;
 }
 
-	#content .post .archives_by_month ul ul
+	#content .post .archives_by_month ul ul,
+	#content .post .categories ul ul,
+	#content .post .tags ul ul
 	{
 		list-style-type: none;
 		margin: 0;
@@ -2130,7 +2134,15 @@ Footer
 	#content .post .archives_by_month ul ul ul,
 	#content .post .archives_by_month ul ul ul ul,
 	#content .post .archives_by_month ul ul ul ul ul,
-	#content .post .archives_by_month ul ul ul ul ul ul
+	#content .post .archives_by_month ul ul ul ul ul ul,
+	#content .post .categories ul ul ul,
+	#content .post .categories ul ul ul ul,
+	#content .post .categories ul ul ul ul ul,
+	#content .post .categories ul ul ul ul ul ul,
+	#content .post .tags ul ul ul,
+	#content .post .tags ul ul ul ul,
+	#content .post .tags ul ul ul ul ul,
+	#content .post .tags ul ul ul ul ul ul
 	{
 		list-style: none;
 		margin: 0;
@@ -2143,14 +2155,28 @@ Footer
 	#content .post .archives_by_month ul ul ul li,
 	#content .post .archives_by_month ul ul ul ul li,
 	#content .post .archives_by_month ul ul ul ul ul li,
-	#content .post .archives_by_month ul ul ul ul ul ul li
+	#content .post .archives_by_month ul ul ul ul ul ul li,
+	#content .post .categories ul li,
+	#content .post .categories ul ul li
+	#content .post .categories ul ul ul li,
+	#content .post .categories ul ul ul ul li,
+	#content .post .categories ul ul ul ul ul li,
+	#content .post .categories ul ul ul ul ul ul li,
+	#content .post .tags ul li,
+	#content .post .tags ul ul li
+	#content .post .tags ul ul ul li,
+	#content .post .tags ul ul ul ul li,
+	#content .post .tags ul ul ul ul ul li,
+	#content .post .tags ul ul ul ul ul ul li
 	{
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
 	}
 	
-	#content .post .archives_by_month ul a
+	#content .post .archives_by_month ul a,
+	#content .post .categories ul a,
+	#content .post .tags ul a
 	{
 		display: block;
 		font-size: 1em;
@@ -2163,16 +2189,30 @@ Footer
 		text-decoration: none;
 	}
 	
-		#content .post .archives_by_month ul a:hover
+		#content .post .archives_by_month ul a:hover,
+		#content .post .categories ul a:hover,
+		#content .post .tags ul a:hover
 		{
 			background: #EFEFEF;
 			text-decoration: none;
 			color: #761D19;
 		}
 		
-		#content .post .archives_by_month ul a:visited
+		#content .post .archives_by_month ul a:visited,
+		#content .post .categories ul a:visited,
+		#content .post .tags ul a:visited
 		{
 			color: #761D19;
+		}
+		
+		#content .post .tags ul li.no_tags
+		{
+			font-size: 1em;
+			color: #761D19;
+			padding: 10px 5px;
+			margin: 0 0 0 0;
+			line-height: 1;
+			border-top: 1px solid #B5BFB2;
 		}
 		
 	
