@@ -105,8 +105,8 @@ wp_list_categories( $defaults );
 
 $args = array(
 
-	'smallest' => 1.1, 
-	'largest' => 1.1,
+	'smallest' => 1, 
+	'largest' => 1,
 	'unit' => 'em', 
 	'number' => 0,  
 	'format' => 'list',
