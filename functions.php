@@ -1066,39 +1066,92 @@ function cp_echo_post_meta() {
 		
 			// have we got more than one?
 			if ( count( $authors ) > 1 ) {
-		
-				?>
-				<div class="coauthors-plus-authors">
-				<?php
+			
+				// yes - are we showing avatars?
+				if ( get_option('show_avatars') ) {
 				
-				// loop
-				foreach( $authors AS $author ) {
-				
+					// yes
+
 					?>
-					<div class="coauthors-plus-author">
-	
-						<?php
-						
-						// get avatar
-						echo get_avatar( $author->ID, $size='32' );
-						
-						?>
-						
-						<cite class="fn"><?php cp_echo_post_author( $author->ID ) ?></cite>
-					
-					</div>
-	
+					<div class="coauthors-plus-authors">
 					<?php
 					
-				}
+					// loop
+					foreach( $authors AS $author ) {
+					
+						?>
+						<div class="coauthors-plus-author">
+		
+							<?php
+							
+							// get avatar
+							echo get_avatar( $author->ID, $size='32' );
+							
+							?>
+							
+							<cite class="fn"><?php cp_echo_post_author( $author->ID ) ?></cite>
+						
+						</div>
+		
+						<?php
+						
+					}
+					
+					?>
+					
+					<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+					
+					</div>
+					<?php
 				
-				?>
+				} else {
 				
-				<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+					?><cite class="fn"><?php
+					
+					// use the Co-Authors format of "name, name, name and name"
+					
+					// init counter
+					$n = 1;
+					
+					// find out how many author we have
+					$author_count = count( $authors );
 				
-				</div>
-				<?php
-			
+					// loop
+					foreach( $authors AS $author ) {
+						
+						// default to comma
+						$sep = ', ';
+						
+						// if we're on the penultimate
+						if ( $n == ($author_count - 1) ) {
+						
+							// use ampersand
+							$sep = __( ' &amp; ', 'commentpress-theme' );
+							
+						}
+						
+						// if we're on the last, don't add
+						if ( $n == $author_count ) { $sep = ''; }
+						
+						// echo name
+						cp_echo_post_author( $author->ID );
+						
+						// and separator
+						echo $sep;
+						
+						// increment
+						$n++;
+						
+					}
+					
+					?></cite>
+					
+					<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+					
+					<?php
+				
+				} // end show_avatars check
+				
 			} else {
 			
 				// just the one author, revert to standard display method
