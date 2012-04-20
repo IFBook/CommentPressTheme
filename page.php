@@ -127,7 +127,9 @@ if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 	?>
 	<div class="search_meta">
 		
-		<?php 
+		<?php cp_echo_post_meta(); ?>
+		
+		<?php /*
 		
 		// get avatar
 		$author_id = get_the_author_meta( 'ID' );
@@ -138,7 +140,9 @@ if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 		<cite class="fn"><?php cp_echo_post_author() ?></cite>
 		
 		<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-	
+		
+		<?php */ ?>
+		
 	</div>
 	<?php
 	

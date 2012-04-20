@@ -1046,45 +1046,144 @@ endif; // cp_get_user_link
 
 
 
-if ( ! function_exists( 'cp_echo_post_author' ) ):
+if ( ! function_exists( 'cp_echo_post_meta' ) ):
 /** 
- * @description: show user in the loop
+ * @description: show user(s) in the loop
  * @todo: 
  *
  */
-function cp_echo_post_author() {
+function cp_echo_post_meta() {
 
+	// compat with Co-Authors Plus
+	if ( function_exists( 'get_coauthors' ) ) {
+	
+		// get multiple authors
+		$authors = get_coauthors();
+		//print_r( $authors ); die();
+		
+		// if we get some
+		if ( !empty( $authors ) ) {
+		
+			// have we got more than one?
+			if ( count( $authors ) > 1 ) {
+		
+				?>
+				<div class="coauthors-plus-authors">
+				<?php
+				
+				// loop
+				foreach( $authors AS $author ) {
+				
+					?>
+					<div class="coauthors-plus-author">
+	
+						<?php
+						
+						// get avatar
+						echo get_avatar( $author->ID, $size='32' );
+						
+						?>
+						
+						<cite class="fn"><?php cp_echo_post_author( $author->ID ) ?></cite>
+					
+					</div>
+	
+					<?php
+					
+				}
+				
+				?>
+				
+				<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+				
+				</div>
+				<?php
+			
+			} else {
+			
+				// just the one author, revert to standard display method
+			
+				// get avatar
+				$author_id = get_the_author_meta( 'ID' );
+				echo get_avatar( $author_id, $size='32' );
+				
+				?>
+				
+				<cite class="fn"><?php cp_echo_post_author( $author_id ) ?></cite>
+				
+				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+				
+				<?php 
+		
+			}
+			
+		}
+	
+	} else {
+	
+		// get avatar
+		$author_id = get_the_author_meta( 'ID' );
+		echo get_avatar( $author_id, $size='32' );
+		
+		?>
+		
+		<cite class="fn"><?php cp_echo_post_author( $author_id ) ?></cite>
+		
+		<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+		
+		<?php 
+	
+	}
+
+}
+endif; // cp_echo_post_meta
+
+
+
+
+
+
+
+if ( ! function_exists( 'cp_echo_post_author' ) ):
+/** 
+ * @description: show username (with link) in the loop
+ * @todo: 
+ *
+ */
+function cp_echo_post_author( $author_id ) {
+
+	// get author details
+	$user = get_userdata( $author_id );
+	
+	// kick out if we don't have a user with that ID
+	if ( !is_object( $user ) ) { return; }
+	
+	
+	
 	// access plugin
 	global $commentpress_obj, $post;
 
 	// if we have the plugin enabled and it's BP
 	if ( is_object( $post ) AND is_object( $commentpress_obj ) AND $commentpress_obj->is_buddypress() ) {
 	
-		// get author details
-		$user = get_userdata( $post->post_author );
-		
-		// for safety, check we got one
-		if ( is_object( $user ) ) {
-		
-			// construct user link
-			echo bp_core_get_userlink( $user->ID );
-		
-		} else {
-		
-			// link to theme author page
-			the_author_posts_link(); 
-
-		}
+		// construct user link
+		echo bp_core_get_userlink( $user->ID );
 
 	} else {
 	
-		// link to theme author page
-		the_author_posts_link(); 
-		
+		// link to theme's author page
+		$link = sprintf(
+			'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
+			get_author_posts_url( $user->ID, $user->user_nicename ),
+			esc_attr( sprintf( __( 'Posts by %s' ), $user->display_name ) ),
+			esc_html( $user->display_name )
+		);
+		echo apply_filters( 'the_author_posts_link', $link );
+
 	}
 		
 }
-endif; // cp_get_user_link
+endif; // cp_echo_post_author
 
 
 
