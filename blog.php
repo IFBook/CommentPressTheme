@@ -40,25 +40,15 @@ if (have_posts()) : ?>
 			<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 
 			<div class="search_meta">
-				
-				<p><?php 
-				
-				// get avatar
-				$author_id = get_the_author_meta( 'ID' );
-				echo get_avatar( $author_id, $size='32' );
-				
-				?></p>
-					
-				<p><small><?php the_time('F jS, Y') ?> <!-- by <?php the_author() ?> --></small></p>
-	
-				<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
-				
+				<?php cp_echo_post_meta(); ?>
 			</div>
 
 			<div class="entry">
 				<?php the_content('Read the rest of this entry &raquo;'); ?>
 			</div>
 
+			<p class="postmetadata"><?php the_tags('Tags: ', ', ', '<br />'); ?> Posted in <?php the_category(', ') ?> | <?php edit_post_link('Edit', '', ' | '); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p>
+			
 		</div>
 
 		</div><!-- /archive_item -->
