@@ -2623,6 +2623,9 @@ jQuery(document).ready( function($) {
 	
 	// set up activity headers
 	cp_setup_context_headers();
+	
+	// set up footnote plugin compatibility
+	cp_setup_footnotes_compatibility();
 
 
 
