@@ -634,6 +634,56 @@ function cp_scroll_page( target ) {
 
 
 /** 
+ * @description: scroll page to target with passed duration param
+ * @todo: 
+ *
+ */
+function cp_quick_scroll_page( target, duration ) {
+
+	// if IE6, then we have to scroll #wrapper
+	if ( msie6 ) {
+		
+		// 
+		jQuery(window).scrollTo( 0, 0 );
+
+		// scroll container to title
+		jQuery('#main_wrapper').scrollTo(
+			target, 
+			{
+				duration: (duration * 1.5), 
+				axis:'y', 
+				offset: cp_get_header_offset()
+			}, function () {
+				// when done, make sure page is ok
+				jQuery(window).scrollTo( 0, 1 );
+			}
+		);
+
+	} else {
+	
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+	
+			// scroll page
+			jQuery.scrollTo(
+				target, 
+				{
+					duration: (duration * 1.5), 
+					axis:'y', 
+					offset: cp_get_header_offset()
+				}
+			);
+			
+		}
+		
+	}
+	
+}
+
+
+
+
+/** 
  * @description: scroll page to top
  * @todo: 
  *
@@ -2340,7 +2390,7 @@ function cp_setup_footnotes_compatibility() {
 		//console.log(text_sig);
 		
 		// use function for offset
-		cp_scroll_page( target );
+		cp_quick_scroll_page( target, 100 );
 		
 		// --<
 		return false;
@@ -2368,7 +2418,7 @@ function cp_setup_footnotes_compatibility() {
 			event.preventDefault();
 		
 			// use function for offset
-			cp_scroll_page( target );
+			cp_quick_scroll_page( target, 100 );
 			
 			// --<
 			return false;
@@ -2399,7 +2449,7 @@ function cp_setup_footnotes_compatibility() {
 		//console.log(text_sig);
 		
 		// use function for offset
-		cp_scroll_page( target );
+		cp_quick_scroll_page( target, 100 );
 		
 		// --<
 		return false;
