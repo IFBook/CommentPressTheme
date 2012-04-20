@@ -956,10 +956,10 @@ ul#group_list li
 	font-size: 1.1em;
 	font-weight: normal;
 	font-style: normal;
-	color: #761D19;
 }
 
-#content .search_meta a
+#content .search_meta a,
+#content .search_meta cite a
 {
 	color: #761D19;
 	text-decoration: none;
