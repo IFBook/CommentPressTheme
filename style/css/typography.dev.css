@@ -408,14 +408,19 @@ p.edit_link a:visited
 	color: #761D19;
 }
 
-/* footnotes plugin compat */
-.footnotes,
+/* footnotes plugins compat */
+ol.footnotes,
 .footnotes ol,
-.simple-footnotes,
 .simple-footnotes ol
 {
 	font-family: Helvetica,Arial,sans-serif;
 	font-size: 0.8em;
+	color: #666;
+}
+
+.simple-footnotes
+{
+	font-family: Helvetica,Arial,sans-serif;
 	color: #666;
 }
 
