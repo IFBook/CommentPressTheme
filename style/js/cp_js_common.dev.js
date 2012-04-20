@@ -634,6 +634,56 @@ function cp_scroll_page( target ) {
 
 
 /** 
+ * @description: scroll page to target with passed duration param
+ * @todo: 
+ *
+ */
+function cp_quick_scroll_page( target, duration ) {
+
+	// if IE6, then we have to scroll #wrapper
+	if ( msie6 ) {
+		
+		// 
+		jQuery(window).scrollTo( 0, 0 );
+
+		// scroll container to title
+		jQuery('#main_wrapper').scrollTo(
+			target, 
+			{
+				duration: (duration * 1.5), 
+				axis:'y', 
+				offset: cp_get_header_offset()
+			}, function () {
+				// when done, make sure page is ok
+				jQuery(window).scrollTo( 0, 1 );
+			}
+		);
+
+	} else {
+	
+		// only scroll if not mobile (but allow tablets)
+		if ( cp_is_mobile == '0' || cp_is_tablet == '1' ) {
+	
+			// scroll page
+			jQuery.scrollTo(
+				target, 
+				{
+					duration: (duration * 1.5), 
+					axis:'y', 
+					offset: cp_get_header_offset()
+				}
+			);
+			
+		}
+		
+	}
+	
+}
+
+
+
+
+/** 
  * @description: scroll page to top
  * @todo: 
  *
@@ -2312,6 +2362,108 @@ function cp_setup_para_links() {
 
 	
 /** 
+ * @description: set up footnote links for various plugins
+ * @todo: 
+ *
+ */
+function cp_setup_footnotes_compatibility() {
+	
+	// -------------------------------------------
+	// Back links
+	// -------------------------------------------
+
+	// unbind first to allow repeated calls to this function
+	jQuery('span.footnotereverse a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on reverse links in FD-Footnotes and WP_Footnotes
+	 * @todo: 
+	 *
+	 */
+	jQuery('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var target = jQuery(this).attr('href');
+		//console.log(text_sig);
+		
+		// use function for offset
+		cp_quick_scroll_page( target, 100 );
+		
+		// --<
+		return false;
+		
+	});
+	
+	// unbind first to allow repeated calls to this function
+	jQuery('.simple-footnotes ol li a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on reverse links in Simple Footnotes plugin
+	 * @todo: 
+	 *
+	 */
+	jQuery('.simple-footnotes ol li a').click( function( event ) {
+	
+		// get text signature
+		var target = jQuery(this).attr('href');
+		//console.log(text_sig);
+		
+		// is it a backlink?
+		if ( target.match('#return-note-' ) ) {
+		
+			// override event
+			event.preventDefault();
+		
+			// use function for offset
+			cp_quick_scroll_page( target, 100 );
+			
+			// --<
+			return false;
+			
+		}
+		
+	});
+
+	// -------------------------------------------
+	// Footnote links
+	// -------------------------------------------
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on footnote links in FD-Footnotes, WP-Footnotes and Simple Footnotes
+	 * @todo: 
+	 *
+	 */
+	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var target = jQuery(this).attr('href');
+		//console.log(text_sig);
+		
+		// use function for offset
+		cp_quick_scroll_page( target, 100 );
+		
+		// --<
+		return false;
+		
+	});
+	
+}
+
+
+
+
+
+	
+/** 
  * @description: get top of sidebar
  * @todo: 
  *
@@ -2521,6 +2673,9 @@ jQuery(document).ready( function($) {
 	
 	// set up activity headers
 	cp_setup_context_headers();
+	
+	// set up footnote plugin compatibility
+	cp_setup_footnotes_compatibility();
 
 
 
