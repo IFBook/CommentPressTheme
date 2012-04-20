@@ -162,7 +162,13 @@ Updated by Christian Wach for Commentpress
 		padding: 0;
 	}
 	
-	/* guessing tags */
+	/* guessing some tags */
+	#footer h3,
+	#footer h4,
+	#footer h5,
+	#footer h6,
+	#footer address,
+	#footer span,
 	#footer p,
 	#footer ul li,
 	#footer ol li

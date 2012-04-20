@@ -242,14 +242,6 @@ Post-related styles
 
 
 
-/* horizontal rule (to divide text from footnotes) */
-.post hr 
-{
-	margin: 2px 0 16px 0;
-	padding-left: 7px;
-	padding-right: 7px;
-}
-
 .post table
 {
 	margin: 0 7px;
@@ -416,15 +408,35 @@ p.edit_link a:visited
 	color: #761D19;
 }
 
-.footnotes
+/* footnotes plugins compat */
+ol.footnotes,
+.footnotes ol,
+.simple-footnotes ol
 {
 	font-family: Helvetica,Arial,sans-serif;
-	font-size: 12px;
+	font-size: 0.8em;
+	color: #666;
 }
 
+.simple-footnotes
+{
+	font-family: Helvetica,Arial,sans-serif;
+	color: #666;
+}
+
+.simple-footnotes p.notes
+{
+	font-size: 1em;
+	font-weight: bold;
+	color: #666;
+}
+
+/* horizontal rule (can be used to divide text from footnotes) */
 .post hr 
 {
 	margin: 20px 0 8px 0;
+	padding-left: 7px;
+	padding-right: 7px;
 	color: #999;
 	background-color: #999;
 	height: 1px;
