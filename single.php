@@ -281,7 +281,7 @@ if ( $tabs_class != '' ) {
 	
 	<h2 class="post_title"><?php _e( 'Literal Translation', 'commentpress-theme' ); ?></h2>
 	
-	<?php echo wpautop(convert_chars(wptexturize( $literal ))); ?>
+	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $literal ) ))); ?>
 	
 	</div><!-- /post -->
 	
@@ -303,7 +303,7 @@ if ( $tabs_class != '' ) {
 	
 	<h2 class="post_title"><?php _e( 'Original Text', 'commentpress-theme' ); ?></h2>
 	
-	<?php echo wpautop(convert_chars(wptexturize( $original ))); ?>
+	<?php echo wpautop(convert_chars(wptexturize( stripslashes( $original ) ))); ?>
 	
 	</div><!-- /post -->
 	

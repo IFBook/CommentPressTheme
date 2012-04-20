@@ -2312,6 +2312,108 @@ function cp_setup_para_links() {
 
 	
 /** 
+ * @description: set up footnote links for various plugins
+ * @todo: 
+ *
+ */
+function cp_setup_footnotes_compatibility() {
+	
+	// -------------------------------------------
+	// Back links
+	// -------------------------------------------
+
+	// unbind first to allow repeated calls to this function
+	jQuery('span.footnotereverse a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on reverse links in FD-Footnotes and WP_Footnotes
+	 * @todo: 
+	 *
+	 */
+	jQuery('span.footnotereverse a, a.footnote-back-link').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var target = jQuery(this).attr('href');
+		//console.log(text_sig);
+		
+		// use function for offset
+		cp_scroll_page( target );
+		
+		// --<
+		return false;
+		
+	});
+	
+	// unbind first to allow repeated calls to this function
+	jQuery('.simple-footnotes ol li a').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on reverse links in Simple Footnotes plugin
+	 * @todo: 
+	 *
+	 */
+	jQuery('.simple-footnotes ol li a').click( function( event ) {
+	
+		// get text signature
+		var target = jQuery(this).attr('href');
+		//console.log(text_sig);
+		
+		// is it a backlink?
+		if ( target.match('#return-note-' ) ) {
+		
+			// override event
+			event.preventDefault();
+		
+			// use function for offset
+			cp_scroll_page( target );
+			
+			// --<
+			return false;
+			
+		}
+		
+	});
+
+	// -------------------------------------------
+	// Footnote links
+	// -------------------------------------------
+
+	// unbind first to allow repeated calls to this function
+	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on footnote links in FD-Footnotes, WP-Footnotes and Simple Footnotes
+	 * @todo: 
+	 *
+	 */
+	jQuery('a.simple-footnote, sup.footnote a, sup a.footnote-identifier-link').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var target = jQuery(this).attr('href');
+		//console.log(text_sig);
+		
+		// use function for offset
+		cp_scroll_page( target );
+		
+		// --<
+		return false;
+		
+	});
+	
+}
+
+
+
+
+
+	
+/** 
  * @description: get top of sidebar
  * @todo: 
  *
