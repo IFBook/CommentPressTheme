@@ -71,8 +71,10 @@ if ( $title_page_id != '' ) {
 			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			
 			<div class="search_meta">
-			
-				<?php 
+				
+				<?php cp_echo_post_meta(); ?>
+				
+				<?php /*
 				
 				// get avatar
 				$author_id = get_the_author_meta( 'ID' );
@@ -83,6 +85,8 @@ if ( $title_page_id != '' ) {
 				<cite class="fn"><?php cp_echo_post_author() ?></cite>
 				
 				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+				
+				<?php */ ?>
 				
 			</div>
 

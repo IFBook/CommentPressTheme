@@ -40,19 +40,7 @@
 			<h3 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 			
 			<div class="search_meta">
-			
-				<?php 
-				
-				// get avatar
-				$author_id = get_the_author_meta( 'ID' );
-				echo get_avatar( $author_id, $size='32' );
-				
-				?>
-				
-				<cite class="fn"><?php cp_echo_post_author() ?></cite>
-				
-				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-				
+				<?php cp_echo_post_meta(); ?>
 			</div>
 
 			<?php the_excerpt() ?>
