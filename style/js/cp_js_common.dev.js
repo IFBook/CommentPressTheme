@@ -2398,14 +2398,14 @@ function cp_setup_footnotes_compatibility() {
 	});
 	
 	// unbind first to allow repeated calls to this function
-	jQuery('.simple-footnotes ol li a').unbind( 'click' );
+	jQuery('.simple-footnotes ol li > a').unbind( 'click' );
 
 	/** 
 	 * @description: clicking on reverse links in Simple Footnotes plugin
 	 * @todo: 
 	 *
 	 */
-	jQuery('.simple-footnotes ol li a').click( function( event ) {
+	jQuery('.simple-footnotes ol li > a').click( function( event ) {
 	
 		// get text signature
 		var target = jQuery(this).attr('href');
