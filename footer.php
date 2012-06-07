@@ -7,7 +7,7 @@
 	<?php 
 	
 	// are we using the page footer widget?
-	if ( ! dynamic_sidebar( 'Page Footer' ) ) {
+	if ( !dynamic_sidebar( 'cp-license-8' ) ) {
 		
 		// no - make other provision here
 	
