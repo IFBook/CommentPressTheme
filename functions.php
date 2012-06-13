@@ -43,14 +43,12 @@ function cp_setup(
 	 * If you're building a theme based on Commentpress, use a find and replace
 	 * to change 'commentpress-theme' to the name of your theme in all the template files.
 	 */
-	load_theme_textdomain( 'commentpress-theme', get_template_directory() . '/style/languages' );
-
-	// header text colour
-	define('HEADER_TEXTCOLOR', 'eeeeee');
+	load_theme_textdomain( 
 	
-	// set height and width
-	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'cp_header_image_width', 940 ) );
-	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'cp_header_image_height', 67 ) );
+		'commentpress-theme', 
+		get_template_directory() . '/style/languages' 
+		
+	);
 
 	// add_custom_background function is deprecated in WP 3.4+
 	global $wp_version;
@@ -64,12 +62,27 @@ function cp_setup(
 		add_theme_support( 'custom-background' );
 		
 		// allow custom header
-		add_theme_support( 'custom-header', array( 'callback' => 'cp_admin_header' ) );
+		add_theme_support( 'custom-header', array( 
+			
+			'default-text-color' => 'eeeeee',
+			'width' => apply_filters( 'cp_header_image_width', 940 ),
+			'height' => apply_filters( 'cp_header_image_height', 67 ),
+			'wp-head-callback' => 'cp_header',
+			'admin-head-callback' => 'cp_admin_header' 
+			
+		) );
 	
 	} else {
 	
-		// retain old function for earlier versions
+		// retain old declarations for earlier versions
 		add_custom_background();
+	
+		// header text colour
+		define('HEADER_TEXTCOLOR', 'eeeeee');
+		
+		// set height and width
+		define( 'HEADER_IMAGE_WIDTH', apply_filters( 'cp_header_image_width', 940 ) );
+		define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'cp_header_image_height', 67 ) );
 	
 		// allow custom header images
 		add_custom_image_header( 'cp_header', 'cp_admin_header' );
@@ -333,8 +346,8 @@ endif; // cp_admin_header
 
 if ( ! function_exists( 'cp_get_header_image' ) ):
 /** 
- * @description: get an ID for the body tag
- * @todo: 
+ * @description: deprecated function that was once intended as an automation method for setting a header image
+ * @todo: inform users that header images will be using a different method in future
  *
  */
 function cp_get_header_image( 
@@ -2641,7 +2654,13 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 	$editlink = '';
 	
 	// if logged in and has capability
-	if ( is_user_logged_in() AND current_user_can('edit_posts') ) {
+	if ( 
+		is_user_logged_in() 
+	AND 
+		current_user_can('edit_posts') 
+	AND 
+		current_user_can( 'edit_comment', $comment->comment_ID ) 
+	) {
 
 		// get edit comment link
 		$editlink = '<span class="alignright"><a class="comment-edit-link" href="'.get_edit_comment_link().'" title="Edit comment">(Edit)</a></span>';
@@ -3324,8 +3343,8 @@ function commentpress_widgets_init() {
 
 	// define an area where a widget may be placed
 	register_sidebar( array(
-		'name' => __( 'Page Footer', 'commentpress-theme' ),
-		'id' => 'cp-license',
+		'name' => __( 'Commentpress Footer', 'commentpress-theme' ),
+		'id' => 'cp-license-8',
 		'description' => __( 'An optional widget area in the page footer of Commentpress theme', 'commentpress-theme' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => "</div>",
