@@ -1366,6 +1366,7 @@ function cp_get_all_comments_content( $page_or_post = 'page' ) {
 	AND $wpdb->comments.comment_approved = '1' 
 	AND $wpdb->comments.comment_parent = '0' 
 	AND $wpdb->comments.comment_type != 'pingback' 
+	AND $wpdb->posts.post_status = 'publish' 
 	ORDER BY $wpdb->posts.comment_count DESC, $wpdb->comments.comment_post_ID, $wpdb->comments.comment_date ASC
 	";
 	
@@ -1591,6 +1592,7 @@ function cp_get_comments_by_content() {
 	WHERE $wpdb->comments.comment_post_ID = $wpdb->posts.ID 
 	AND $wpdb->comments.comment_type != 'pingback' 
 	AND $wpdb->comments.comment_approved = '1' 
+	AND $wpdb->posts.post_status = 'publish' 
 	ORDER BY $wpdb->comments.comment_author, $wpdb->posts.post_title, $wpdb->comments.comment_post_ID, $wpdb->comments.comment_date ASC
 	";
 	
