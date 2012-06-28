@@ -33,28 +33,33 @@
 
 	<?php while ( bp_blogs() ) : bp_the_blog(); 
 	
-	// access BP object
-	global $blogs_template;
-
 	// init as ordinary blog
 	$class = '';
 
-	// init group blog type
-	$groupblogtype = '';
-	
 	// is this a groupblog?
-	$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
-	if ( is_numeric( $group_id ) ) {
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+		
+		// access BP object
+		global $blogs_template;
 	
-		// get group blogtype
-		$groupblogtype = groups_get_groupmeta( $group_id, 'groupblogtype' );
+		// init group blog type
+		$groupblogtype = '';
 		
-		// add space before if we have it
-		if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
+		// get group ID
+		$group_id = get_groupblog_group_id( $blogs_template->blog->blog_id );
+		if ( is_numeric( $group_id ) ) {
 		
-		// yes
-		$class = ' class="bp-groupblog-blog'.$groupblogtype.'"';
-		
+			// get group blogtype
+			$groupblogtype = groups_get_groupmeta( $group_id, 'groupblogtype' );
+			
+			// add space before if we have it
+			if ( $groupblogtype ) { $groupblogtype = ' '.$groupblogtype; }
+			
+			// yes
+			$class = ' class="bp-groupblog-blog'.$groupblogtype.'"';
+			
+		}
+	
 	}
 	
 	?>

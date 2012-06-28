@@ -349,6 +349,7 @@ body.group-create .standard-form
 }
 
 body.create-blog.buddypress_page #content a.button,
+#blogs-directory-form a.button,
 #groups-directory-form a.button,
 .standard-form a.button
 {

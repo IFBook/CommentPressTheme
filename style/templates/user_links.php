@@ -46,7 +46,7 @@ if ( is_multisite() ) {
 				);
 		
 				// BP uses its own signup page at /blogs/create/ but doesn't redirect to it
-				?><li><a href="<?php echo site_url(); ?>/blogs/create/" title="<?php echo $new_site_title; ?>" id="btn_create"><?php echo $new_site_title; ?></a></li>
+				?><li><a href="<?php echo network_site_url(); ?>blogs/create/" title="<?php echo $new_site_title; ?>" id="btn_create"><?php echo $new_site_title; ?></a></li>
 				<?php 
 			
 			} else {
@@ -64,7 +64,7 @@ if ( is_multisite() ) {
 			);
 	
 			// standard WP multisite
-			?><li><a href="<?php echo site_url(); ?>/wp-signup.php" title="<?php echo $new_site_title; ?>" id="btn_create"><?php echo $new_site_title; ?></a></li>
+			?><li><a href="<?php echo network_site_url(); ?>wp-signup.php" title="<?php echo $new_site_title; ?>" id="btn_create"><?php echo $new_site_title; ?></a></li>
 			<?php 
 		
 		}
