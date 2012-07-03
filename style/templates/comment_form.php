@@ -54,7 +54,7 @@ global $post;
 
 <?php else : ?>
 
-	<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
+	<form action="<?php echo site_url( '/wp-comments-post.php' ); ?>" method="post" id="commentform">
 	
 	<fieldset id="author_details">
 	
