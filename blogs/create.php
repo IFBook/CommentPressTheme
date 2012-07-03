@@ -32,7 +32,23 @@
 
 		<?php do_action( 'template_notices' ); ?>
 
-			<h3><?php _e( 'Create a Site', 'buddypress' ); ?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_blogs_root_slug() ) ?>"><?php _e( 'Site Directory', 'buddypress' ); ?></a></h3>
+			<h3><?php 
+			
+			// define title
+			$create_title = __( 'Create a Document', 'commentpress-theme' );
+			
+			// allow overrides
+			echo apply_filters( 'cp_create_site_page_title', $create_title );
+			
+			?> &nbsp;<a class="button" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_blogs_root_slug() ) ?>"><?php 
+			
+			// define link title
+			$link_title = __( 'Directory', 'commentpress-theme' );
+			
+			// allow overrides
+			echo apply_filters( 'cp_create_site_page_link_title', $link_title );
+			
+			?></a></h3>
 
 		<?php do_action( 'bp_before_create_blog_content' ); ?>
 

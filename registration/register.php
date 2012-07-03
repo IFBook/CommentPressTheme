@@ -40,6 +40,8 @@
 
 				<p><?php _e( 'Registering for this site is easy, just fill in the fields below and we\'ll get a new account set up for you in no time.', 'buddypress' ) ?></p>
 
+				<div id="details-section-wrapper">
+
 				<?php do_action( 'bp_before_account_details_fields' ) ?>
 
 				<div class="register-section" id="basic-details-section">
@@ -219,6 +221,8 @@
 							<label><input type="radio" name="signup_blog_privacy" id="signup_blog_privacy_public" value="public"<?php if ( 'public' == bp_get_signup_blog_privacy_value() || !bp_get_signup_blog_privacy_value() ) : ?> checked="checked"<?php endif; ?> /> <?php _e( 'Yes', 'buddypress' ) ?></label>
 							<label><input type="radio" name="signup_blog_privacy" id="signup_blog_privacy_private" value="private"<?php if ( 'private' == bp_get_signup_blog_privacy_value() ) : ?> checked="checked"<?php endif; ?> /> <?php _e( 'No', 'buddypress' ) ?></label>
 
+							<?php do_action( 'cpmu_bp_after_blog_details_fields' ) ?>
+
 						</div>
 
 					</div><!-- #blog-details-section -->
@@ -236,6 +240,8 @@
 				<?php do_action( 'bp_after_registration_submit_buttons' ) ?>
 
 				<?php wp_nonce_field( 'bp_new_signup' ) ?>
+
+				</div><!-- /details-section-wrapper -->
 
 			<?php endif; // request-details signup step ?>
 

@@ -348,6 +348,8 @@ body.group-create .standard-form
 	font-size: 1em;
 }
 
+body.create-blog.buddypress_page #content a.button,
+#blogs-directory-form a.button,
 #groups-directory-form a.button,
 .standard-form a.button
 {
@@ -456,47 +458,102 @@ div.blog-button
 
 
 /* Activation & Registration pages */
-#register-page p,
+#register-page p
+{
+	font-size: 1em;
+	line-height: 1.45;
+}
+
+#register-page #signup_form,
+#activate-page
+{
+	padding: 0;
+}
+
+#register-page #signup_form p,
 #activate-page p
 {
 	font-size: 1em;
 	line-height: 1.45;
-	padding: 7px 7px 11px 7px;
+	padding: 7px 19px 11px 19px;
 }
 
-#register-page #signup_form,
-#activate-page #activation-form
+#details-section-wrapper
 {
-	padding: 7px 7px 11px 7px;
+	padding: 7px 19px 19px 19px;
 }
 
-#register-page #signup_form p,
-#activate-page #activation-form p
+/* don't add padding to paras inside divs */
+#register-page #signup_form .register-section p,
+#register-page #cp-multisite-options p
+{
+	padding: 7px 0 19px 0;
+}
+
+#register-page #cp-multisite-options
+{
+	padding: 2px 0 0 0;
+	clear: left;
+}
+
+#register-page #cp-multisite-options h4
 {
 	font-size: 1em;
 	line-height: 1.45;
-	padding: 7px 0 11px 0;
+	font-weight: bold;
+	color: #000;
+	padding: 7px 0 7px 0;
+	margin: 0;
 }
 
+#register-page .register-section #cp-multisite-options p
+{
+	padding: 7px 0 0 0;
+	margin: 0;
+}
 
 
 /* Create Site page */
 body.create-blog #setupform
 {
-	padding: 7px 7px 11px 7px;
+	padding: 7px 19px 11px 19px;
 }
 
 body.create-blog #content p
 {
 	font-size: 1em;
 	line-height: 1.45;
-	padding: 7px 7px 11px 7px;
+	padding: 7px 19px 11px 19px;
+}
+
+body.create-blog #content #setupform p,
+body.create-blog #content #cp-multisite-options p
+{
+	font-size: 1em;
+	line-height: 1.45;
+	padding: 7px 0 0 0;
 }
 
 .standard-form#signup_form div.submit 
 {
 	float: none;
 	text-align: right;
+}
+
+body.create-blog #cp-multisite-options
+{
+	padding-bottom: 19px;
+}
+
+#register-page #cp-multisite-options h4,
+body.create-blog #cp-multisite-options h4
+{
+	font-size: 1em;
+	line-height: 1.45;
+	font-weight: bold;
+	color: #000;
+	padding: 7px 0 7px 0;
+	margin: 0;
 }
 
 
@@ -558,8 +615,6 @@ BuddyPress Typography
 body.settings.my-account #content h3,
 body.create-blog #content h3,
 body.registration #content h2,
-body.activation.activate #content h2,
-body.activate #content h3,
 body.directory.logged-in #content h3
 {
 	font-size: 1.6em;
@@ -572,7 +627,6 @@ body.directory.logged-in #content h3
 }
 
 body.create-blog #content h3,
-body.activation.activate #content h2,
 body.registration #content h2
 {
 	padding-left: 0;
@@ -616,7 +670,13 @@ body.settings.my-account #content h3
 /* Directory Title when not in a form */
 body.directory #content h3,
 /* Title when in a standard form */
-body.group-create #content form.standard-form > h3
+body.group-create #content form.standard-form > h3,
+/* Title when on BuddyPress Registration page */
+body.create-blog.buddypress_page #content h3,
+/* Title when on BuddyPress Sign-up page */
+#register-page #signup_form h2,
+#activate-page h2,
+#activate-page h3
 {
 	font-size: 1.6em;
 	font-weight: normal;
@@ -624,6 +684,16 @@ body.group-create #content form.standard-form > h3
 	color: #fff;
 	padding: 21px 19px 15px 19px;
 	background-color: #819565;
+}
+
+body.create-blog.buddypress_page #content h3,
+#register-page #signup_form h2,
+#activate-page h2,
+#activate-page h3
+{
+	margin-top: 0;
+	margin-bottom: 19px;
+	padding-bottom: 19px;
 }
 
 /* Directory Title when in a form */
