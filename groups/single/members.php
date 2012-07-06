@@ -38,7 +38,7 @@
 					<?php bp_group_member_avatar_thumb(); ?>
 
 				</a>
-				
+
 				<h5><?php bp_group_member_link(); ?></h5>
 				<span class="activity"><?php bp_group_member_joined_since(); ?></span>
 
