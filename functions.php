@@ -198,7 +198,7 @@ function cp_header(
 ) { //-->
 
 	// init (same as bg in layout.css and default in class_commentpress_db.php)
-	$colour = '819565';
+	$bg_colour = '819565';
 
 	// access plugin
 	global $commentpress_obj;
@@ -207,7 +207,7 @@ function cp_header(
 	if ( is_object( $commentpress_obj ) ) {
 	
 		// override
-		$colour = $commentpress_obj->db->option_get_header_bg();
+		$bg_colour = $commentpress_obj->db->option_get_header_bg();
 	
 	}
 	
@@ -224,36 +224,66 @@ function cp_header(
 	
 	}
 	
+	
+	
+	// get custom text colour
+	// note: this does NOT retrieve the default if not manually set in the Theme Customizer in WP3.4
+	$text_color = get_header_textcolor();
+
+	
+	
+	// WP3.4 seems to behave differently.
+	global $wp_version;
+	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
+	
+		// if blank, we're hiding the title
+		if ( $text_color == 'blank' ) {
+			$css = 'text-indent: -9999px;';
+		} else {
+			
+			// if empty, we need to use default
+			if ( $text_color == '' ) {
+				$css = 'color: #'.HEADER_TEXTCOLOR.';';
+			} else {
+				
+				// use the custom one. I know this amounts to the same thing.
+				$css = 'color: #'.$text_color.';';
+			}
+			
+		}
+
+	} else {
+		
+		// use previous logic
+		if ( $text_color == 'blank' OR $text_color == '' ) {
+			$css = 'text-indent: -9999px;';
+		} else {
+			$css = 'color: #'.$text_color.';';
+		}
+		
+	}
+	
     ?>
 <style type="text/css">
 
 #book_header
 {
-	background-color: #<?php echo $colour; ?>;
+	background-color: #<?php echo $bg_colour; ?>;
 	<?php echo $bg_image; ?>
+
 }
 
 #title h1,
 #title h1 a
 {
-	<?php 
-	$_col = get_header_textcolor();
-	if ( $_col == 'blank' OR $_col == '' ) {
-	?>text-indent: -9999px;<?php
-	} else {
-	?>color: #<?php header_textcolor(); ?>;<?php
-	} ?>
+	<?php echo $css; ?>
+
 }
 
 #book_header #tagline
 {
-	<?php 
-	$_col = get_header_textcolor();
-	if ( $_col == 'blank' OR $_col == '' ) {
-	?>text-indent: -9999px;<?php
-	} else {
-	?>color: #<?php header_textcolor(); ?>;<?php
-	} ?>
+	<?php echo $css; ?>
+
 }
 
 </style><?php
@@ -263,6 +293,26 @@ endif; // cp_header
 
 
 
+/*
+	// if no custom options for text are set, ignore
+	if ( $text_color == HEADER_TEXTCOLOR ) {
+	
+		// set flag
+		$ignore = true;
+		
+	}
+	
+	// if blank or empty, we're hiding the title
+	if ( $text_color == 'blank' OR $text_color == '' ) {
+	
+	}
+
+	// If we get this far, we have custom styles. Let's do this.
+	print_r( ( $text_color ? $text_color : 'nowt<br/>' ) );
+	print_r( HEADER_TEXTCOLOR ); die();
+	
+
+*/
 
 
 
@@ -3426,6 +3476,151 @@ endif; // commentpress_wplicense_compat
 
 // do this late, so license ought to be declared by then
 add_action( 'init', 'commentpress_wplicense_compat', 100 );
+
+
+
+
+
+
+if ( ! function_exists( 'commentpress_groupblog_classes' ) ):
+/**
+ * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types
+ */
+function commentpress_groupblog_classes() {
+	
+	// init empty
+	$groupblog_class = '';
+	
+	// only add classes when bp-groupblog is active
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+	
+		// init groupblogtype
+		$groupblogtype = 'groupblog';
+		
+		// get group blogtype
+		$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
+		
+		// did we get one?
+		if ( $groupblog_type ) {
+		
+			// add to default
+			$groupblogtype .= ' '.$groupblog_type;
+		
+		}
+		
+		// complete
+		$groupblog_class = ' class="'.$groupblogtype.'"';
+		
+	}
+	
+	
+	
+	// --<
+	return $groupblog_class;
+	
+}
+endif; // commentpress_groupblog_classes
+
+
+
+
+
+
+if ( ! function_exists( 'cp_get_post_version_info' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_version_info( $post ) {
+	
+	// check for newer version
+	$newer = '';
+	
+	// set key
+	$key = '_cp_newer_version';
+	
+	// if the custom field already has a value...
+	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+	
+		// get it
+		$newer = get_post_meta( $post->ID, $key, true );
+		
+	}
+	
+	
+	
+	// if we've got one...
+	if ( $newer != '' ) {
+	
+		// get post
+		$newer_post = get_post( $newer );
+		
+		// is it published?
+		if ( $newer_post->post_status == 'publish' ) {
+	
+			// get link
+			$newer_link = get_permalink( $newer_post->ID );
+		
+			// construct anchor
+			$newer = '<a href="'.$newer_link.'" title="Newer version">Newer version &rarr;</a>';
+		
+		}
+	
+	}
+	
+	
+	
+	// check for older version
+	$older = '';
+	
+	// get post with this post's ID as their _cp_newer_version meta value
+	$args = array(
+	
+		'numberposts' => 1,
+		'meta_key' => '_cp_newer_version',
+		'meta_value' => $post->ID
+	
+	);
+	
+	// get the array
+	$previous_posts = get_posts( $args );
+	
+	// did we get one?
+	if ( is_array( $previous_posts ) AND count( $previous_posts ) == 1 ) {
+	
+		// get it
+		$older_post = $previous_posts[0];
+	
+		// is it published?
+		if ( $older_post->post_status == 'publish' ) {
+	
+			// get link
+			$older_link = get_permalink( $older_post->ID );
+			
+			// construct anchor
+			$older = '<a href="'.$older_link.'" title="Older version">&larr; Older version</a>';
+		
+		}
+	
+	}
+	
+	
+	
+	// did we get either?
+	if ( $newer != '' OR $older != '' ) {
+	
+		?>
+		<div class="version_info">
+			<ul>
+				<?php if ( $newer != '' ) echo '<li class="newer_version">'.$newer.'</li>'; ?>
+				<?php if ( $older != '' ) echo '<li class="older_version">'.$older.'</li>'; ?>
+			</ul>
+		</div>
+		<?php
+			
+	}
+	
+}
+endif; // cp_get_post_version_info
 
 
 

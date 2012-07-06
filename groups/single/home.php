@@ -1,20 +1,4 @@
-<?php get_header( 'buddypress' ); 
-
-// init groupblogtype
-$groupblogtype = 'groupblog';
-
-// get group blogtype
-$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
-
-// did we get one?
-if ( $groupblog_type ) {
-
-	// add to default
-	$groupblogtype .= ' '.$groupblog_type;
-
-}
-
-?>
+<?php get_header( 'buddypress' ); ?>
 
 <!-- groups/single/home.php -->
 
@@ -30,7 +14,7 @@ if ( $groupblog_type ) {
 
 
 
-	<div id="content" class="<?php echo $groupblogtype; ?>">
+	<div id="content"<?php echo commentpress_groupblog_classes(); ?>>
 		<div class="padder">
 
 			<?php if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group(); ?>
@@ -68,8 +52,8 @@ if ( $groupblog_type ) {
 				elseif ( bp_is_group_invites() && bp_group_is_visible() ) :
 					locate_template( array( 'groups/single/send-invites.php' ), true );
 
-					elseif ( bp_is_group_forum() && bp_group_is_visible() && bp_is_active( 'forums' ) && bp_forums_is_installed_correctly() ) :
-						locate_template( array( 'groups/single/forum.php' ), true );
+				elseif ( bp_is_group_forum() && bp_group_is_visible() && bp_is_active( 'forums' ) && bp_forums_is_installed_correctly() ) :
+					locate_template( array( 'groups/single/forum.php' ), true );
 
 				elseif ( bp_is_group_membership_request() ) :
 					locate_template( array( 'groups/single/request-membership.php' ), true );

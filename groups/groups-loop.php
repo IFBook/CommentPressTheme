@@ -42,20 +42,25 @@
 		// init groupblogtype
 		$groupblogtype = '';
 		
-		// get group blogtype
-		$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
+		// only add classes when bp-groupblog is active
+		if ( function_exists( 'get_groupblog_group_id' ) ) {
 		
-		// did we get one?
-		if ( $groupblog_type ) {
-		
-			// add to default
-			$groupblogtype = ' class="'.$groupblog_type.'"';
-		
+			// get group blogtype
+			$groupblog_type = groups_get_groupmeta( bp_get_group_id(), 'groupblogtype' );
+			
+			// did we get one?
+			if ( $groupblog_type ) {
+			
+				// add to default
+				$groupblogtype = ' class="'.$groupblog_type.'"';
+			
+			}
+			
 		}
 		
 		?>
 
-		<li<?php echo $groupblogtype ?>>
+		<li<?php echo $groupblogtype; ?>>
 			<div class="item-avatar">
 				<a href="<?php bp_group_permalink(); ?>"><?php bp_group_avatar( 'type=thumb&width=50&height=50' ); ?></a>
 			</div>

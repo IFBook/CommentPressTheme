@@ -113,7 +113,7 @@ if ( $all_comments_output != '' ) {
 
 ?><h3 class="activity_heading"><?php echo $all_comments_title; ?></h3>
 
-<div class="paragraph_wrapper">
+<div class="paragraph_wrapper all_comments_output">
 
 <?php echo $all_comments_output; ?>
 
@@ -226,7 +226,7 @@ if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is
 		<h3 class="activity_heading">Recent Activity in Public Workshops</h3>
 		<?php } ?>
 
-		<div class="paragraph_wrapper">
+		<div class="paragraph_wrapper workshop_comments_output">
 		
 		<ol class="comment_activity">
 	
@@ -259,7 +259,7 @@ if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is
 	
 		<h3 class="activity_heading">Recently Active Members</h3>
 	
-		<div class="paragraph_wrapper">
+		<div class="paragraph_wrapper active_members_output">
 	
 		<ul class="item-list cp-recently-active">
 	
@@ -327,7 +327,7 @@ if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is
 	
 		<h3 class="activity_heading">Who's Online</h3>
 	
-		<div class="paragraph_wrapper">
+		<div class="paragraph_wrapper online_members_output">
 	
 		<ul class="item-list cp-online-members">
 	
