@@ -10,6 +10,9 @@
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); 
 
+// access post
+global $post;
+
 
 
 // init class values
@@ -151,65 +154,11 @@ if ( $tabs_class != '' ) {
 	
 	<?php cp_echo_post_meta(); ?>
 	
-	<?php /*
-	
-	// get avatar
-	$author_id = get_the_author_meta( 'ID' );
-	echo get_avatar( $author_id, $size='32' );
-	
-	?>
-	
-	<cite class="fn"><?php cp_echo_post_author() ?></cite>
-	
-	<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-	
-	<?php */ ?>
-	
 </div>
 
 
 
-<?php 
-
-// check for newer version
-$newer = '';
-
-// set key
-$key = '_cp_newer_version';
-
-// if the custom field already has a value...
-if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-	// get it
-	$newer = get_post_meta( $post->ID, $key, true );
-	
-}
-
-
-
-// if we've got one...
-if ( $newer != '' ) {
-
-	// get post
-	$newer_post = get_post( $newer );
-	
-	// is it published?
-	if ( $newer_post->post_status == 'publish' ) {
-
-		// get link
-		$newer_link = get_permalink( $newer_post->ID );
-	
-		?>
-		<div class="alert">
-			<p><a href="<?php echo $newer_link ?>">Newer version available!</a></p>
-		</div>
-		<?php
-		
-	}
-
-}
-
-?>
+<?php cp_get_post_version_info( $post ); ?>
 
 
 

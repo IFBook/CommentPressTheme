@@ -348,12 +348,14 @@ body.group-create .standard-form
 	font-size: 1em;
 }
 
+#content a.button,
 body.create-blog.buddypress_page #content a.button,
 #blogs-directory-form a.button,
 #groups-directory-form a.button,
 .standard-form a.button
 {
 	vertical-align: 35%;
+	text-decoration: none;
 }
 
 .standard-form .left-menu
@@ -560,12 +562,9 @@ body.create-blog #cp-multisite-options h4
 
 
 /* messages */
-div#message 
+div#message.updated
 {
-	/*
-	font-family: Helvetica, Arial, sans-serif;
-	text-transform: uppercase;
-	*/
+	margin: 0;
 }
 
 div#message p
@@ -577,9 +576,19 @@ div#message p
 	border: none;
 }
 
+div#message.updated
+{
+}
 
 
-/* Private Messages */
+
+/* 
+----------------------------------------
+Private Messages 
+----------------------------------------
+*/
+
+/* Inbox & Sentbox */
 table#message-threads
 {
 	margin: 0;
@@ -589,7 +598,47 @@ table#message-threads
 table#message-threads tr td, 
 table#message-threads tr th 
 {
-	padding: 10px 0;
+	padding: 10px 5px;
+}
+
+table#message-threads tr td.thread-from
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+table#message-threads tr td.thread-from a
+{
+	color: #761D19;
+}
+
+table#message-threads tr td.thread-options a.button
+{
+	vertical-align: 5%;
+}
+
+table#message-threads tr td.thread-info p
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	font-size: 16px;
+	padding: 0;
+	margin: 0;
+}
+
+table#message-threads tr td.thread-info p a
+{
+	color: #761D19;
+}
+
+table#message-threads tr td.thread-info p.thread-excerpt 
+{
+	padding: 6px 0 0 0;
+	font-size: 11px;
+	font-family: Georgia, serif;
+	text-transform: none;
 }
 
 div.messages-options-nav
@@ -597,10 +646,93 @@ div.messages-options-nav
 	margin: 0;
 }
 
+form#send_message_form
+{
+	padding-bottom: 19px;
+}
+
+
+
+/* Message formatting */
 #message-thread
 {
 	padding: 19px;
 }
+
+#message-recipients span.highlight 
+{
+	color: #222;
+}
+
+#message-recipients span.highlight a
+{
+	color: #761D19;
+}
+
+#content #message-recipients a.button
+{
+	vertical-align: 15%;
+}
+
+div#message-thread div.message-box
+{
+	margin: 0;
+	background: whiteSmoke;
+	border-bottom: 1px solid #fff;
+}
+
+/* sender's name */
+div#message-thread strong a 
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 15px;
+	font-weight: normal;
+	padding-top: 2px;
+}
+
+form#send-reply
+{
+	padding: 19px 0;
+}
+
+form#send-reply div.message-box
+{
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+
+/* Message compose screen */
+li.friend-tab
+{
+}
+
+li.friend-tab span
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+li.friend-tab img.avatar 
+{
+	margin-right: 3px;
+	margin-bottom: 3px;
+	vertical-align: middle;
+}
+
+
+
+
+/* Group Notifications - there's an incompatibility with Email Notifications plugin */
+table#groups-notification-settings
+{
+	margin-bottom: 0;
+}
+
+
 
 
 
@@ -612,10 +744,13 @@ BuddyPress Typography
 ----------------------------------------
 */
 
+body.settings #content h3,
 body.settings.my-account #content h3,
+body.settings.general #content h3,
 body.create-blog #content h3,
 body.registration #content h2,
-body.directory.logged-in #content h3
+body.directory.logged-in #content h3,
+h3#message-subject
 {
 	font-size: 1.6em;
 	font-weight: normal;
@@ -627,7 +762,8 @@ body.directory.logged-in #content h3
 }
 
 body.create-blog #content h3,
-body.registration #content h2
+body.registration #content h2,
+h3#message-subject
 {
 	padding-left: 0;
 	padding-right: 0;
@@ -658,7 +794,9 @@ div.profile h4
 }
 
 /* Settings header */
-body.settings.my-account #content h3
+body.settings #content h3,
+body.settings.my-account #content h3,
+body.settings.general #content h3
 {
 	padding: 19px 19px 12px 19px;
 }
@@ -757,16 +895,39 @@ div#item-header ul.avatars img.avatar
 }
 
 /* group members list */
-ul#member-list h5
+ul#member-list h5,
+ul#admins-list h5,
+ul#mods-list h5,
+ul#members-list h5
 {
 	color: #761D19;
 	font-weight: normal;
 }
 
-ul#member-list h5 a
+ul#member-list h5 a,
+ul#admins-list h5 a,
+ul#mods-list h5 a,
+ul#members-list h5 a
 {
 	font-size: 1.2em;
 	color: #761D19;
+}
+
+#admins-list li,
+#mods-list li,
+#members-list li
+{
+	overflow: auto;
+	padding: 15px 0;
+}
+
+/* site members list */
+body.directory #members-list li,
+/* friends list */
+body.friends #members-list li
+{
+	overflow: auto;
+	padding: 15px;
 }
 
 
@@ -788,6 +949,7 @@ span.activity,
 .activity-list .activity-content .comment-header 
 {
 	font-family: Helvetica, Arial, sans-serif;
+	text-transform: none;
 }
 
 .activity-list .activity-content .activity-header, 
@@ -863,6 +1025,42 @@ div.activity-comments div.acomment-content
 div.profile
 {
 	padding: 0 19px;
+}
+
+table.profile-fields th,
+table.profile-fields td
+{
+	padding: 0.2em;
+	border: 1px solid whiteSmoke;
+}
+
+table.profile-fields td.label
+{
+	padding: 0.2em 0.2em 0.5em 0.2em;
+}
+
+
+
+/* Recent Activity (activity tab) */
+#activity_sidebar .workshop_comments_output .comment-identifier p
+{
+	/* we have to use p instead of cite because that's how BP stores activity meta */
+	padding: 5px 5px 0 5px;
+	font-size: 80%;
+	font-style: normal;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #222;
+	line-height: 1.3;
+}
+
+#activity_sidebar .workshop_comments_output .comment-identifier p a
+{
+	color: #761D19;
+}
+
+#activity_sidebar .workshop_comments_output .comment-identifier p img {
+	display: none;
+	vertical-align: middle;
 }
 
 
@@ -1047,3 +1245,118 @@ table.group-docs-options td.label
 
 
 
+
+
+/* 
+----------------------------------------
+BuddyPress Group Email Subscription compatibility 
+----------------------------------------
+*/
+
+#content #groups-dir-list .group-subscription-options, 
+#content #groups-list .group-subscription-options 
+{
+	position: absolute;
+}
+
+#groups-dir-list .group-subscription-div, 
+#groups-list .group-subscription-div 
+{
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-bottom: 12px;
+}
+
+.single-item .group-subscription-div
+{
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: normal;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.single-item .group-subscription-div a
+{
+	color: #ccc;
+}
+
+.single-item .group-subscription-div a:hover
+{
+	color: #fff;
+}
+
+#ass-email-subscriptions-options-page
+{
+	padding: 9px 19px;
+}
+
+#ass-email-subscriptions-options-page h3
+{
+	font-size: 1.3em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 24px 0 12px 0;
+	padding: 0;
+}
+
+#ass-email-subscriptions-options-page label
+{
+	color: #888;
+	font-weight: bold;
+	margin: 5px 0 0 0;
+	margin-top: 10px;
+	font-size: 1.1em;
+}
+
+#ass-email-subscriptions-options-page .ass-email-type
+{
+	margin: 14px 0;
+}
+
+#ass-email-subscriptions-options-page .ass-email-type input
+{
+	margin-right: 5px;
+}
+
+#ass-email-subscriptions-options-page .ass-email-explain
+{
+	font-size: 0.9em;
+	margin-top: 4px;
+}
+
+/* Notifications table */
+form#settings-form table.notification-settings th,
+form#settings-form table.notification-settings td
+{
+	padding: 2px;
+}
+
+form#settings-form table.notification-settings tbody tr
+{
+	border-bottom: 1px solid #eee;
+}
+
+table#groups-notification-settings.notification-settings
+{
+	margin-bottom: 20px;
+}
+
+/* for admins in members list */
+ul#admins-list h5 .ass_manage_members_links, 
+ul#mods-list h5 .ass_manage_members_links, 
+ul#members-list h5 .ass_manage_members_links
+{
+	text-transform: uppercase;
+	font-size: 9px;
+	font-weight: normal;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+ul#admins-list h5 .ass_manage_members_links a, 
+ul#mods-list h5 .ass_manage_members_links a, 
+ul#members-list h5 .ass_manage_members_links a
+{
+	font-size: 9px;
+	font-weight: normal;
+	font-family: Helvetica, Arial, sans-serif;
+}
