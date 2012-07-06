@@ -1,4 +1,4 @@
-<?php get_header( 'buddypress' ) ?>
+<?php get_header( 'buddypress' ); ?>
 
 <!-- groups/single/plugins.php -->
 
@@ -14,7 +14,7 @@
 
 
 
-	<div id="content">
+	<div id="content"<?php echo commentpress_groupblog_classes(); ?>>
 		<div class="padder">
 			<?php if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group(); ?>
 

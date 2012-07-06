@@ -3432,4 +3432,149 @@ add_action( 'init', 'commentpress_wplicense_compat', 100 );
 
 
 
+if ( ! function_exists( 'commentpress_groupblog_classes' ) ):
+/**
+ * Add classes to #content in BuddyPress, so that we can distinguish different groupblog types
+ */
+function commentpress_groupblog_classes() {
+	
+	// init empty
+	$groupblog_class = '';
+	
+	// only add classes when bp-groupblog is active
+	if ( function_exists( 'get_groupblog_group_id' ) ) {
+	
+		// init groupblogtype
+		$groupblogtype = 'groupblog';
+		
+		// get group blogtype
+		$groupblog_type = groups_get_groupmeta( bp_get_current_group_id(), 'groupblogtype' );
+		
+		// did we get one?
+		if ( $groupblog_type ) {
+		
+			// add to default
+			$groupblogtype .= ' '.$groupblog_type;
+		
+		}
+		
+		// complete
+		$groupblog_class = ' class="'.$groupblogtype.'"';
+		
+	}
+	
+	
+	
+	// --<
+	return $groupblog_class;
+	
+}
+endif; // commentpress_groupblog_classes
+
+
+
+
+
+
+if ( ! function_exists( 'cp_get_post_version_info' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_version_info( $post ) {
+	
+	// check for newer version
+	$newer = '';
+	
+	// set key
+	$key = '_cp_newer_version';
+	
+	// if the custom field already has a value...
+	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+	
+		// get it
+		$newer = get_post_meta( $post->ID, $key, true );
+		
+	}
+	
+	
+	
+	// if we've got one...
+	if ( $newer != '' ) {
+	
+		// get post
+		$newer_post = get_post( $newer );
+		
+		// is it published?
+		if ( $newer_post->post_status == 'publish' ) {
+	
+			// get link
+			$newer_link = get_permalink( $newer_post->ID );
+		
+			// construct anchor
+			$newer = '<a href="'.$newer_link.'" title="Newer version">Newer version &rarr;</a>';
+		
+		}
+	
+	}
+	
+	
+	
+	// check for older version
+	$older = '';
+	
+	// get post with this post's ID as their _cp_newer_version meta value
+	$args = array(
+	
+		'numberposts' => 1,
+		'meta_key' => '_cp_newer_version',
+		'meta_value' => $post->ID
+	
+	);
+	
+	// get the array
+	$previous_posts = get_posts( $args );
+	
+	// did we get one?
+	if ( is_array( $previous_posts ) AND count( $previous_posts ) == 1 ) {
+	
+		// get it
+		$older_post = $previous_posts[0];
+	
+		// is it published?
+		if ( $older_post->post_status == 'publish' ) {
+	
+			// get link
+			$older_link = get_permalink( $older_post->ID );
+			
+			// construct anchor
+			$older = '<a href="'.$older_link.'" title="Older version">&larr; Older version</a>';
+		
+		}
+	
+	}
+	
+	
+	
+	// did we get either?
+	if ( $newer != '' OR $older != '' ) {
+	
+		?>
+		<div class="version_info">
+			<ul>
+				<?php if ( $newer != '' ) echo '<li class="newer_version">'.$newer.'</li>'; ?>
+				<?php if ( $older != '' ) echo '<li class="older_version">'.$older.'</li>'; ?>
+			</ul>
+		</div>
+		<?php
+			
+	}
+	
+}
+endif; // cp_get_post_version_info
+
+
+
+
+
+
 ?>

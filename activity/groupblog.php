@@ -73,7 +73,7 @@ if ( $type == 'new_groupblog_post' OR $type == 'new_groupblog_comment' ) {
 		<div class="comment-identifier">
 		
 			<a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar( 'width=32&height=32' ); ?></a>
-			<cite class="fn"><?php bp_activity_action(); ?></cite>
+			<?php bp_activity_action(); ?>
 	
 		</div>
 	
