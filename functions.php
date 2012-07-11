@@ -3533,35 +3533,38 @@ if ( ! function_exists( 'cp_get_post_version_info' ) ):
 function cp_get_post_version_info( $post ) {
 	
 	// check for newer version
-	$newer = '';
+	$newer_link = '';
+	
+	// assume no newer version
+	$newer_id = '';
 	
 	// set key
 	$key = '_cp_newer_version';
 	
 	// if the custom field already has a value...
-	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
+	if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
 	
 		// get it
-		$newer = get_post_meta( $post->ID, $key, true );
+		$newer_id = get_post_meta( $post->ID, $key, true );
 		
 	}
 	
 	
 	
 	// if we've got one...
-	if ( $newer != '' ) {
+	if ( $newer_id !== '' ) {
 	
 		// get post
-		$newer_post = get_post( $newer );
+		$newer_post = get_post( $newer_id );
 		
 		// is it published?
 		if ( $newer_post->post_status == 'publish' ) {
 	
 			// get link
-			$newer_link = get_permalink( $newer_post->ID );
+			$_link = get_permalink( $newer_post->ID );
 		
 			// construct anchor
-			$newer = '<a href="'.$newer_link.'" title="Newer version">Newer version &rarr;</a>';
+			$newer_link = '<a href="'.$_link.'" title="Newer version">Newer version &rarr;</a>';
 		
 		}
 	
@@ -3570,7 +3573,7 @@ function cp_get_post_version_info( $post ) {
 	
 	
 	// check for older version
-	$older = '';
+	$older_link = '';
 	
 	// get post with this post's ID as their _cp_newer_version meta value
 	$args = array(
@@ -3594,10 +3597,10 @@ function cp_get_post_version_info( $post ) {
 		if ( $older_post->post_status == 'publish' ) {
 	
 			// get link
-			$older_link = get_permalink( $older_post->ID );
+			$_link = get_permalink( $older_post->ID );
 			
 			// construct anchor
-			$older = '<a href="'.$older_link.'" title="Older version">&larr; Older version</a>';
+			$older_link = '<a href="'.$_link.'" title="Older version">&larr; Older version</a>';
 		
 		}
 	
@@ -3606,13 +3609,13 @@ function cp_get_post_version_info( $post ) {
 	
 	
 	// did we get either?
-	if ( $newer != '' OR $older != '' ) {
+	if ( $newer_link != '' OR $older_link != '' ) {
 	
 		?>
 		<div class="version_info">
 			<ul>
-				<?php if ( $newer != '' ) echo '<li class="newer_version">'.$newer.'</li>'; ?>
-				<?php if ( $older != '' ) echo '<li class="older_version">'.$older.'</li>'; ?>
+				<?php if ( $newer_link != '' ) echo '<li class="newer_version">'.$newer_link.'</li>'; ?>
+				<?php if ( $older_link != '' ) echo '<li class="older_version">'.$older_link.'</li>'; ?>
 			</ul>
 		</div>
 		<?php

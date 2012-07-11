@@ -849,7 +849,8 @@ body.directory #content form.dir-form h3
 
 
 /* Group Name */
-div#item-header h2 
+div#item-header h2,
+body.group-admin #content div#item-header h2 
 {
 	font-weight: normal;
 	font-family: Helvetica, Arial, sans-serif;
