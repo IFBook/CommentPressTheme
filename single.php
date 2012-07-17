@@ -81,24 +81,28 @@ $type_overridden = '';
 // set post meta key
 $key = '_cp_post_type_override';
 
-// default to current blog type
-$type = $commentpress_obj->db->option_get('cp_blog_type');
+// do we have workflow?
+if ( is_object( $commentpress_obj ) ) {
 
-// but, if the custom field has a value...
-if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-	// get it
-	$overridden_type = get_post_meta( $post->ID, $key, true );
+	// default to current blog type
+	$type = $commentpress_obj->db->option_get('cp_blog_type');
 	
-	// is it different to the current blog type?
-	if ( $overridden_type != $type ) {
+	// but, if the custom field has a value...
+	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 	
-		$type_overridden = ' overridden_type-'.$overridden_type;
+		// get it
+		$overridden_type = get_post_meta( $post->ID, $key, true );
+		
+		// is it different to the current blog type?
+		if ( $overridden_type != $type ) {
+		
+			$type_overridden = ' overridden_type-'.$overridden_type;
+		
+		}
 	
 	}
 
 }
-
 
 
 
