@@ -3105,8 +3105,40 @@ endif; // cp_multipager
  * @param string $mce_css The default TinyMCE stylesheets as set by WordPress
  * @return string $mce_css The list of stylesheets with ours added
  */
-function cp_add_visual_editor() {
+function cp_add_wp_editor() {
 	
+	// init option
+	$rich_text = false;
+	
+	global $commentpress_obj;
+	
+	// kick out if wp_editor doesn't exist
+	// TinyMCE will be handled by including the script using the pre- wp_editor() method
+	if ( !function_exists( 'wp_editor' ) ) {
+	
+		// --<
+		return false;
+	
+	}
+
+	// kick out if plugin not active
+	if ( !is_object( $commentpress_obj ) ) {
+	
+		// --<
+		return false;
+	
+	}
+
+	// only allow through if plugin says so
+	if ( !$commentpress_obj->display->is_tinymce_allowed() ) {
+	
+		// --<
+		return false;
+
+	}
+	
+
+
 	// add our buttons
 	$mce_buttons = apply_filters( 
 		
@@ -3125,16 +3157,12 @@ function cp_add_visual_editor() {
 			'link', 
 			'unlink', 
 			'|', 
-			'spellchecker', 
 			'removeformat',
 			'fullscreen'
 		)
 		
 	);
 	
-	// make comma-delimited
-	$mce_buttons = implode( $mce_buttons, ',' );
-
 	// our settings
 	$settings = array(
 		
@@ -3162,9 +3190,11 @@ function cp_add_visual_editor() {
 		
 		// configure TinyMCE
 		'tinymce' => array(
-		
-			'theme_advanced_buttons1' => $mce_buttons,
-			'theme_advanced_statusbar_location' => 'none'
+			
+			'theme' => 'advanced',
+			'width' => '99%',
+			'theme_advanced_buttons1' => implode( $mce_buttons, ',' ),
+			'theme_advanced_statusbar_location' => 'none',
 		
 		),
 		
@@ -3190,8 +3220,40 @@ function cp_add_visual_editor() {
 		$settings
 	
 	);
+	
+	
+	
+	// don't show textarea
+	return true;
 
 }
+
+
+
+
+
+
+/**
+ * @description; makes TinyMCE the default editor on the front end
+ * @param string $r The default editor as set by WordPress
+ * @return string 'tinymce' our overridden default editor
+ */
+function cp_assign_default_editor( $r ) {
+
+	// only on front-end
+	if ( is_admin() ) { return $r; }
+	
+	
+	
+	// always return 'tinymce' as the default editor, or else the comment form will not show up!
+	
+	// --<
+	return 'tinymce';
+	
+}
+
+add_filter( 'wp_default_editor', 'cp_assign_default_editor', 10, 1 );
+
 
 
 

@@ -86,14 +86,9 @@ global $post;
 		<p><label for="comment" class="off-left">Comment</label><br />
 		<?php
 		
-		// override if wp_editor exists
-		if ( function_exists( 'wp_editor' ) ) {
-		
-			// in functions.php
-			cp_add_visual_editor();
-	
-		} else {
-		
+		// in functions.php
+		if ( false === cp_add_wp_editor() ) {
+			
 			?>
 			<textarea name="comment" class="comment" id="comment" cols="100%" rows="10"></textarea>
 			<?php
