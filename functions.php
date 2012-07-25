@@ -3101,11 +3101,138 @@ endif; // cp_multipager
 
 
 /**
+ * @description; adds our styles to the TinyMCE editor
+ * @param string $mce_css The default TinyMCE stylesheets as set by WordPress
+ * @return string $mce_css The list of stylesheets with ours added
+ */
+function cp_add_visual_editor() {
+	
+	// add our buttons
+	$mce_buttons = apply_filters( 
+		
+		// filter for plugins
+		'cp_tinymce_buttons', 
+		
+		// basic buttons
+		array(
+			'bold', 
+			'italic', 
+			'underline', 
+			'|',
+			'bullist',
+			'numlist',
+			'|',
+			'link', 
+			'unlink', 
+			'|', 
+			'spellchecker', 
+			'removeformat',
+			'fullscreen'
+		)
+		
+	);
+	
+	// make comma-delimited
+	$mce_buttons = implode( $mce_buttons, ',' );
+
+	// our settings
+	$settings = array(
+		
+		// configure comment textarea
+		'media_buttons' => false,
+		'textarea_name' => 'comment',
+		'textarea_rows' => 10,
+		
+		// might as well start with teeny
+		'teeny' => true,
+		
+		// give the iframe a white background
+		'editor_css' => '
+			<style type="text/css">
+				/* <![CDATA[ */
+				
+				.wp_themeSkin iframe
+				{
+					background: #fff;
+				}
+				
+				/* ]]> */
+			</style>
+		',
+		
+		// configure TinyMCE
+		'tinymce' => array(
+		
+			'theme_advanced_buttons1' => $mce_buttons,
+			'theme_advanced_statusbar_location' => 'none'
+		
+		),
+		
+		// no quicktags
+		'quicktags' => false
+	
+	);
+	
+	/*
+	had we wanted quicktags, we could have used:
+	
+		'quicktags' => array(
+			'buttons' => 'strong,em,ul,ol,li,link,close'
+		)
+
+	*/
+	
+	// create editor
+	wp_editor(
+	
+		'', // initial content
+		'comment', // id of comment textarea
+		$settings
+	
+	);
+
+}
+
+
+
+
+
+/**
+ * @description; adds our styles to the TinyMCE editor
+ * @param string $mce_css The default TinyMCE stylesheets as set by WordPress
+ * @return string $mce_css The list of stylesheets with ours added
+ */
+function cp_add_tinymce_styles( $mce_css ) {
+
+	// only on front-end
+	if ( is_admin() ) { return $mce_css; }
+	
+	// add comma if not empty
+	if ( !empty( $mce_css ) ) { $mce_css .= ','; }
+	
+	// add our editor styles
+	$mce_css .= get_template_directory_uri().'/style/css/comment-form.css';
+	
+	return $mce_css;
+	
+}
+
+// add filter for the above
+add_filter( 'mce_css', 'cp_add_tinymce_styles' );
+
+
+
+
+
+/**
  * @description; adds the Next Page button to the TinyMCE editor
  * @param array $buttons The default TinyMCE buttons as set by WordPress
  * @return array $buttons The buttons with More removed
  */
 function cp_add_tinymce_nextpage_button( $buttons ) {
+	
+	// only on back-end
+	if ( !is_admin() ) { return $buttons; }
 	
 	// try and place Next Page after More button
 	$pos = array_search( 'wp_more', $buttons, true );
@@ -3237,6 +3364,9 @@ if ( ! function_exists( 'add_commentblock_button' ) ):
  */
 function add_commentblock_button() {
 
+	// only on back-end
+	if ( !is_admin() ) { return; }
+	
 	// don't bother doing this stuff if the current user lacks permissions
 	if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') ) {
 		return;
@@ -3245,8 +3375,8 @@ function add_commentblock_button() {
 	// add only if user can edit in Rich-text Editor mode
 	if ( get_user_option('rich_editing') == 'true') {
 	
-		add_filter('mce_external_plugins', 'add_commentblock_tinymce_plugin');
-		add_filter('mce_buttons', 'register_commentblock_button');
+		add_filter( 'mce_external_plugins', 'add_commentblock_tinymce_plugin' );
+		add_filter( 'mce_buttons', 'register_commentblock_button' );
 	
 	}
 
@@ -3264,10 +3394,10 @@ if ( ! function_exists( 'register_commentblock_button' ) ):
  * @todo:
  *
  */
-function register_commentblock_button($buttons) {
+function register_commentblock_button( $buttons ) {
 	
 	// add our button to the editor button array
-	array_push($buttons, "|", "commentblock");
+	array_push( $buttons, '|', 'commentblock' );
 	
 	// --<
 	return $buttons;
@@ -3286,9 +3416,12 @@ if ( ! function_exists( 'add_commentblock_tinymce_plugin' ) ):
  * @todo:
  *
  */
-function add_commentblock_tinymce_plugin($plugin_array) {
+function add_commentblock_tinymce_plugin( $plugin_array ) {
 
+	// add comment block
 	$plugin_array['commentblock'] = get_template_directory_uri().'/style/js/tinymce/cp_editor_plugin.js';
+	
+	// --<
 	return $plugin_array;
 
 }

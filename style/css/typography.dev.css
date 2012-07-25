@@ -241,7 +241,7 @@ Post-related styles
 
 
 
-
+/* tables included in content */
 .post table
 {
 	margin: 0 7px;
@@ -269,6 +269,18 @@ Post-related styles
 {
 	background: #d6d6d7;
 }
+
+/* resets for the TinyMCE editor on General Comments */
+.post table.mceLayout th,
+.post table.mceLayout td
+{
+	text-align: left;
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+
+
 
 .post p,
 .post ul,
@@ -874,6 +886,7 @@ div#comments_sidebar .comments_container .comment-content ul li,
 div#comments_sidebar .comments_container .comment-content ol li
 {
 	margin: 2px 0;
+	padding: 0;
 	line-height: 1.2;
 }
 
