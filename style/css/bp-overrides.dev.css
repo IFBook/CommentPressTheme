@@ -372,6 +372,13 @@ div#respond .defaultSkin table
 	width: auto;
 }
 
+div#sidebar table.mceLayout,
+div#sidebar table.mceToolbar
+{
+	margin: 0;
+	width: auto;
+}
+
 #delete-group-avatar-button
 {
 	padding: 12px 0 0 0;
