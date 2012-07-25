@@ -3192,7 +3192,6 @@ function cp_add_wp_editor() {
 		'tinymce' => array(
 			
 			'theme' => 'advanced',
-			'width' => '99%',
 			'theme_advanced_buttons1' => implode( $mce_buttons, ',' ),
 			'theme_advanced_statusbar_location' => 'none',
 		
