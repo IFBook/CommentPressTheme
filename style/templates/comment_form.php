@@ -84,7 +84,19 @@ global $post;
 		<legend class="off-left">Your comment</legend>
 		
 		<p><label for="comment" class="off-left">Comment</label><br />
-		<textarea name="comment" class="comment" id="comment" cols="100%" rows="10"></textarea></p>
+		<?php
+		
+		// in functions.php
+		if ( false === cp_add_wp_editor() ) {
+			
+			?>
+			<textarea name="comment" class="comment" id="comment" cols="100%" rows="10"></textarea>
+			<?php
+		
+		}
+		
+		?>		
+		</p>
 	
 	</fieldset>
 	

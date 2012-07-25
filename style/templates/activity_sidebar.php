@@ -15,7 +15,7 @@ $cp_commentable = cp_is_commentable();
 if ( $cp_commentable ) {
 
 	// set default phrase
-	$paragraph_text = __( 'Recent Comments on this Page', 'cp-buddypress' );
+	$paragraph_text = __( 'Recent Comments on this Page', 'commentpress-theme' );
 
 	$current_type = get_post_type();
 	//print_r( $current_type ); die();
@@ -23,8 +23,8 @@ if ( $cp_commentable ) {
 	switch( $current_type ) {
 		
 		// we can add more of these if needed
-		case 'post': $paragraph_text = __( 'Recent Comments on this Post', 'cp-buddypress' ); break;
-		case 'page': $paragraph_text = __( 'Recent Comments on this Page', 'cp-buddypress' ); break;
+		case 'post': $paragraph_text = __( 'Recent Comments on this Post', 'commentpress-theme' ); break;
+		case 'page': $paragraph_text = __( 'Recent Comments on this Page', 'commentpress-theme' ); break;
 		
 	}
 	
@@ -46,7 +46,7 @@ if ( $cp_commentable ) {
 // set default
 $all_comments_title = apply_filters(
 	'cp_activity_tab_recent_title_blog', 
-	__( 'Recent Comments in this Document', 'cp-buddypress' )
+	__( 'Recent Comments in this Document', 'commentpress-theme' )
 );
 
 // get all comments
@@ -218,14 +218,29 @@ if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is
 		'scope' => 'groups',
 		'action' => 'new_groupblog_comment,new_groupblog_post',
 		
-	) ) ) : ?>
+	) ) ) :
+	
+		// change header depending on logged in status
+		if ( is_user_logged_in() ) {
 		
-		<?php if ( is_user_logged_in() ) { ?>
-		<h3 class="activity_heading">Recent Activity in your Workshops</h3>
-		<?php } else { ?>
-		<h3 class="activity_heading">Recent Activity in Public Workshops</h3>
-		<?php } ?>
+			// set default
+			$section_header_text = apply_filters(
+				'cp_activity_tab_recent_title_all_yours', 
+				__( 'Recent Activity in your Documents', 'commentpress-theme' )
+			);
+			
+		} else { 
+		
+			// set default
+			$section_header_text = apply_filters(
+				'cp_activity_tab_recent_title_all_public', 
+				__( 'Recent Activity in Public Documents', 'commentpress-theme' )
+			);
+		
+		 } ?>
 
+		<h3 class="activity_heading"><?php echo $section_header_text; ?></h3>
+		
 		<div class="paragraph_wrapper workshop_comments_output">
 		
 		<ol class="comment_activity">
