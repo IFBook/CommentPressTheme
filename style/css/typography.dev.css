@@ -734,17 +734,17 @@ Comment content styles
 ---------------------------------------------------------------------
 */
 
-div#comments_sidebar .comments_container .comment-content 
+div#sidebar .comments_container .comment-content 
 {
 	font-size: 90%;
 }
 
-div#comments_sidebar .comments_container .comment-content h1,
-div#comments_sidebar .comments_container .comment-content h2,
-div#comments_sidebar .comments_container .comment-content h3,
-div#comments_sidebar .comments_container .comment-content h4,
-div#comments_sidebar .comments_container .comment-content h5,
-div#comments_sidebar .comments_container .comment-content h6
+div#sidebar .comments_container .comment-content h1,
+div#sidebar .comments_container .comment-content h2,
+div#sidebar .comments_container .comment-content h3,
+div#sidebar .comments_container .comment-content h4,
+div#sidebar .comments_container .comment-content h5,
+div#sidebar .comments_container .comment-content h6
 {
 	float: none;
 	font-size: 100%;
@@ -760,41 +760,41 @@ div#comments_sidebar .comments_container .comment-content h6
 	margin: 0;
 }
 
-div#comments_sidebar .comments_container .comment-content h1
+div#sidebar .comments_container .comment-content h1
 {
 	font-size: 140%;
 	padding: 8px 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content h2
+div#sidebar .comments_container .comment-content h2
 {
 	font-size: 130%;
 	padding: 6px 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content h3
+div#sidebar .comments_container .comment-content h3
 {
 	font-size: 120%;
 	padding: 4px 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content h4
+div#sidebar .comments_container .comment-content h4
 {
 	font-size: 110%;
 	padding: 2px 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content h5
+div#sidebar .comments_container .comment-content h5
 {
 	font-size: 100%;
 }
 
-div#comments_sidebar .comments_container .comment-content h6
+div#sidebar .comments_container .comment-content h6
 {
 	font-size: 90%;
 }
 
-div#comments_sidebar .comments_container .comment-content blockquote
+div#sidebar .comments_container .comment-content blockquote
 {
 	margin: 0 0 8px 0;
 	padding: 4px 8px 1px 8px;
@@ -804,42 +804,42 @@ div#comments_sidebar .comments_container .comment-content blockquote
 }
 
 /* create alternately coloured blockquotes */
-div#comments_sidebar .comments_container .comment-content blockquote blockquote,
-div#comments_sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote
+div#sidebar .comments_container .comment-content blockquote blockquote,
+div#sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote
 {
 	background: #fff;
 }
 
-div#comments_sidebar .comments_container .comment-content blockquote blockquote blockquote,
-div#comments_sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote blockquote
+div#sidebar .comments_container .comment-content blockquote blockquote blockquote,
+div#sidebar .comments_container .comment-content blockquote blockquote blockquote blockquote blockquote
 {
 	background: #eee;
 }
 
-div#comments_sidebar .comments_container .comment-content blockquote cite:before
+div#sidebar .comments_container .comment-content blockquote cite:before
 {
 	content: "\00BB \0020";
 }
 
-div#comments_sidebar .comments_container .comment-content blockquote cite
+div#sidebar .comments_container .comment-content blockquote cite
 {
 	font-style: italic;
 }
 
-div#comments_sidebar .comments_container .comment-content table
+div#sidebar .comments_container .comment-content table
 {
 	color: #333;
 	border: 1px solid #ccc;
 	margin: 0 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content table th
+div#sidebar .comments_container .comment-content table th
 {
 	font-weight: bold;
 }
 
-div#comments_sidebar .comments_container .comment-content table th,
-div#comments_sidebar .comments_container .comment-content table td
+div#sidebar .comments_container .comment-content table th,
+div#sidebar .comments_container .comment-content table td
 {
 	text-align: center;
 	padding: 5px;
@@ -847,59 +847,61 @@ div#comments_sidebar .comments_container .comment-content table td
 	background: #eee;
 }
 
-div#comments_sidebar .comments_container .comment-content table tr.alternate th,
-div#comments_sidebar .comments_container .comment-content table tr.alternate td
+div#sidebar .comments_container .comment-content table tr.alternate th,
+div#sidebar .comments_container .comment-content table tr.alternate td
 {
 	background: #fff;
 }
 
-div#comments_sidebar .comments_container .comment-content p,
-div#comments_sidebar .comments_container .comment-content dl
+div#sidebar .comments_container .comment-content p,
+div#sidebar .comments_container .comment-content dl
 {
 	line-height: 1.3;
 	padding: 0 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content ul,
-div#comments_sidebar .comments_container .comment-content ol
+div#sidebar .comments_container .comment-content ul,
+div#sidebar .comments_container .comment-content ol
 {
 	margin: 0 0 0 20px;
 }
 
-div#comments_sidebar .comments_container .comment-content > ul,
-div#comments_sidebar .comments_container .comment-content > ol
+div#sidebar .comments_container .comment-content > ul,
+div#sidebar .comments_container .comment-content > ol
 {
 	margin: 0 0 8px 20px;
+	border-bottom: none;
 }
 
-div#comments_sidebar .comments_container .comment-content ul li
+div#sidebar .comments_container .comment-content ul li
 {
 	list-style-type: disc;
 }
 
-div#comments_sidebar .comments_container .comment-content ol li
+div#sidebar .comments_container .comment-content ol li
 {
 	list-style-type: decimal;
 }
 
-div#comments_sidebar .comments_container .comment-content ul li,
-div#comments_sidebar .comments_container .comment-content ol li
+div#sidebar .comments_container .comment-content ul li,
+div#sidebar .comments_container .comment-content ol li
 {
 	margin: 2px 0;
 	padding: 0;
 	line-height: 1.2;
+	border-top: none;
 }
 
-div#comments_sidebar .comments_container .comment-content address,
-div#comments_sidebar .comments_container .comment-content pre, 
-div#comments_sidebar .comments_container .comment-content xmp, 
-div#comments_sidebar .comments_container .comment-content plaintext, 
-div#comments_sidebar .comments_container .comment-content listing
+div#sidebar .comments_container .comment-content address,
+div#sidebar .comments_container .comment-content pre, 
+div#sidebar .comments_container .comment-content xmp, 
+div#sidebar .comments_container .comment-content plaintext, 
+div#sidebar .comments_container .comment-content listing
 {
 	padding: 0 0 8px 0;
 }
 
-div#comments_sidebar .comments_container .comment-content a
+div#sidebar .comments_container .comment-content a
 {
 	text-decoration: underline;
 }

@@ -1,45 +1,27 @@
 <?php
 
-
-
-// set default link name
-$cp_comments_title = apply_filters(
-
-	// filter name
-	'cp_tab_title_comments', 
-	
-	// default value
-	__( 'Comments', 'commentpress-theme' )
-	
-);
-
-// set default link name
-$cp_toc_title = apply_filters(
-
-	// filter name
-	'cp_tab_title_toc', 
-	
-	// default value
-	__( 'Contents', 'commentpress-theme' )
-	
-);
-
-
-
-// init
-$_min = '';
-
 // declare access to globals
 global $commentpress_obj;
 
-// if we have the plugin enabled...
-if ( is_object( $commentpress_obj ) ) {
 
-	// show the minimise all button
-	$_min = $commentpress_obj->get_minimise_all_button( 'comments' );
+
+// init tab order
+$cp_tab_order = array( 'comments', 'activity', 'contents' );
+
+// if we have the plugin enabled and the method exists...
+if ( 
+
+	is_object( $commentpress_obj ) AND 
+	method_exists( $commentpress_obj, 'get_sidebar_order' ) 
+	
+) {
+
+	// get order from plugin options
+	$cp_tab_order = $commentpress_obj->get_sidebar_order();
 
 }
 
+//print_r( $cp_tab_order ); die();
 
 
 
@@ -53,9 +35,53 @@ if ( is_object( $commentpress_obj ) ) {
 
 <ul id="sidebar_tabs">
 
-<li id="comments_header" class="sidebar_header">
-<h2><a href="#comments_sidebar"><?php echo $cp_comments_title; ?></a></h2>
 <?php
+
+// ----------------------------------------
+// SIDEBAR HEADERS
+// ----------------------------------------
+
+
+foreach( $cp_tab_order AS $cp_tab ) {
+
+	switch ( $cp_tab ) {
+	
+	
+	
+		// Comments Header
+		case 'comments':
+
+
+
+?><li id="comments_header" class="sidebar_header">
+<h2><a href="#comments_sidebar"><?php 
+
+// set default link name
+$cp_comments_title = apply_filters(
+
+	// filter name
+	'cp_tab_title_comments', 
+	
+	// default value
+	__( 'Comments', 'commentpress-theme' )
+	
+);
+
+echo $cp_comments_title; 
+
+?></a></h2>
+<?php
+
+// init
+$_min = '';
+
+// if we have the plugin enabled...
+if ( is_object( $commentpress_obj ) ) {
+
+	// show the minimise all button
+	$_min = $commentpress_obj->get_minimise_all_button( 'comments' );
+
+}
 
 // show the minimise all button
 echo $_min;
@@ -64,6 +90,15 @@ echo $_min;
 </li>
 
 <?php 
+
+break;
+
+
+
+		// Activity Header
+		case 'activity':
+
+
 
 // do we want to show activity tab?
 if ( cp_show_activity_tab() ) {
@@ -102,11 +137,46 @@ if ( cp_show_activity_tab() ) {
 		
 }
 
+break;
+
+
+
+		// Contents Header
+		case 'contents':
+
+
+
 ?>
 <li id="toc_header" class="sidebar_header">
-<h2><a href="#toc_sidebar"><?php echo $cp_toc_title; ?></a></h2>
+<h2><a href="#toc_sidebar"><?php 
+
+// set default link name
+$cp_toc_title = apply_filters(
+
+	// filter name
+	'cp_tab_title_toc', 
+	
+	// default value
+	__( 'Contents', 'commentpress-theme' )
+	
+);
+
+echo $cp_toc_title; 
+
+?></a></h2>
 </li>
-<?php ?>
+<?php 
+
+break;
+
+
+
+	} // end switch
+	
+} // end foreach
+
+
+?>
 
 </ul>
 
@@ -114,43 +184,40 @@ if ( cp_show_activity_tab() ) {
 
 <?php
 
+
+
+
+// ----------------------------------------
+// THE SIDEBARS THEMSELVES
+// ----------------------------------------
+
 // plugin global
 global $commentpress_obj, $post;
 
 // if we have the plugin enabled...
 if ( is_object( $commentpress_obj ) ) {
 
-	
-	
-	// get sidebar
-	$sidebar_flag = $commentpress_obj->get_default_sidebar();
 
-	// is it a commentable page?
-	if ( $sidebar_flag == 'comments' ) {
-			
+
+	// check commentable status
+	$commentable = $commentpress_obj->is_commentable();
+
+	// is it commentable?
+	if ( $commentable ) {
+	
 		// get comments sidebar
-		include (get_template_directory() . '/style/templates/comments_sidebar.php');
+		include( get_template_directory() . '/style/templates/comments_sidebar.php');
+		
+	}
+	
+	// always include TOC
+	include( get_template_directory() . '/style/templates/toc_sidebar.php' );
+	
+	// do we want to show activity tab?
+	if ( cp_show_activity_tab() ) {
 		
 		// get activity sidebar
 		include (get_template_directory() . '/style/templates/activity_sidebar.php');
-		
-		// get TOC
-		include( get_template_directory() . '/style/templates/toc_sidebar.php' );
-		
-	} else {
-	
-		// always include TOC
-		include( get_template_directory() . '/style/templates/toc_sidebar.php' );
-		
-		// do we want to show activity tab?
-		if ( cp_show_activity_tab() ) {
-			
-			// get activity sidebar
-			include (get_template_directory() . '/style/templates/activity_sidebar.php');
-			
-		} else {
-			
-		}
 		
 	}
 	

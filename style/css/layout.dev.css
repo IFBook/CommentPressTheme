@@ -1198,7 +1198,7 @@ Sidebar
 		#toc_header.sidebar_header
 		{
 			display: none;
-			margin-right: 0;
+			/* margin-right: 0; */
 		}
 		
 		body.cp_sidebar_toc #toc_header.sidebar_header
@@ -1261,6 +1261,12 @@ Sidebar
 		{
 			display: block;
 			height: 27px;
+		}
+		
+		body.cp_sidebar_activity.commentable #comments_header.sidebar_header,
+		body.cp_sidebar_toc.commentable #comments_header.sidebar_header
+		{
+			display: block;
 		}
 		
 		#comments_header.sidebar_header h2

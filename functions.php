@@ -522,6 +522,19 @@ function cp_get_body_classes(
 	
 
 
+	// init commentable class
+	$commentable = '';
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+		
+		// set class
+		$commentable = ( $commentpress_obj->is_commentable() ) ? ' commentable' : ' not_commentable';
+		
+	}
+	
+	
+	
 	// init layout class
 	$layout_class = '';
 	
@@ -626,7 +639,7 @@ function cp_get_body_classes(
 
 
 	// construct attribute
-	$_body_classes = $sidebar_class.$layout_class.$page_type.$blog_type;
+	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$blog_type;
 
 	// if we want them wrapped, do so
 	if ( !$raw ) {
@@ -765,20 +778,20 @@ function cp_page_navigation( $with_comments = false ) {
 	
 		// init title
 		$img = '';
-		$title = 'Next page'; //htmlentities( $next_page->post_title );	
+		$title = __( 'Next page', 'commentpress-theme' ); //htmlentities( $next_page->post_title );	
 	
 		// if we wanted pages with comments...
 		if ( $with_comments ) {
 		
 			// set title
-			$title = 'Next page with comments';
+			$title = __( 'Next page with comments', 'commentpress-theme' );
 			$img = '<img src="'.get_bloginfo('template_directory').'/style/images/next.png" />';	
 
 		}
 		
 		// define list item 
 		$next_page_html = $before_next.
-						  $img.'<a href="'.get_permalink( $next_page->ID ).'" id="next_page" class="css_btn" title="Next Page">'.$title.'</a>'.$after_next;
+						  $img.'<a href="'.get_permalink( $next_page->ID ).'" id="next_page" class="css_btn" title="'.$title.'">'.$title.'</a>'.$after_next;
 		
 	}
 	
@@ -795,20 +808,20 @@ function cp_page_navigation( $with_comments = false ) {
 		
 		// init title
 		$img = '';
-		$title = 'Previous page'; //htmlentities( $prev_page->post_title );
+		$title = __( 'Previous page', 'commentpress-theme' ); //htmlentities( $prev_page->post_title );
 	
 		// if we wanted pages with comments...
 		if ( $with_comments ) {
 		
 			// set title
-			$title = 'Previous page with comments';
+			$title = __( 'Previous page with comments', 'commentpress-theme' );
 			$img = '<img src="'.get_bloginfo('template_directory').'/style/images/prev.png" />';
 		
 		}
 		
 		// define list item 
 		$prev_page_html = $before_prev.
-						  $img.'<a href="'.get_permalink( $prev_page->ID ).'" id="previous_page" class="css_btn" title="Previous Page">'.$title.'</a>'.$after_prev;
+						  $img.'<a href="'.get_permalink( $prev_page->ID ).'" id="previous_page" class="css_btn" title="'.$title.'">'.$title.'</a>'.$after_prev;
 		
 	}
 	
@@ -1356,7 +1369,7 @@ function cp_format_comment( $comment, $context = 'all' ) {
 		} else { 
 		
 			// we don't have a name
-			$_context = 'by Anonymous';
+			$_context = __( 'by Anonymous', 'commentpress-theme' );
 			
 		}
 	
@@ -1846,31 +1859,19 @@ if ( ! function_exists( 'cp_is_commentable' ) ):
  */
 function cp_is_commentable() {
 
-	// declare access to globals
-	global $commentpress_obj, $post;
-
+	// declare access to plugin
+	global $commentpress_obj;
 	
-	
-	// not if we're not on a page/post and especially not if there's no post object
-	if ( !is_singular() OR !is_object( $post ) ) { return false; }
-	
-	
-	
-	// if we have the plugin enabled...
+	// if we have it...
 	if ( is_object( $commentpress_obj ) ) {
 	
-		// CP Special Pages special pages are not
-		if ( $commentpress_obj->db->is_special_page() ) { return false; }
-
-		// BuddyPress special pages are not
-		if ( $commentpress_obj->is_buddypress_special_page() ) { return false; }
-
+		// return what it reports
+		return $commentpress_obj->is_commentable();
+		
 	}
 	
-
-
 	// --<
-	return true;
+	return false;
 	
 }
 endif; // cp_is_commentable
@@ -3192,7 +3193,6 @@ function cp_add_wp_editor() {
 		'tinymce' => array(
 			
 			'theme' => 'advanced',
-			'width' => '99%',
 			'theme_advanced_buttons1' => implode( $mce_buttons, ',' ),
 			'theme_advanced_statusbar_location' => 'none',
 		
