@@ -19,9 +19,9 @@ For further information and instructions please see the [Commentpress site](http
 This theme only works in combination with the [Commentpress Plugin](https://github.com/IFBook/CommentPressPlugin)
 Please install and activate the theme by doing the following:
 
-1. Unzip the .zip file into `/wp-content/themes/commentpress`
-2. Activate the theme
-3. Visit settings pages and configure theme
+1. Unzip the .zip file and, if needed, rename the enclosing folder so that the theme's files are located directly inside `/wp-content/themes/commentpress`
+2. Activate the theme.
+3. Visit settings pages and configure theme.
 4. You are done!
 
 == Other Notes ==
@@ -34,5 +34,5 @@ TBA
 
 == Changelog == 
 
-=3.3.2=
+=3.3.3=
 * See the [commits on GitHub](https://github.com/IFBook/CommentPressTheme/commits/master)
