@@ -2040,7 +2040,7 @@ Footer
 		padding: 0;
 	}
 	
-	#content .post ul.all_comments_listing h3 
+	#content .post ul.all_comments_listing li > h3 
 	{
 		font-size: 1em;
 		color: #761D19;
@@ -2051,12 +2051,12 @@ Footer
 		border-top: 1px solid #B5BFB2;
 	}
 	
-		#content .post ul.all_comments_listing h3:hover
+		#content .post ul.all_comments_listing li > h3:hover
 		{
 			background: #EFEFEF;
 		}
 		
-		#content .post ul.all_comments_listing h3 img.avatar
+		#content .post ul.all_comments_listing li > h3 img.avatar
 		{
 			margin: 0 4px;
 			vertical-align: middle;
@@ -2104,6 +2104,22 @@ Footer
 	{
 		font-size: 90%;
 		line-height: 1.4;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_content ul,
+	#content .post ul.all_comments_listing div.item_body div.comment_content ol
+	{
+		margin: 0 0 0 20px;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_content ul li
+	{
+		list-style-type: disc;
+	}
+	
+	#content .post ul.all_comments_listing div.item_body div.comment_content ol li
+	{
+		list-style-type: decimal;
 	}
 	
 	

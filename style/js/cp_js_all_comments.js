@@ -14,10 +14,10 @@ jQuery(document).ready( function($) {
 	$('ul.all_comments_listing div.item_body').hide();
 	
 	// set pointer 
-	$("ul.all_comments_listing h3").css( 'cursor', 'pointer' );
+	$("ul.all_comments_listing li > h3").css( 'cursor', 'pointer' );
 
 	// all comment page headings toggle slide
-	$("ul.all_comments_listing h3").click( function() {
+	$("ul.all_comments_listing li > h3").click( function() {
 	
 		// toggle next item_body
 		$(this).next('div.item_body').slideToggle( 'slow' );
