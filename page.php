@@ -23,25 +23,33 @@
 // add a class for overridden page types
 $type_overridden = '';
 
-// set post meta key
-$key = '_cp_post_type_override';
+// declare access to globals
+global $commentpress_obj;
 
-// default to current blog type
-$type = $commentpress_obj->db->option_get('cp_blog_type');
+// if we have the plugin enabled...
+if ( is_object( $commentpress_obj ) ) {
 
-// but, if the custom field has a value...
-if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-
-	// get it
-	$overridden_type = get_post_meta( $post->ID, $key, true );
+	// default to current blog type
+	$type = $commentpress_obj->db->option_get( 'cp_blog_type' );
 	
-	// is it different to the current blog type?
-	if ( $overridden_type != $type ) {
+	// set post meta key
+	$key = '_cp_post_type_override';
 	
-		$type_overridden = ' overridden_type-'.$overridden_type;
+	// but, if the custom field has a value...
+	if ( get_post_meta( $post->ID, $key, true ) !== '' ) {
+	
+		// get it
+		$overridden_type = get_post_meta( $post->ID, $key, true );
+		
+		// is it different to the current blog type?
+		if ( $overridden_type != $type ) {
+		
+			$type_overridden = ' overridden_type-'.$overridden_type;
+		
+		}
 	
 	}
-
+	
 }
 
 
@@ -59,25 +67,22 @@ if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 	// init hide (show by default
 	$hide = 'show';
 	
-	// declare access to globals
-	global $commentpress_obj;
-	
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_obj ) ) {
 	
 		// get global hide
 		$hide = $commentpress_obj->db->option_get( 'cp_title_visibility' );;
 		
-	}
-	
-	// set key
-	$key = '_cp_title_visibility';
-	
-	// if the custom field already has a value...
-	if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
-	
-		// get it
-		$hide = get_post_meta( $post->ID, $key, true );
+		// set key
+		$key = '_cp_title_visibility';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( get_the_ID(), $key, true ) !== '' ) {
+		
+			// get it
+			$hide = get_post_meta( $post->ID, $key, true );
+			
+		}
 		
 	}
 	
@@ -99,25 +104,22 @@ if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 	// init hide (hide by default)
 	$hide_meta = 'hide';
 	
-	// declare access to globals
-	global $commentpress_obj;
-	
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_obj ) ) {
 	
 		// get global hide_meta
 		$hide_meta = $commentpress_obj->db->option_get( 'cp_page_meta_visibility' );;
 		
-	}
-	
-	// set key
-	$key = '_cp_page_meta_visibility';
-	
-	// if the custom field already has a value...
-	if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
-	
-		// override with local value
-		$hide_meta = get_post_meta( $post->ID, $key, true );
+		// set key
+		$key = '_cp_page_meta_visibility';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
+		
+			// override with local value
+			$hide_meta = get_post_meta( $post->ID, $key, true );
+			
+		}
 		
 	}
 	
@@ -128,20 +130,6 @@ if ( get_post_meta( $post->ID, $key, true ) != '' ) {
 	<div class="search_meta">
 		
 		<?php cp_echo_post_meta(); ?>
-		
-		<?php /*
-		
-		// get avatar
-		$author_id = get_the_author_meta( 'ID' );
-		echo get_avatar( $author_id, $size='32' );
-		
-		?>
-		
-		<cite class="fn"><?php cp_echo_post_author() ?></cite>
-		
-		<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-		
-		<?php */ ?>
 		
 	</div>
 	<?php
