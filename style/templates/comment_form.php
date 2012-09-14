@@ -116,6 +116,12 @@ global $post;
 	if ( !empty( $page ) ) {
 		echo "\n".'<input type="hidden" name="page" value="'.$page.'" />'."\n";
 	}
+	
+	// compatibility with Subscribe to Comments Reloaded
+	if ( function_exists( 'subscribe_reloaded_show' ) ) {
+		subscribe_reloaded_show();
+	}
+	
 	?>
 
 	<p id="respond_button"><input name="submit" type="submit" id="submit" value="Submit Comment" /></p>
