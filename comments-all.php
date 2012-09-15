@@ -39,8 +39,9 @@ get_header();
 
 
 
+<div id="comments_in_page_wrapper">
 <?php echo $_page_content; ?>
-
+</div>
 
 
 </div><!-- /post -->

@@ -1999,7 +1999,7 @@ Footer
 ---------------------------------------------------------------------
 */
 
-#content .post ul.all_comments_listing 
+#comments_in_page_wrapper ul.all_comments_listing 
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 90%;
@@ -2009,115 +2009,117 @@ Footer
 	border-bottom: 1px solid #B5BFB2;
 }
 
-	#content .post ul.all_comments_listing ul
+	#comments_in_page_wrapper ul.all_comments_listing ul.item_ul
+	{
+		list-style-type: none;
+		margin: 0;
+		padding: 0 0 0 20px;
+	}
+	
+	#comments_in_page_wrapper ul.all_comments_listing > ul
 	{
 		list-style-type: none;
 		margin: 0;
 		padding: 0 0 0 10px;
 	}
 	
-	/* style six levels deep */
-	#content .post ul.all_comments_listing ul ul,
-	#content .post ul.all_comments_listing ul ul ul,
-	#content .post ul.all_comments_listing ul ul ul ul,
-	#content .post ul.all_comments_listing ul ul ul ul ul
-	{
-		list-style: none;
-		margin: 0;
-		padding: 0 0 0 20px;
-	}
-	
 	/* remove list style */
-	#content .post ul.all_comments_listing li,
-	#content .post ul.all_comments_listing ul li
-	#content .post ul.all_comments_listing ul ul li,
-	#content .post ul.all_comments_listing ul ul ul li,
-	#content .post ul.all_comments_listing ul ul ul ul li,
-	#content .post ul.all_comments_listing ul ul ul ul ul li
+	#comments_in_page_wrapper ul.all_comments_listing li.page_li,
+	#comments_in_page_wrapper ul.all_comments_listing li.item_li,
+	#comments_in_page_wrapper ul.all_comments_listing li.author_li
 	{
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
 	}
 	
-	#content .post ul.all_comments_listing li > h3 
+	#comments_in_page_wrapper ul.all_comments_listing li > h3 
 	{
 		font-size: 1em;
 		color: #761D19;
 		cursor: pointer;
-		padding: 5px 0;
+		padding: 8px 0;
 		margin: 0 0 0 0;
 		line-height: 1;
 		border-top: 1px solid #B5BFB2;
 	}
 	
-		#content .post ul.all_comments_listing li > h3:hover
+		#comments_in_page_wrapper ul.all_comments_listing li > h3:hover
 		{
 			background: #EFEFEF;
 		}
 		
-		#content .post ul.all_comments_listing li > h3 img.avatar
+		#comments_in_page_wrapper ul.all_comments_listing li > h3 img.avatar
 		{
 			margin: 0 4px;
 			vertical-align: middle;
 		}
 		
-	#content .post ul.all_comments_listing h3 span
+	#comments_in_page_wrapper ul.all_comments_listing h3 span
 	{
 		font-weight: normal;
 		color: #000;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body 
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body 
 	{
-		padding: 0;
+		padding: 0 0 10px 0;
 		border-top: 1px solid #B5BFB2;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_wrapper
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_wrapper
 	{
 		border-top: 2px solid #B5BFB2;
-		padding: 1px 0 0 0;
+		padding: 0;
 		margin: 10px 0 0 0;
 		font-family: Georgia;
 		font-size: 1.1em;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_meta 
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta 
 	{
 		font-size: 70%;
 		line-height: 1.4;
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		color: #222;
+		border-bottom: 1px solid #B5BFB2;
+		padding: 3px;
+		background-color: #f9f9f9;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_meta a:link,
-	#content .post ul.all_comments_listing div.item_body div.comment_meta a:hover,
-	#content .post ul.all_comments_listing div.item_body div.comment_meta a:active,
-	#content .post ul.all_comments_listing div.item_body div.comment_meta a:visited
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:link,
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:hover,
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:active,
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment_meta a:visited
 	{
 		color: #666;
 		text-decoration: none;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_content 
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content 
 	{
 		font-size: 90%;
 		line-height: 1.4;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_content ul,
-	#content .post ul.all_comments_listing div.item_body div.comment_content ol
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ul,
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ol
 	{
 		margin: 0 0 0 20px;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_content ul li
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content > ul,
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content > ol
+	{
+		margin: 0 0 8px 20px;
+	}
+	
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ul li
 	{
 		list-style-type: disc;
 	}
 	
-	#content .post ul.all_comments_listing div.item_body div.comment_content ol li
+	#comments_in_page_wrapper ul.all_comments_listing div.item_body div.comment-content ol li
 	{
 		list-style-type: decimal;
 	}
