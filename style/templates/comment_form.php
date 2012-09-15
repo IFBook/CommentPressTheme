@@ -118,9 +118,11 @@ global $post;
 	}
 	
 	// compatibility with Subscribe to Comments Reloaded
-	if ( function_exists( 'subscribe_reloaded_show' ) ) {
-		subscribe_reloaded_show();
-	}
+	if ( function_exists( 'subscribe_reloaded_show' ) ) { ?>
+		<div class="subscribe_reloaded_insert">
+		<?php subscribe_reloaded_show(); ?>
+		</div>
+	<?php }
 	
 	?>
 
