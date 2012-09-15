@@ -1016,13 +1016,13 @@ function cp_get_comments(
 	if( count( $comments ) > 0 ) {
 	
 		// open ul
-		$cp_comment_output .= '<ul>'."\n\n";
+		$cp_comment_output .= '<ul class="item_ul">'."\n\n";
 
 		// produce a checkbox for each
 		foreach( $comments as $comment ) {
 		
 			// open li
-			$cp_comment_output .= '<li>'."\n\n";
+			$cp_comment_output .= '<li class="item_li">'."\n\n";
 	
 			// format this comment
 			$cp_comment_output .= cp_format_comment( $comment );
@@ -1391,7 +1391,7 @@ function cp_format_comment( $comment, $context = 'all' ) {
 	$_comment_meta = '<div class="comment_meta"><a href="'.$_comment_link.'" title="See comment in context">Comment</a> '.$_context.' on '.date('F jS, Y',strtotime($comment->comment_date)).'</div>'."\n";
 
 	// comment content
-	$_comment_body = '<div class="comment_content">'.wpautop(convert_chars(wptexturize($comment->comment_content))).'</div>'."\n";
+	$_comment_body = '<div class="comment-content">'.wpautop(convert_chars(wptexturize($comment->comment_content))).'</div>'."\n";
 	
 	// construct comment
 	return '<div class="comment_wrapper">'."\n".$_comment_meta.$_comment_body.'</div>'."\n\n";
@@ -1478,7 +1478,7 @@ function cp_get_all_comments_content( $page_or_post = 'page' ) {
 				}
 		
 				// open li
-				$_page_content .= '<li><!-- page li -->'."\n\n";
+				$_page_content .= '<li class="page_li"><!-- page li -->'."\n\n";
 				
 				// count comments
 				if ( $comment->comment_count > 1 ) { $_comment_count_text = 'comments'; } else { $_comment_count_text = 'comment'; }
@@ -1490,7 +1490,7 @@ function cp_get_all_comments_content( $page_or_post = 'page' ) {
 				$_page_content .= '<div class="item_body">'."\n\n";
 				
 				// open ul
-				$_page_content .= '<ul>'."\n\n";
+				$_page_content .= '<ul class="item_ul">'."\n\n";
 		
 				// set mem
 				$_title = $comment->post_title;
@@ -1499,7 +1499,7 @@ function cp_get_all_comments_content( $page_or_post = 'page' ) {
 		
 			
 			// open li
-			$_page_content .= '<li><!-- item li -->'."\n\n";
+			$_page_content .= '<li class="item_li"><!-- item li -->'."\n\n";
 	
 			// show the comment
 			$_page_content .= cp_format_comment( $comment );
@@ -1707,7 +1707,7 @@ function cp_get_comments_by_content() {
 				}
 		
 				// open li
-				$_page_content .= '<li><!-- author li -->'."\n\n";
+				$_page_content .= '<li class="author_li"><!-- author li -->'."\n\n";
 				
 				// count comments
 				//if ( $comment->comment_count > 1 ) { $_comment_count_text = 'comments'; } else { $_comment_count_text = 'comment'; }
@@ -1721,7 +1721,7 @@ function cp_get_comments_by_content() {
 				$_page_content .= '<div class="item_body">'."\n\n";
 				
 				// open ul
-				$_page_content .= '<ul>'."\n\n";
+				$_page_content .= '<ul class="item_ul">'."\n\n";
 		
 				// set mem
 				$_title = $comment->comment_author;
@@ -1730,7 +1730,7 @@ function cp_get_comments_by_content() {
 		
 			
 			// open li
-			$_page_content .= '<li><!-- item li -->'."\n\n";
+			$_page_content .= '<li class="item_li"><!-- item li -->'."\n\n";
 	
 			// show the comment
 			$_page_content .= cp_format_comment( $comment, 'by' );
