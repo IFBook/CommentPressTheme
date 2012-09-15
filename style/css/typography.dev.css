@@ -725,6 +725,22 @@ div#respond p a#cancel-comment-reply-link
 	color: #761D19;
 }
 
+/* compatibility with Subscribe to Comments Reloaded */
+div#respond .subscribe_reloaded_insert
+{
+	font-size: 11px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #666;
+	padding: 0;
+	margin: 15px 0;
+}
+
+div#respond .subscribe_reloaded_insert p
+{
+	font-size: 11px;
+}
+
+
 
 
 
