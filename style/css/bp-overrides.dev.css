@@ -361,6 +361,12 @@ body.create-blog.buddypress_page #content a.button,
 .standard-form .left-menu
 {
 	padding: 0 0 20px 0;
+	float: left;
+}
+
+.standard-form .main-column 
+{
+	margin-left: 190px;
 }
 
 
@@ -400,6 +406,7 @@ ul.item-list li
 	border-bottom: 1px solid #EAEAEA;
 	padding: 15px;
 	position: relative;
+	overflow: auto;
 }
 
 ul.item-list li div.action 
@@ -937,6 +944,76 @@ body.friends #members-list li
 	overflow: auto;
 	padding: 15px;
 }
+
+
+
+/* Invite Anyone plugin compatibility */
+body.groups.invite-anyone #item-body,
+form#invite-anyone-by-email
+{
+	padding: 9px 19px;
+}
+
+body.groups.invite-anyone .left-menu
+{
+	float: left;
+}
+
+#invite-anyone-by-email h4,
+body.sent-invites h4
+{
+	padding: 19px 0 12px 0;
+	font-size: 1.6em;
+	font-weight: normal;
+	color: #761D19;
+	margin: 0;
+}
+
+body.sent-invites h4
+{
+	padding: 28px 19px 12px 19px;
+}
+
+body.sent-invites #sent-invites-intro
+{
+	padding: 7px 19px 12px 19px;
+}
+
+body.sent-invites .ia-pagination
+{
+	margin-left: 19px;
+	margin-right: 19px;
+}
+
+body.sent-invites .invite-anyone-sent-invites
+{
+	margin-left: 19px;
+	margin-right: 19px;
+	width: 90%;
+}
+
+ol#invite-anyone-steps
+{
+	margin: 0;
+}
+
+ol#invite-anyone-steps li 
+{
+	margin: 20px 0;
+}
+
+ol#invite-anyone-steps textarea.invite-anyone-email-addresses,
+ol#invite-anyone-steps #invite-anyone-custom-subject,
+ol#invite-anyone-steps #invite-anyone-custom-message
+{
+	width: 90%;
+}
+
+#invite-anyone-by-email .submit 
+{
+	padding: 20px 0;
+}
+
 
 
 
