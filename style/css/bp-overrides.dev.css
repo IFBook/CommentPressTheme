@@ -439,7 +439,22 @@ ul.activity-list > li:first-child
     padding-top: 15px;
 }
 
+.activity-list .activity-content .activity-inner, 
+.activity-list .activity-content blockquote 
+{
+	margin: 10px 10px 5px 0;
+	overflow: hidden;
+}
 
+.activity-inner > p 
+{
+	margin-bottom: 10px;
+}
+
+div.activity-meta 
+{
+	margin: 12px 0;
+}
 
 /* activity permalink page */
 body.activity-permalink .activity-list > li:first-child 
