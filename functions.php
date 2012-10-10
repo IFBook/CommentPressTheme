@@ -412,7 +412,13 @@ function cp_customize_register(
 	$wp_customize 
 
 ) { //-->
+
+	// access plugin
+	global $commentpress_obj;
 	
+	// kick out if buddypress groupblog...
+	if ( is_object( $commentpress_obj ) AND $commentpress_obj->is_groupblog() ) return;
+
 	// add customizer section title
 	$wp_customize->add_section( 'cp_inline_header_image', array(
 		'title'          => 'Site Logo',
