@@ -89,6 +89,21 @@ function cp_setup(
 		
 	}
 	
+	// Default custom headers packaged with the theme (see Twenty Eleven)
+	// A nice side-effect of supplying a default header image is that it triggers the
+	// "Header Image" option in the Theme Customizer
+	// %s is a placeholder for the theme template directory URI
+	register_default_headers( 
+		array(
+			'caves' => array(
+				'url' => '%s/style/images/header/caves.jpg',
+				'thumbnail_url' => '%s/style/images/header/caves-thumbnail.jpg',
+				/* translators: header image description */
+				'description' => __( 'Abstract Green', 'commentpress-theme' )
+			)
+		)
+	);
+	
 	// auto feed links
 	add_theme_support( 'automatic-feed-links' );
 	
@@ -378,12 +393,12 @@ function cp_admin_header(
 {
 	margin: 0;
 	padding: 0;
-	padding-top: 7px;
+	padding-top: 12px;
 }
 
 #headimg #name
 {
-	font-size: 1.6em;
+	font-size: 1em;
 	text-decoration: none;
 }
 
