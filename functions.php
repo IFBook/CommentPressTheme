@@ -270,7 +270,12 @@ function cp_header(
 {
 	background-color: #<?php echo $bg_colour; ?>;
 	<?php echo $bg_image; ?>
-
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
 }
 
 #title h1,
@@ -394,10 +399,91 @@ endif; // cp_admin_header
 
 
 
+if ( ! function_exists( 'cp_customize_register' ) ) {
+/**
+ * Implements Commentpress theme options into Theme Customizer
+ *
+ * @param $wp_customize Theme Customizer object
+ * @return void
+ *
+ */
+function cp_customize_register( 
+
+	$wp_customize 
+
+) { //-->
+	
+	// add customizer section title
+	$wp_customize->add_section( 'cp_inline_header_image', array(
+		'title'          => 'Site Logo',
+		'priority'       => 35,
+	) );
+	
+	// add image
+	$wp_customize->add_setting('cp_theme_settings[cp_inline_header_image]', array(
+		 'default'           => '',
+		 'capability'        => 'edit_theme_options',
+		 'type'           => 'option'
+	));
+	 
+	$wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'cp_inline_header_image', array(
+		 'label'    => __('Logo Image', 'commentpress-theme'),
+		 'section'  => 'cp_inline_header_image',
+		 'settings' => 'cp_theme_settings[cp_inline_header_image]',
+		 'priority'	=>	1
+	)));
+	
+	// add padding
+	$wp_customize->add_setting('cp_theme_settings[cp_inline_header_padding]', array(
+		 'default'           => '',
+		 'capability'        => 'edit_theme_options',
+		 'type'           => 'option'
+	));
+	 
+	$wp_customize->add_control( 'cp_theme_settings[cp_inline_header_padding]', array(
+		'label'   => 'Top padding in px',
+		'section' => 'cp_inline_header_image',
+		'type'    => 'text'
+	) );
+
+}
+}
+add_action( 'customize_register', 'cp_customize_register' );
+
+
+
+
+
+if ( ! function_exists( 'cp_admin_menu' ) ) {
+/** 
+ * @description: adds more prominent menu item
+ * @todo:
+ *
+ */
+function cp_admin_menu() {
+
+	// Only add for WP3.4+
+	global $wp_version;
+	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
+
+		// add the Customize link to the admin menu
+		add_theme_page( 'Customize', 'Customize', 'edit_theme_options', 'customize.php' );
+		
+	}
+	
+}
+}
+add_action( 'admin_menu', 'cp_admin_menu' );
+
+
+
+
+
+
 if ( ! function_exists( 'cp_get_header_image' ) ):
 /** 
- * @description: deprecated function that was once intended as an automation method for setting a header image
- * @todo: inform users that header images will be using a different method in future
+ * @description: function that sets a header foreground image (a logo, for example)
+ * @todo: inform users that header images are using a different method
  *
  */
 function cp_get_header_image( 
@@ -406,6 +492,70 @@ function cp_get_header_image(
 
 	// access plugin
 	global $commentpress_obj;
+
+	// test for groupblog
+	if ( is_object( $commentpress_obj ) AND $commentpress_obj->is_groupblog() ) {
+	
+		// get group ID
+		$group_id = get_groupblog_group_id( get_current_blog_id() );
+	
+		// get group avatar
+		$avatar_options = array ( 
+			'item_id' => $group_id, 
+			'object' => 'group', 
+			'type' => 'full', 
+			'alt' => 'Group avatar', 
+			'class' => 'cp_logo_image cp_group_avatar', 
+			'width' => 48, 
+			'height' => 48, 
+			'html' => true 
+		);
+        
+        // show group avatar
+        echo bp_core_fetch_avatar( $avatar_options );
+		
+		// --<
+		return;
+	
+	}
+	
+	
+	
+	// -------------------------------------------------------------------------
+	// implement compatibility with WordPress Theme Customizer
+	// -------------------------------------------------------------------------
+
+	// get the new options
+	$options = get_option( 'cp_theme_settings' );
+	//print_r( $options ); die();
+	
+	// test for our new theme customizer option
+	if ( isset( $options['cp_inline_header_image'] ) AND !empty( $options['cp_inline_header_image'] ) ) {
+	
+		// init top padding
+		$style = '';
+		
+		// test for top padding	
+		if ( isset( $options['cp_inline_header_padding'] ) AND !empty( $options['cp_inline_header_padding'] ) ) {
+		
+			// override
+			$style = ' style="padding-top: '.$options['cp_inline_header_padding'].'px"';
+			
+		}		
+		
+		// show the uploaded image
+		echo '<img src="'.$options['cp_inline_header_image'].'" class="cp_logo_image" '.$style.'alt="Logo" />';
+		
+		// --<
+		return;
+	
+	}
+	
+	
+	
+	// -------------------------------------------------------------------------
+	// our fallback is to go with the legacy method that some people might still be using
+	// -------------------------------------------------------------------------
 
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_obj ) AND $commentpress_obj->db->option_get( 'cp_toc_page' ) ) {
