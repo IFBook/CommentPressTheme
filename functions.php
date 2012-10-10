@@ -4114,10 +4114,10 @@ function cp_get_post_meta_visibility( $post_id ) {
 		$key = '_cp_page_meta_visibility';
 		
 		// if the custom field already has a value...
-		if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
+		if ( get_post_meta( $post_id, $key, true ) != '' ) {
 		
 			// override with local value
-			$hide_meta = get_post_meta( $post->ID, $key, true );
+			$hide_meta = get_post_meta( $post_id, $key, true );
 			
 		}
 		
