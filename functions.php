@@ -78,7 +78,7 @@ function cp_setup(
 		add_custom_background();
 	
 		// header text colour
-		define('HEADER_TEXTCOLOR', 'eeeeee');
+		define( 'HEADER_TEXTCOLOR', 'eeeeee' );
 		
 		// set height and width
 		define( 'HEADER_IMAGE_WIDTH', apply_filters( 'cp_header_image_width', 940 ) );
@@ -210,6 +210,11 @@ function cp_header(
 		$bg_colour = $commentpress_obj->db->option_get_header_bg();
 	
 	}
+	
+	// allow overrides
+	$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );	
+	
+	
 	
 	// init background-image
 	$bg_image = '';
