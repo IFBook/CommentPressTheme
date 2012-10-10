@@ -1342,6 +1342,9 @@ function cp_scroll_to_anchor_on_load() {
 	// do we have a comment permalink?
 	if ( url.match('#comment-' ) ) {
 	
+		// activate comments sidebar
+		cp_activate_sidebar('comments');
+
 		// open the matching block
 
 		// get comment ID
@@ -1520,7 +1523,7 @@ function cp_scroll_to_anchor_on_load() {
 
 
 /** 
- * @description: page load prodecure
+ * @description: page load prodecure for special pages with comments in content
  * @todo: 
  *
  */
@@ -2691,7 +2694,7 @@ jQuery(document).ready( function($) {
 		event.preventDefault();
 	
 		// activate it
-		cp_activate_sidebar('toc')
+		cp_activate_sidebar('toc');
 
 		// --<
 		return false;
@@ -2709,7 +2712,7 @@ jQuery(document).ready( function($) {
 		event.preventDefault();
 	
 		// activate it
-		cp_activate_sidebar('activity')
+		cp_activate_sidebar('activity');
 
 		// --<
 		return false;
@@ -2727,7 +2730,7 @@ jQuery(document).ready( function($) {
 		event.preventDefault();
 	
 		// activate it
-		cp_activate_sidebar('comments')
+		cp_activate_sidebar('comments');
 
 		// --<
 		return false;
