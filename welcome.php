@@ -8,7 +8,7 @@ Template Name: Welcome
 
 
 
-<!-- page.php -->
+<!-- welcome.php -->
 
 <div id="wrapper">
 
@@ -30,39 +30,14 @@ Template Name: Welcome
 
 
 
-<div class="post" id="post-<?php the_ID(); ?>">
+<div class="post<?php echo cp_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
 
 
 	<?php
 	
-	// init hide (show by default
-	$hide = 'show';
-	
-	// declare access to globals
-	global $commentpress_obj;
-	
-	// if we have the plugin enabled...
-	if ( is_object( $commentpress_obj ) ) {
-	
-		// get global hide
-		$hide = $commentpress_obj->db->option_get( 'cp_title_visibility' );;
-		
-	}
-	
-	// set key
-	$key = '_cp_title_visibility';
-	
-	//if the custom field already has a value...
-	if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
-	
-		// get it
-		$hide = get_post_meta( $post->ID, $key, true );
-		
-	}
-	
-	// if show...
-	if ( $hide == 'show' ) {
+	// if we've elected to show the title...
+	if ( cp_get_post_title_visibility( get_the_ID() ) ) {
 
 	?><h2 class="post_title"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
 	

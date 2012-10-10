@@ -3975,4 +3975,132 @@ endif; // cp_get_post_version_info
 
 
 
-?>
+if ( ! function_exists( 'cp_get_post_css_override' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_css_override( $post_id ) {
+	
+	// add a class for overridden page types
+	$type_overridden = '';
+	
+	// declare access to globals
+	global $commentpress_obj;
+	//print_r(array( 'here' )); die();
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// default to current blog type
+		$type = $commentpress_obj->db->option_get( 'cp_blog_type' );
+		//print_r($type); die();
+		
+		// set post meta key
+		$key = '_cp_post_type_override';
+		
+		// but, if the custom field has a value...
+		if ( get_post_meta( $post_id, $key, true ) !== '' ) {
+		
+			// get it
+			$overridden_type = get_post_meta( $post_id, $key, true );
+			
+			// is it different to the current blog type?
+			if ( $overridden_type != $type ) {
+			
+				$type_overridden = ' overridden_type-'.$overridden_type;
+			
+			}
+		
+		}
+		
+	}
+	
+	// --<
+	return $type_overridden;
+
+}
+endif; // cp_get_post_css_override
+
+
+
+
+
+if ( ! function_exists( 'cp_get_post_title_visibility' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_title_visibility( $post_id ) {
+	
+	// init hide (show by default)
+	$hide = 'show';
+	
+	// declare access to globals
+	global $commentpress_obj;
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// get global hide
+		$hide = $commentpress_obj->db->option_get( 'cp_title_visibility' );;
+		
+	}
+	
+	// set key
+	$key = '_cp_title_visibility';
+	
+	//if the custom field already has a value...
+	if ( get_post_meta( $post_id, $key, true ) != '' ) {
+	
+		// get it
+		$hide = get_post_meta( $post_id, $key, true );
+		
+	}
+	
+	// --<
+	return ( $hide == 'show' ) ? true : false;
+
+}
+endif; // cp_get_post_title_visibility
+
+
+
+
+
+if ( ! function_exists( 'cp_get_post_meta_visibility' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_meta_visibility( $post_id ) {
+	
+	// init hide (hide by default)
+	$hide_meta = 'hide';
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// get global hide_meta
+		$hide_meta = $commentpress_obj->db->option_get( 'cp_page_meta_visibility' );;
+		
+		// set key
+		$key = '_cp_page_meta_visibility';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( get_the_ID(), $key, true ) != '' ) {
+		
+			// override with local value
+			$hide_meta = get_post_meta( $post->ID, $key, true );
+			
+		}
+		
+	}
+	
+	// --<
+	return ( $hide_meta == 'show' ) ? true : false;
+
+}
+endif; // cp_get_post_meta_visibility
+
+
+
+
+
