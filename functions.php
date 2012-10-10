@@ -4081,6 +4081,9 @@ function cp_get_post_meta_visibility( $post_id ) {
 	// init hide (hide by default)
 	$hide_meta = 'hide';
 	
+	// declare access to globals
+	global $commentpress_obj;
+	
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_obj ) ) {
 	
