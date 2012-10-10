@@ -73,7 +73,7 @@ elseif ( is_home() ) {
 	
 	<?php } ?>
 	
-	<div id="cp_book_info"><p>Blog</p></div>
+	<div id="cp_book_info"><p><?php echo __( 'Blog', 'commentpress-theme' ); ?></p></div>
 	<?php
 
 }
@@ -96,7 +96,7 @@ elseif ( is_day() || is_month() || is_year() ) {
 	
 	<?php } ?>
 	
-	<div id="cp_book_info"><p><?php echo 'Blog Archives: '; wp_title(''); ?></p></div>
+	<div id="cp_book_info"><p><?php echo __( 'Blog Archives: ', 'commentpress-theme' ); wp_title(''); ?></p></div>
 	<?php
 
 }
