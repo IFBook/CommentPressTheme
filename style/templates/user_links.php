@@ -34,7 +34,7 @@ if ( is_multisite() ) {
 	) {
 	
 		// test whether we have BuddyPress
-		if ( defined( 'BP_VERSION' ) ) {
+		if ( function_exists( 'bp_get_root_domain' ) ) {
 		
 			// different behaviour when logged in or not
 			if ( is_user_logged_in() ) {

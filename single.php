@@ -75,37 +75,6 @@ if ( is_object( $commentpress_obj ) ) {
 }
 
 
-// add a class for overridden page types
-$type_overridden = '';
-
-// set post meta key
-$key = '_cp_post_type_override';
-
-// do we have workflow?
-if ( is_object( $commentpress_obj ) ) {
-
-	// default to current blog type
-	$type = $commentpress_obj->db->option_get('cp_blog_type');
-	
-	// but, if the custom field has a value...
-	if ( get_post_meta( $post->ID, $key, true ) != '' ) {
-	
-		// get it
-		$overridden_type = get_post_meta( $post->ID, $key, true );
-		
-		// is it different to the current blog type?
-		if ( $overridden_type != $type ) {
-		
-			$type_overridden = ' overridden_type-'.$overridden_type;
-		
-		}
-	
-	}
-
-}
-
-
-
 ?>
 
 
@@ -148,7 +117,7 @@ if ( $tabs_class != '' ) {
 
 
 
-<div class="post<?php echo $type_overridden; ?>" id="post-<?php the_ID(); ?>">
+<div class="post<?php echo cp_get_post_css_override( get_the_ID() ); ?>" id="post-<?php the_ID(); ?>">
 
 
 

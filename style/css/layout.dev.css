@@ -109,13 +109,19 @@ Book Header
 		#titlewrap
 		{
 			float: left;
-			padding: 0 0 0 20px;
+			padding: 0 0 0 16px;
 		}
 			
 			#titlewrap img
 			{
 				float: left;
 				padding: 0 20px 0 0;
+			}
+			
+			#titlewrap img.cp_group_avatar
+			{
+				float: left;
+				padding: 9px 16px 0 0;
 			}
 			
 		#page_title
@@ -698,6 +704,11 @@ ul#content-tabs li
 		font-size: smaller;
 	}
 	
+	.hidden_page_url
+	{
+		display: none;
+	}
+	
 
 
 
@@ -760,7 +771,9 @@ span.commenticonbox a.para_permalink
 	
 	span.commenticonbox small.comment_count
 	{
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 10px; 
+		font-weight: normal;
 		position: absolute; 
 		float: right;
 		padding: 0 0 0 3px;
@@ -817,12 +830,16 @@ span.textblock.selected_para
 
 	.post span.para_marker span
 	{
-		font-size: 70%;
+		font-size: 11px;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 	
 	#content .post span.para_marker a
 	{
 		text-decoration: none;
+		font-weight: normal;
+		font-size: 16px;
+		font-family: Georgia, serif;
 	}
 	
 	/* enable visual cue for rollovers */
@@ -833,7 +850,7 @@ span.textblock.selected_para
 	
 	#content .post span.para_marker a.js-hover span
 	{
-		font-size: 90%;
+		font-size: 13px;
 		font-weight: bold;
 	}
 	
@@ -841,7 +858,7 @@ span.textblock.selected_para
 	span.commenticonbox small.comment_count.js-hover
 	{
 		margin-top: -2px;
-		font-size: 80%;
+		font-size: 13px;
 		font-weight: bold;
 		color: #761D19;
 	}
@@ -2340,25 +2357,6 @@ ul.tml-user-links
 		text-decoration: none;
 		text-transform: uppercase;
 	}
-
-
-
-
-/* 
----------------------------------------------------------------------
-Co Authors Plus
----------------------------------------------------------------------
-*/
-
-.coauthors-plus-author
-{
-	clear: left;
-}
-
-.coauthors-date
-{
-	clear: left;
-}
 
 
 
