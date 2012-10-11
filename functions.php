@@ -3378,7 +3378,7 @@ function cp_add_wp_editor() {
 		'tinymce' => array(
 			
 			'theme' => 'advanced',
-			'theme_advanced_buttons1' => implode( $mce_buttons, ',' ),
+			'theme_advanced_buttons1' => implode( ',', $mce_buttons ),
 			'theme_advanced_statusbar_location' => 'none',
 		
 		),
@@ -3387,6 +3387,8 @@ function cp_add_wp_editor() {
 		'quicktags' => false
 	
 	);
+	
+	print_r( $settings ); die();
 	
 	/*
 	had we wanted quicktags, we could have used:
