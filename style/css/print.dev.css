@@ -38,6 +38,7 @@ Updated by Christian Wach for Commentpress
 		/* Avoid printed page breaks immediately after headers, or in middle of images or blockquotes */
 		page-break-after: avoid; 
 		page-break-inside: avoid;
+		text-transform: none;
 	}
 
 	/* Headings as links are superfluous */
@@ -53,12 +54,16 @@ Updated by Christian Wach for Commentpress
 		padding-top: 4pt;
 		padding-bottom: 4pt;
 		font-size: 32pt;
+		text-transform: none;
 	}
 	
 	/* Remove unnecessary elements */
 	a.skip,
 	span.off-left,
-	#book_header,
+	#book_header img,
+	#tagline,
+	#book_search,
+	#user_links,
 	#header,
 	span.commenticonbox,
 	p.postmetadata,
@@ -79,6 +84,13 @@ Updated by Christian Wach for Commentpress
 		display: none; 
 	}
 	
+	/* show site title */
+	#book_header h1
+	{
+		font-size: 80%;
+		color: #666;
+	}
+
 	/* force comment form to be hidden */
 	#respond
 	{
@@ -89,21 +101,38 @@ Updated by Christian Wach for Commentpress
 	.post
 	{
 		font-size: 130%;
-		border-bottom: 2px solid #aaa;
+		border-bottom: 2px solid #ccc;
 	}
 	
 	/* post meta */
+	.post .search_meta
+	{
+		margin: 0;
+		padding: 0;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
 	.post .search_meta,
 	.post .search_meta cite,
 	.post .search_meta p
 	{
 		margin: 0;
 		padding: 0;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 90%;
+		color: #444;
 	}
 
 	.post .search_meta a
 	{
 		text-decoration: none;
+	}
+	
+	/* show url */
+	.hidden_page_url
+	{
+		display: block;
+		color: #666;
 	}
 	
 	/* paragraph marker */
@@ -127,7 +156,7 @@ Updated by Christian Wach for Commentpress
 	/* show divider */
 	#comments_sidebar
 	{
-		border-bottom: 2px solid #aaa;
+		border-bottom: 2px solid #ccc;
 	}
 	
 	/* release vertical constraint on comment wrapper */
@@ -161,6 +190,10 @@ Updated by Christian Wach for Commentpress
 		border: none;
 		padding-top: 1em;
 		color: #aaa;
+		-webkit-box-shadow: 0 0 0 #fff;
+		-moz-box-shadow: 0 0 0 #fff;
+		-khtml-box-shadow: 0 0 0 #fff;
+		box-shadow: 0 0 0 #fff;
 	}
 	
 	#footer_inner 

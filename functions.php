@@ -1396,6 +1396,9 @@ function cp_echo_post_meta() {
 		<?php 
 	
 	}
+		
+	// add the URL - hidden, but revealed by print stylesheet
+	?><p class="hidden_page_url"><?php echo __( 'Source: ', 'commentpress-theme' ); the_permalink(); ?></p><?php 
 
 }
 endif; // cp_echo_post_meta

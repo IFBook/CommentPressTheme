@@ -704,6 +704,11 @@ ul#content-tabs li
 		font-size: smaller;
 	}
 	
+	.hidden_page_url
+	{
+		display: none;
+	}
+	
 
 
 
@@ -767,6 +772,7 @@ span.commenticonbox a.para_permalink
 	span.commenticonbox small.comment_count
 	{
 		font-size: 10px; 
+		font-weight: normal;
 		position: absolute; 
 		float: right;
 		padding: 0 0 0 3px;
@@ -829,6 +835,7 @@ span.textblock.selected_para
 	#content .post span.para_marker a
 	{
 		text-decoration: none;
+		font-weight: normal;
 	}
 	
 	/* enable visual cue for rollovers */
