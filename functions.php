@@ -78,7 +78,7 @@ function cp_setup(
 		add_custom_background();
 	
 		// header text colour
-		define('HEADER_TEXTCOLOR', 'eeeeee');
+		define( 'HEADER_TEXTCOLOR', 'eeeeee' );
 		
 		// set height and width
 		define( 'HEADER_IMAGE_WIDTH', apply_filters( 'cp_header_image_width', 940 ) );
@@ -88,6 +88,21 @@ function cp_setup(
 		add_custom_image_header( 'cp_header', 'cp_admin_header' );
 		
 	}
+	
+	// Default custom headers packaged with the theme (see Twenty Eleven)
+	// A nice side-effect of supplying a default header image is that it triggers the
+	// "Header Image" option in the Theme Customizer
+	// %s is a placeholder for the theme template directory URI
+	register_default_headers( 
+		array(
+			'caves' => array(
+				'url' => '%s/style/images/header/caves.jpg',
+				'thumbnail_url' => '%s/style/images/header/caves-thumbnail.jpg',
+				/* translators: header image description */
+				'description' => __( 'Abstract Green', 'commentpress-theme' )
+			)
+		)
+	);
 	
 	// auto feed links
 	add_theme_support( 'automatic-feed-links' );
@@ -111,11 +126,14 @@ add_action( 'after_setup_theme', 'cp_setup' );
 
 if ( ! function_exists( 'cp_enqueue_theme_styles' ) ):
 /** 
- * @description: add front-end styles
+ * @description: add buddypress front-end styles
  * @todo:
  *
  */
 function cp_enqueue_theme_styles() {
+
+	// kick out on admin
+	if ( is_admin() ) { return; }
 
 	// init
 	$dev = '';
@@ -124,25 +142,34 @@ function cp_enqueue_theme_styles() {
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '.dev';
 	}
-	
-	// if BuddyPress is enabled...
-	if ( defined( 'BP_VERSION' ) ) {
 
-		// add BuddyPress css
-		wp_enqueue_style( 
-			
-			'cp_buddypress_css', 
-			get_template_directory_uri() . '/style/css/bp-overrides'.$dev.'.css'
-			
-		);
-	
-	}
+	// add BuddyPress css
+	wp_enqueue_style( 
+		
+		'cp_buddypress_css', 
+		get_template_directory_uri() . '/style/css/bp-overrides'.$dev.'.css'
+		
+	);
 	
 }
 endif; // cp_enqueue_theme_styles
 
-// add a filter for the above
-add_filter( 'wp_enqueue_scripts', 'cp_enqueue_theme_styles', 40 );
+if ( ! function_exists( 'cp_enqueue_bp_theme_styles' ) ):
+/** 
+ * @description: enqueue buddypress front-end styles
+ * @todo:
+ *
+ */
+function cp_enqueue_bp_theme_styles() {
+
+	// add a filter to include bp-overrides when buddypress is active
+	add_action( 'wp_enqueue_scripts', 'cp_enqueue_theme_styles', 40 );
+	
+}
+endif; // cp_enqueue_bp_theme_styles
+
+// add an action for the above
+add_action( 'bp_setup_globals', 'cp_enqueue_theme_styles' );
 
 
 
@@ -180,7 +207,7 @@ function cp_enqueue_print_styles() {
 endif; // cp_enqueue_print_styles
 
 // add a filter for the above, very late so it (hopefully) is last in the queue
-add_filter( 'wp_enqueue_scripts', 'cp_enqueue_print_styles', 100 );
+add_action( 'wp_enqueue_scripts', 'cp_enqueue_print_styles', 100 );
 
 
 
@@ -210,6 +237,11 @@ function cp_header(
 		$bg_colour = $commentpress_obj->db->option_get_header_bg();
 	
 	}
+	
+	// allow overrides
+	$bg_colour = apply_filters( 'cp_default_header_bgcolor', $bg_colour );	
+	
+	
 	
 	// init background-image
 	$bg_image = '';
@@ -270,7 +302,12 @@ function cp_header(
 {
 	background-color: #<?php echo $bg_colour; ?>;
 	<?php echo $bg_image; ?>
-
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
 }
 
 #title h1,
@@ -368,12 +405,12 @@ function cp_admin_header(
 {
 	margin: 0;
 	padding: 0;
-	padding-top: 7px;
+	padding-top: 12px;
 }
 
 #headimg #name
 {
-	font-size: 1.6em;
+	font-size: 1em;
 	text-decoration: none;
 }
 
@@ -394,10 +431,97 @@ endif; // cp_admin_header
 
 
 
+if ( ! function_exists( 'cp_customize_register' ) ) {
+/**
+ * Implements Commentpress theme options into Theme Customizer
+ *
+ * @param $wp_customize Theme Customizer object
+ * @return void
+ *
+ */
+function cp_customize_register( 
+
+	$wp_customize 
+
+) { //-->
+
+	// access plugin
+	global $commentpress_obj;
+	
+	// kick out if buddypress groupblog...
+	if ( is_object( $commentpress_obj ) AND $commentpress_obj->is_groupblog() ) return;
+
+	// add customizer section title
+	$wp_customize->add_section( 'cp_inline_header_image', array(
+		'title'          => 'Site Logo',
+		'priority'       => 35,
+	) );
+	
+	// add image
+	$wp_customize->add_setting('cp_theme_settings[cp_inline_header_image]', array(
+		 'default'           => '',
+		 'capability'        => 'edit_theme_options',
+		 'type'           => 'option'
+	));
+	 
+	$wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'cp_inline_header_image', array(
+		 'label'    => __('Logo Image', 'commentpress-theme'),
+		 'section'  => 'cp_inline_header_image',
+		 'settings' => 'cp_theme_settings[cp_inline_header_image]',
+		 'priority'	=>	1
+	)));
+	
+	// add padding
+	$wp_customize->add_setting('cp_theme_settings[cp_inline_header_padding]', array(
+		 'default'           => '',
+		 'capability'        => 'edit_theme_options',
+		 'type'           => 'option'
+	));
+	 
+	$wp_customize->add_control( 'cp_theme_settings[cp_inline_header_padding]', array(
+		'label'   => 'Top padding in px',
+		'section' => 'cp_inline_header_image',
+		'type'    => 'text'
+	) );
+
+}
+}
+add_action( 'customize_register', 'cp_customize_register' );
+
+
+
+
+
+if ( ! function_exists( 'cp_admin_menu' ) ) {
+/** 
+ * @description: adds more prominent menu item
+ * @todo:
+ *
+ */
+function cp_admin_menu() {
+
+	// Only add for WP3.4+
+	global $wp_version;
+	if ( version_compare( $wp_version, '3.4', '>=' ) ) {
+
+		// add the Customize link to the admin menu
+		add_theme_page( 'Customize', 'Customize', 'edit_theme_options', 'customize.php' );
+		
+	}
+	
+}
+}
+add_action( 'admin_menu', 'cp_admin_menu' );
+
+
+
+
+
+
 if ( ! function_exists( 'cp_get_header_image' ) ):
 /** 
- * @description: deprecated function that was once intended as an automation method for setting a header image
- * @todo: inform users that header images will be using a different method in future
+ * @description: function that sets a header foreground image (a logo, for example)
+ * @todo: inform users that header images are using a different method
  *
  */
 function cp_get_header_image( 
@@ -406,6 +530,70 @@ function cp_get_header_image(
 
 	// access plugin
 	global $commentpress_obj;
+
+	// test for groupblog
+	if ( is_object( $commentpress_obj ) AND $commentpress_obj->is_groupblog() ) {
+	
+		// get group ID
+		$group_id = get_groupblog_group_id( get_current_blog_id() );
+	
+		// get group avatar
+		$avatar_options = array ( 
+			'item_id' => $group_id, 
+			'object' => 'group', 
+			'type' => 'full', 
+			'alt' => 'Group avatar', 
+			'class' => 'cp_logo_image cp_group_avatar', 
+			'width' => 48, 
+			'height' => 48, 
+			'html' => true 
+		);
+        
+        // show group avatar
+        echo bp_core_fetch_avatar( $avatar_options );
+		
+		// --<
+		return;
+	
+	}
+	
+	
+	
+	// -------------------------------------------------------------------------
+	// implement compatibility with WordPress Theme Customizer
+	// -------------------------------------------------------------------------
+
+	// get the new options
+	$options = get_option( 'cp_theme_settings' );
+	//print_r( $options ); die();
+	
+	// test for our new theme customizer option
+	if ( isset( $options['cp_inline_header_image'] ) AND !empty( $options['cp_inline_header_image'] ) ) {
+	
+		// init top padding
+		$style = '';
+		
+		// test for top padding	
+		if ( isset( $options['cp_inline_header_padding'] ) AND !empty( $options['cp_inline_header_padding'] ) ) {
+		
+			// override
+			$style = ' style="padding-top: '.$options['cp_inline_header_padding'].'px"';
+			
+		}		
+		
+		// show the uploaded image
+		echo '<img src="'.$options['cp_inline_header_image'].'" class="cp_logo_image" '.$style.'alt="Logo" />';
+		
+		// --<
+		return;
+	
+	}
+	
+	
+	
+	// -------------------------------------------------------------------------
+	// our fallback is to go with the legacy method that some people might still be using
+	// -------------------------------------------------------------------------
 
 	// if we have the plugin enabled...
 	if ( is_object( $commentpress_obj ) AND $commentpress_obj->db->option_get( 'cp_toc_page' ) ) {
@@ -614,6 +802,21 @@ function cp_get_body_classes(
 
 	
 	// set default type
+	$groupblog_type = ' not-groupblog';
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// if it's a groupblog
+		if ( $commentpress_obj->is_groupblog() ) {
+			$groupblog_type = ' is-groupblog';
+		}
+		
+	}
+	
+
+
+	// set default type
 	$blog_type = '';
 	
 	// if we have the plugin enabled...
@@ -621,6 +824,7 @@ function cp_get_body_classes(
 	
 		// get type
 		$_type = $commentpress_obj->db->option_get( 'cp_blog_type' );
+		//print_r( $_type ); die();
 		
 		// get workflow
 		$_workflow = $commentpress_obj->db->option_get( 'cp_blog_workflow' );
@@ -639,7 +843,7 @@ function cp_get_body_classes(
 
 
 	// construct attribute
-	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$blog_type;
+	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$groupblog_type.$blog_type;
 
 	// if we want them wrapped, do so
 	if ( !$raw ) {
@@ -1140,112 +1344,57 @@ function cp_echo_post_meta() {
 		// if we get some
 		if ( !empty( $authors ) ) {
 		
-			// have we got more than one?
-			if ( count( $authors ) > 1 ) {
+			// use the Co-Authors format of "name, name, name & name"
+			$author_html = '';
 			
+			// init counter
+			$n = 1;
+			
+			// find out how many author we have
+			$author_count = count( $authors );
+		
+			// loop
+			foreach( $authors AS $author ) {
+				
+				// default to comma
+				$sep = ', ';
+				
+				// if we're on the penultimate
+				if ( $n == ($author_count - 1) ) {
+				
+					// use ampersand
+					$sep = __( ' &amp; ', 'commentpress-theme' );
+					
+				}
+				
+				// if we're on the last, don't add
+				if ( $n == $author_count ) { $sep = ''; }
+				
+				// get name
+				$author_html .= cp_echo_post_author( $author->ID, false );
+				
+				// and separator
+				$author_html .= $sep;
+				
+				// increment
+				$n++;
+				
 				// yes - are we showing avatars?
 				if ( get_option('show_avatars') ) {
 				
-					// yes
-
-					?>
-					<div class="coauthors-plus-authors">
-					<?php
+					// get avatar
+					echo get_avatar( $author->ID, $size='32' );
 					
-					// loop
-					foreach( $authors AS $author ) {
+				}
 					
-						?>
-						<div class="coauthors-plus-author">
-		
-							<?php
-							
-							// get avatar
-							echo get_avatar( $author->ID, $size='32' );
-							
-							?>
-							
-							<cite class="fn"><?php cp_echo_post_author( $author->ID ) ?></cite>
-						
-						</div>
-		
-						<?php
-						
-					}
-					
-					?>
-					
-					<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-					
-					</div>
-					<?php
-				
-				} else {
-				
-					?><cite class="fn"><?php
-					
-					// use the Co-Authors format of "name, name, name and name"
-					
-					// init counter
-					$n = 1;
-					
-					// find out how many author we have
-					$author_count = count( $authors );
-				
-					// loop
-					foreach( $authors AS $author ) {
-						
-						// default to comma
-						$sep = ', ';
-						
-						// if we're on the penultimate
-						if ( $n == ($author_count - 1) ) {
-						
-							// use ampersand
-							$sep = __( ' &amp; ', 'commentpress-theme' );
-							
-						}
-						
-						// if we're on the last, don't add
-						if ( $n == $author_count ) { $sep = ''; }
-						
-						// echo name
-						cp_echo_post_author( $author->ID );
-						
-						// and separator
-						echo $sep;
-						
-						// increment
-						$n++;
-						
-					}
-					
-					?></cite>
-					
-					<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-					
-					<?php
-				
-				} // end show_avatars check
-				
-			} else {
-			
-				// just the one author, revert to standard display method
-			
-				// get avatar
-				$author_id = get_the_author_meta( 'ID' );
-				echo get_avatar( $author_id, $size='32' );
-				
-				?>
-				
-				<cite class="fn"><?php cp_echo_post_author( $author_id ) ?></cite>
-				
-				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-				
-				<?php 
-		
 			}
 			
+			?><cite class="fn"><?php echo $author_html; ?></cite>
+			
+			<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+			
+			<?php
+				
 		}
 	
 	} else {
@@ -1263,11 +1412,50 @@ function cp_echo_post_meta() {
 		<?php 
 	
 	}
-
+		
 }
 endif; // cp_echo_post_meta
 
 
+
+
+
+if ( ! function_exists( 'cp_show_source_url' ) ):
+/** 
+ * @description: show source URL for print
+ * @todo: 
+ *
+ */
+function cp_show_source_url() {
+
+	// add the URL - hidden, but revealed by print stylesheet
+	?><p class="hidden_page_url"><?php 
+		
+		// label
+		echo __( 'Source: ', 'commentpress-theme' ); 
+		
+		// path from server array, if set
+		$path = ( isset( $_SERVER['REQUEST_URI'] ) ) ? $_SERVER['REQUEST_URI'] : '';
+		
+		// get server, if set
+		$server = ( isset( $_SERVER['SERVER_NAME'] ) ) ? $_SERVER['SERVER_NAME'] : '';
+		
+		// get protocol, if set
+		$protocol = ( !empty( $_SERVER['HTTPS'] ) ) ? 'https' : 'http';
+		
+		// construct URL
+		$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+		
+		// echo
+		echo $url;
+		
+	?></p><?php 
+
+}
+endif; // cp_show_source_url
+
+// add after theme setup hook
+add_action( 'wp_footer', 'cp_show_source_url' );
 
 
 
@@ -1279,7 +1467,7 @@ if ( ! function_exists( 'cp_echo_post_author' ) ):
  * @todo: 
  *
  */
-function cp_echo_post_author( $author_id ) {
+function cp_echo_post_author( $author_id, $echo = true ) {
 
 	// get author details
 	$user = get_userdata( $author_id );
@@ -1296,7 +1484,7 @@ function cp_echo_post_author( $author_id ) {
 	if ( is_object( $post ) AND is_object( $commentpress_obj ) AND $commentpress_obj->is_buddypress() ) {
 	
 		// construct user link
-		echo bp_core_get_userlink( $user->ID );
+		$author = bp_core_get_userlink( $user->ID );
 
 	} else {
 	
@@ -1307,8 +1495,15 @@ function cp_echo_post_author( $author_id ) {
 			esc_attr( sprintf( __( 'Posts by %s' ), $user->display_name ) ),
 			esc_html( $user->display_name )
 		);
-		echo apply_filters( 'the_author_posts_link', $link );
+		$author = apply_filters( 'the_author_posts_link', $link );
 
+	}
+	
+	// if we're echoing
+	if ( $echo ) { 
+		echo $author;
+	} else {
+		return $author;
 	}
 		
 }
@@ -3193,7 +3388,7 @@ function cp_add_wp_editor() {
 		'tinymce' => array(
 			
 			'theme' => 'advanced',
-			'theme_advanced_buttons1' => implode( $mce_buttons, ',' ),
+			'theme_advanced_buttons1' => implode( ',', $mce_buttons ),
 			'theme_advanced_statusbar_location' => 'none',
 		
 		),
@@ -3825,4 +4020,135 @@ endif; // cp_get_post_version_info
 
 
 
-?>
+if ( ! function_exists( 'cp_get_post_css_override' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_css_override( $post_id ) {
+	
+	// add a class for overridden page types
+	$type_overridden = '';
+	
+	// declare access to globals
+	global $commentpress_obj;
+	//print_r(array( 'here' )); die();
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// default to current blog type
+		$type = $commentpress_obj->db->option_get( 'cp_blog_type' );
+		//print_r($type); die();
+		
+		// set post meta key
+		$key = '_cp_post_type_override';
+		
+		// but, if the custom field has a value...
+		if ( get_post_meta( $post_id, $key, true ) !== '' ) {
+		
+			// get it
+			$overridden_type = get_post_meta( $post_id, $key, true );
+			
+			// is it different to the current blog type?
+			if ( $overridden_type != $type ) {
+			
+				$type_overridden = ' overridden_type-'.$overridden_type;
+			
+			}
+		
+		}
+		
+	}
+	
+	// --<
+	return $type_overridden;
+
+}
+endif; // cp_get_post_css_override
+
+
+
+
+
+if ( ! function_exists( 'cp_get_post_title_visibility' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_title_visibility( $post_id ) {
+	
+	// init hide (show by default)
+	$hide = 'show';
+	
+	// declare access to globals
+	global $commentpress_obj;
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// get global hide
+		$hide = $commentpress_obj->db->option_get( 'cp_title_visibility' );;
+		
+	}
+	
+	// set key
+	$key = '_cp_title_visibility';
+	
+	//if the custom field already has a value...
+	if ( get_post_meta( $post_id, $key, true ) != '' ) {
+	
+		// get it
+		$hide = get_post_meta( $post_id, $key, true );
+		
+	}
+	
+	// --<
+	return ( $hide == 'show' ) ? true : false;
+
+}
+endif; // cp_get_post_title_visibility
+
+
+
+
+
+if ( ! function_exists( 'cp_get_post_meta_visibility' ) ):
+/**
+ * Get links to previous and next versions, should they exist
+ */
+function cp_get_post_meta_visibility( $post_id ) {
+	
+	// init hide (hide by default)
+	$hide_meta = 'hide';
+	
+	// declare access to globals
+	global $commentpress_obj;
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// get global hide_meta
+		$hide_meta = $commentpress_obj->db->option_get( 'cp_page_meta_visibility' );;
+		
+		// set key
+		$key = '_cp_page_meta_visibility';
+		
+		// if the custom field already has a value...
+		if ( get_post_meta( $post_id, $key, true ) != '' ) {
+		
+			// override with local value
+			$hide_meta = get_post_meta( $post_id, $key, true );
+			
+		}
+		
+	}
+	
+	// --<
+	return ( $hide_meta == 'show' ) ? true : false;
+
+}
+endif; // cp_get_post_meta_visibility
+
+
+
+
+

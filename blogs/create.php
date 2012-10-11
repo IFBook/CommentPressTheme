@@ -35,7 +35,10 @@
 			<h3><?php 
 			
 			// define title
-			$create_title = __( 'Create a Document', 'commentpress-theme' );
+			$create_title = apply_filters(
+				'cp_register_new_site_page_title', 
+				__( 'Create a new document', 'commentpress-theme' )
+			);
 			
 			// allow overrides
 			echo apply_filters( 'cp_create_site_page_title', $create_title );
