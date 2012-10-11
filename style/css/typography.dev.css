@@ -443,6 +443,33 @@ ol.footnotes,
 	color: #666;
 }
 
+#content a.simple-footnote,
+#content sup.footnote
+{
+	color: #761D19;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+}
+
+#content a.simple-footnote sup,
+#content sup.footnote a
+{
+	padding: 0 1px;
+	background-color: #eee;
+	text-decoration: none;
+}
+
+#content sup a.footnote-link
+{
+	padding: 0 1px;
+	color: #761D19;
+	background-color: #eee;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+}
+
 /* horizontal rule (can be used to divide text from footnotes) */
 .post hr 
 {

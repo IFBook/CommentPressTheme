@@ -139,6 +139,8 @@ Updated by Christian Wach for Commentpress
 		padding: 0;
 	}
 	
+	.simple-footnotes .para_marker,
+	.simple-footnotes .commenticonbox,
 	.simple-footnotes li.list_commenticon .para_marker,
 	.simple-footnotes li.list_commenticon .commenticonbox,
 	.simple-footnotes li > a:last-child,
