@@ -547,7 +547,7 @@ div.blog-button
 /* Create Site page */
 body.create-blog #setupform
 {
-	padding: 7px 19px 11px 19px;
+	padding: 7px 19px 19px 19px;
 }
 
 body.create-blog #content p
@@ -803,6 +803,7 @@ body.create-blog #content h3
 	padding-bottom: 19px;
 }
 
+body.create-blog #cp-multisite-options h4,
 body.registration #content h4,
 body.group-create #group-create-body h2,
 body.group-create #group-create-body h3,
@@ -820,6 +821,12 @@ div.profile h4
 	color: #761D19;
 	margin: 24px 0 12px 0;
 	padding: 0;
+}
+
+/* Commentpress Options header */
+body.create-blog #cp-multisite-options h4
+{
+	margin: 0;
 }
 
 /* Settings header */

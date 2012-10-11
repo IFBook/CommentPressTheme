@@ -802,6 +802,21 @@ function cp_get_body_classes(
 
 	
 	// set default type
+	$groupblog_type = ' not-groupblog';
+	
+	// if we have the plugin enabled...
+	if ( is_object( $commentpress_obj ) ) {
+	
+		// if it's a groupblog
+		if ( $commentpress_obj->is_groupblog() ) {
+			$groupblog_type = ' is-groupblog';
+		}
+		
+	}
+	
+
+
+	// set default type
 	$blog_type = '';
 	
 	// if we have the plugin enabled...
@@ -809,6 +824,7 @@ function cp_get_body_classes(
 	
 		// get type
 		$_type = $commentpress_obj->db->option_get( 'cp_blog_type' );
+		//print_r( $_type ); die();
 		
 		// get workflow
 		$_workflow = $commentpress_obj->db->option_get( 'cp_blog_workflow' );
@@ -827,7 +843,7 @@ function cp_get_body_classes(
 
 
 	// construct attribute
-	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$blog_type;
+	$_body_classes = $sidebar_class.$commentable.$layout_class.$page_type.$groupblog_type.$blog_type;
 
 	// if we want them wrapped, do so
 	if ( !$raw ) {
