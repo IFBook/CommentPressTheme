@@ -1328,112 +1328,57 @@ function cp_echo_post_meta() {
 		// if we get some
 		if ( !empty( $authors ) ) {
 		
-			// have we got more than one?
-			if ( count( $authors ) > 1 ) {
+			// use the Co-Authors format of "name, name, name & name"
+			$author_html = '';
 			
+			// init counter
+			$n = 1;
+			
+			// find out how many author we have
+			$author_count = count( $authors );
+		
+			// loop
+			foreach( $authors AS $author ) {
+				
+				// default to comma
+				$sep = ', ';
+				
+				// if we're on the penultimate
+				if ( $n == ($author_count - 1) ) {
+				
+					// use ampersand
+					$sep = __( ' &amp; ', 'commentpress-theme' );
+					
+				}
+				
+				// if we're on the last, don't add
+				if ( $n == $author_count ) { $sep = ''; }
+				
+				// get name
+				$author_html .= cp_echo_post_author( $author->ID, false );
+				
+				// and separator
+				$author_html .= $sep;
+				
+				// increment
+				$n++;
+				
 				// yes - are we showing avatars?
 				if ( get_option('show_avatars') ) {
 				
-					// yes
-
-					?>
-					<div class="coauthors-plus-authors">
-					<?php
+					// get avatar
+					echo get_avatar( $author->ID, $size='32' );
 					
-					// loop
-					foreach( $authors AS $author ) {
+				}
 					
-						?>
-						<div class="coauthors-plus-author">
-		
-							<?php
-							
-							// get avatar
-							echo get_avatar( $author->ID, $size='32' );
-							
-							?>
-							
-							<cite class="fn"><?php cp_echo_post_author( $author->ID ) ?></cite>
-						
-						</div>
-		
-						<?php
-						
-					}
-					
-					?>
-					
-					<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-					
-					</div>
-					<?php
-				
-				} else {
-				
-					?><cite class="fn"><?php
-					
-					// use the Co-Authors format of "name, name, name and name"
-					
-					// init counter
-					$n = 1;
-					
-					// find out how many author we have
-					$author_count = count( $authors );
-				
-					// loop
-					foreach( $authors AS $author ) {
-						
-						// default to comma
-						$sep = ', ';
-						
-						// if we're on the penultimate
-						if ( $n == ($author_count - 1) ) {
-						
-							// use ampersand
-							$sep = __( ' &amp; ', 'commentpress-theme' );
-							
-						}
-						
-						// if we're on the last, don't add
-						if ( $n == $author_count ) { $sep = ''; }
-						
-						// echo name
-						cp_echo_post_author( $author->ID );
-						
-						// and separator
-						echo $sep;
-						
-						// increment
-						$n++;
-						
-					}
-					
-					?></cite>
-					
-					<p class="coauthors-date"><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-					
-					<?php
-				
-				} // end show_avatars check
-				
-			} else {
-			
-				// just the one author, revert to standard display method
-			
-				// get avatar
-				$author_id = get_the_author_meta( 'ID' );
-				echo get_avatar( $author_id, $size='32' );
-				
-				?>
-				
-				<cite class="fn"><?php cp_echo_post_author( $author_id ) ?></cite>
-				
-				<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
-				
-				<?php 
-		
 			}
 			
+			?><cite class="fn"><?php echo $author_html; ?></cite>
+			
+			<p><a href="<?php the_permalink() ?>"><?php the_time('l, F jS, Y') ?></a></p>
+			
+			<?php
+				
 		}
 	
 	} else {
@@ -1467,7 +1412,7 @@ if ( ! function_exists( 'cp_echo_post_author' ) ):
  * @todo: 
  *
  */
-function cp_echo_post_author( $author_id ) {
+function cp_echo_post_author( $author_id, $echo = true ) {
 
 	// get author details
 	$user = get_userdata( $author_id );
@@ -1484,7 +1429,7 @@ function cp_echo_post_author( $author_id ) {
 	if ( is_object( $post ) AND is_object( $commentpress_obj ) AND $commentpress_obj->is_buddypress() ) {
 	
 		// construct user link
-		echo bp_core_get_userlink( $user->ID );
+		$author = bp_core_get_userlink( $user->ID );
 
 	} else {
 	
@@ -1495,8 +1440,15 @@ function cp_echo_post_author( $author_id ) {
 			esc_attr( sprintf( __( 'Posts by %s' ), $user->display_name ) ),
 			esc_html( $user->display_name )
 		);
-		echo apply_filters( 'the_author_posts_link', $link );
+		$author = apply_filters( 'the_author_posts_link', $link );
 
+	}
+	
+	// if we're echoing
+	if ( $echo ) { 
+		echo $author;
+	} else {
+		return $author;
 	}
 		
 }
