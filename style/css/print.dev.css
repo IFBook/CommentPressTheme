@@ -128,6 +128,28 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
+	/* footnotes plugin compatibility */
+	.simple-footnotes li.list_commenticon,
+	.footnotes li.list_commenticon
+	{
+		visibility: hidden;
+		float: left;
+		height: 1px;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.simple-footnotes li.list_commenticon .para_marker,
+	.simple-footnotes li.list_commenticon .commenticonbox,
+	.simple-footnotes li > a:last-child,
+	.footnotes li.list_commenticon .para_marker,
+	.footnotes li.list_commenticon .commenticonbox,
+	.footnotes li .footnotereverse,
+	.footnotes li > a:last-child
+	{
+		display: none;
+	}
+	
 	/* paragraph marker */
 	span.para_marker
 	{
