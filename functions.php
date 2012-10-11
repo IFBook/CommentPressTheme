@@ -1397,13 +1397,49 @@ function cp_echo_post_meta() {
 	
 	}
 		
-	// add the URL - hidden, but revealed by print stylesheet
-	?><p class="hidden_page_url"><?php echo __( 'Source: ', 'commentpress-theme' ); the_permalink(); ?></p><?php 
-
 }
 endif; // cp_echo_post_meta
 
 
+
+
+
+if ( ! function_exists( 'cp_show_source_url' ) ):
+/** 
+ * @description: show source URL for print
+ * @todo: 
+ *
+ */
+function cp_show_source_url() {
+
+	// add the URL - hidden, but revealed by print stylesheet
+	?><p class="hidden_page_url"><?php 
+		
+		// label
+		echo __( 'Source: ', 'commentpress-theme' ); 
+		
+		// path from server array, if set
+		$path = ( isset( $_SERVER['REQUEST_URI'] ) ) ? $_SERVER['REQUEST_URI'] : '';
+		
+		// get server, if set
+		$server = ( isset( $_SERVER['SERVER_NAME'] ) ) ? $_SERVER['SERVER_NAME'] : '';
+		
+		// get protocol, if set
+		$protocol = ( !empty( $_SERVER['HTTPS'] ) ) ? 'https' : 'http';
+		
+		// construct URL
+		$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+		
+		// echo
+		echo $url;
+		
+	?></p><?php 
+
+}
+endif; // cp_show_source_url
+
+// add after theme setup hook
+add_action( 'wp_footer', 'cp_show_source_url' );
 
 
 

@@ -128,13 +128,6 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
-	/* show url */
-	.hidden_page_url
-	{
-		display: block;
-		color: #666;
-	}
-	
 	/* paragraph marker */
 	span.para_marker
 	{
@@ -219,6 +212,14 @@ Updated by Christian Wach for Commentpress
 	{
 		color: #aaa;
 		text-decoration: none;
+	}
+	
+	/* show url */
+	.hidden_page_url
+	{
+		display: block;
+		color: #666;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 	
 	img
