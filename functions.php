@@ -132,6 +132,9 @@ if ( ! function_exists( 'cp_enqueue_theme_styles' ) ):
  */
 function cp_enqueue_theme_styles() {
 
+	// kick out on admin
+	if ( is_admin() ) { return; }
+
 	// init
 	$dev = '';
 	
@@ -3387,8 +3390,6 @@ function cp_add_wp_editor() {
 		'quicktags' => false
 	
 	);
-	
-	print_r( $settings ); die();
 	
 	/*
 	had we wanted quicktags, we could have used:
