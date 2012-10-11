@@ -126,7 +126,7 @@ add_action( 'after_setup_theme', 'cp_setup' );
 
 if ( ! function_exists( 'cp_enqueue_theme_styles' ) ):
 /** 
- * @description: add front-end styles
+ * @description: add buddypress front-end styles
  * @todo:
  *
  */
@@ -139,25 +139,34 @@ function cp_enqueue_theme_styles() {
 	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
 		$dev = '.dev';
 	}
-	
-	// if BuddyPress is enabled...
-	if ( defined( 'BP_VERSION' ) ) {
 
-		// add BuddyPress css
-		wp_enqueue_style( 
-			
-			'cp_buddypress_css', 
-			get_template_directory_uri() . '/style/css/bp-overrides'.$dev.'.css'
-			
-		);
-	
-	}
+	// add BuddyPress css
+	wp_enqueue_style( 
+		
+		'cp_buddypress_css', 
+		get_template_directory_uri() . '/style/css/bp-overrides'.$dev.'.css'
+		
+	);
 	
 }
 endif; // cp_enqueue_theme_styles
 
-// add a filter for the above
-add_filter( 'wp_enqueue_scripts', 'cp_enqueue_theme_styles', 40 );
+if ( ! function_exists( 'cp_enqueue_bp_theme_styles' ) ):
+/** 
+ * @description: enqueue buddypress front-end styles
+ * @todo:
+ *
+ */
+function cp_enqueue_bp_theme_styles() {
+
+	// add a filter to include bp-overrides when buddypress is active
+	add_action( 'wp_enqueue_scripts', 'cp_enqueue_theme_styles', 40 );
+	
+}
+endif; // cp_enqueue_bp_theme_styles
+
+// add an action for the above
+add_action( 'bp_setup_globals', 'cp_enqueue_theme_styles' );
 
 
 
@@ -195,7 +204,7 @@ function cp_enqueue_print_styles() {
 endif; // cp_enqueue_print_styles
 
 // add a filter for the above, very late so it (hopefully) is last in the queue
-add_filter( 'wp_enqueue_scripts', 'cp_enqueue_print_styles', 100 );
+add_action( 'wp_enqueue_scripts', 'cp_enqueue_print_styles', 100 );
 
 
 
