@@ -8,8 +8,16 @@ h1, h2, h3, h5, h5, h6 { font-weight: bold }
 
 
 /* definition lists */
-dt { font-weight: bold }
-dd { padding: 0 0 10px 0 }
+dt 
+{ 
+	font-weight: bold;
+	padding: 3px 0;
+}
+
+dd 
+{
+	padding: 0 0 12px 8px;
+}
 
 /* acronyms etc */
 acronym, 
@@ -244,7 +252,7 @@ Post-related styles
 /* tables included in content */
 .post table
 {
-	margin: 0 7px;
+	margin: 0 7px 11px 7px;
 	color: #333;
 	border: 1px solid white;
 }

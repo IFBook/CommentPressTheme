@@ -8,7 +8,10 @@ Updated by Christian Wach for Commentpress
 
 	*
 	{
+		width: auto !important;
 		height: auto !important;
+		min-height: 0 !important;
+		color: #000;
 	}
 	
 	/* Set sensible defaults */
@@ -47,16 +50,6 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
-	/* Page Title */
-	h2.post_title
-	{
-		margin: 0;
-		padding-top: 4pt;
-		padding-bottom: 4pt;
-		font-size: 32pt;
-		text-transform: none;
-	}
-	
 	/* Remove unnecessary elements */
 	a.skip,
 	span.off-left,
@@ -84,24 +77,38 @@ Updated by Christian Wach for Commentpress
 		display: none; 
 	}
 	
-	/* show site title */
-	#book_header h1
-	{
-		font-size: 80%;
-		color: #666;
-	}
-
 	/* force comment form to be hidden */
 	#respond
 	{
 		display: none !important;
 	}
 	
+	
+	
+	/* show Site Title */
+	#book_header h1
+	{
+		font-size: 12pt;
+		color: #666;
+	}
+	
+	
+	
 	/* prioritise content */
 	.post
 	{
-		font-size: 130%;
+		font-size: 110%;
 		border-bottom: 2px solid #ccc;
+	}
+	
+	/* Page Title */
+	.post h2.post_title
+	{
+		margin: 0;
+		padding-top: 2pt;
+		padding-bottom: 4pt;
+		font-size: 24pt;
+		text-transform: none;
 	}
 	
 	/* post meta */
@@ -126,11 +133,67 @@ Updated by Christian Wach for Commentpress
 	.post .search_meta a
 	{
 		text-decoration: none;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 	
-	/* footnotes plugin compatibility */
-	.simple-footnotes li.list_commenticon,
-	.footnotes li.list_commenticon
+
+
+	/* post content */
+	.post h1, .post h2, .post h3, .post h4, .post h5, .post h6 
+	{
+		font-weight: bold;
+		font-family: Arial, Helvetica, sans-serif;
+		text-transform: none;
+	}
+
+	.post p,
+	.post address,
+	.post pre
+	{
+		padding-left: 2.5em;
+		line-height: 1.4;
+	}
+	
+	.post ul,
+	.post ol
+	{
+		padding-left: 2.5em;
+		line-height: 1.4;
+	}
+	
+	.post ul li,
+	.post ol li
+	{
+		margin-bottom: 2pt;
+		line-height: 1.4;
+	}
+	
+	.post > ul,
+	.post > ol
+	{
+		padding-left: 4.5em;
+	}
+	
+	.post dd
+	{
+		line-height: 1.4;
+	}
+	
+	/* to show it */
+	li.list_commenticon
+	{
+		float: left;
+		width: 2.5em;
+		color: #888;
+		margin-left: -2.5em;
+		list-style: none;
+	}
+	
+	/* to hide the nested list comment icons */
+	ul ul li.list_commenticon,
+	ul ol li.list_commenticon,
+	ol ol li.list_commenticon,
+	ol ul li.list_commenticon
 	{
 		visibility: hidden;
 		float: left;
@@ -139,23 +202,18 @@ Updated by Christian Wach for Commentpress
 		padding: 0;
 	}
 	
-	.simple-footnotes .para_marker,
-	.simple-footnotes .commenticonbox,
-	.simple-footnotes li.list_commenticon .para_marker,
-	.simple-footnotes li.list_commenticon .commenticonbox,
-	.simple-footnotes li > a:last-child,
-	.footnotes li.list_commenticon .para_marker,
-	.footnotes li.list_commenticon .commenticonbox,
-	.footnotes li .footnotereverse,
-	.footnotes li > a:last-child
-	{
-		display: none;
-	}
+	
+	
 	
 	/* paragraph marker */
 	span.para_marker
 	{
+		display: block;
+		float: left;
+		width: 2.5em;
 		font-size: 80%;
+		color: #888;
+		margin-left: -2.5em;
 	}
 	
 	span.para_marker a
@@ -169,6 +227,8 @@ Updated by Christian Wach for Commentpress
 		text-align: center;
 		padding-bottom: 1em;
 	}
+	
+	
 	
 	/* show divider */
 	#comments_sidebar
@@ -185,7 +245,8 @@ Updated by Christian Wach for Commentpress
 	/* prioritise comment content */
 	div#comments_sidebar .comments_container .comment-content
 	{
-		font-size: 130%;
+		font-size: 110%;
+		padding: 0.2em 0 1em 0;
 	}
 	
 	/* comment meta */
@@ -195,16 +256,66 @@ Updated by Christian Wach for Commentpress
 		text-decoration: none;
 	}
 	
+	
+	
+	/* comment content */
+	div#comments_sidebar .comments_container .comment-content h1,
+	div#comments_sidebar .comments_container .comment-content h2, 
+	div#comments_sidebar .comments_container .comment-content h3, 
+	div#comments_sidebar .comments_container .comment-content h4, 
+	div#comments_sidebar .comments_container .comment-content h5, 
+	div#comments_sidebar .comments_container .comment-content h6 
+	{
+		font-weight: bold;
+		font-family: Arial, Helvetica, sans-serif;
+		text-transform: none;
+	}
+
+	div#comments_sidebar .comments_container .comment-content p
+	{
+		line-height: 1.4;
+		padding: 0 0 0.6em 0.2em;
+		margin: 0;
+	}
+	
+	div#comments_sidebar .comments_container .comment-content ul,
+	div#comments_sidebar .comments_container .comment-content ol
+	{
+		line-height: 1.4;
+		padding: 0 0 0 1.1em;
+		margin: 0;
+	}
+	
+	div#comments_sidebar .comments_container .comment-content > ul,
+	div#comments_sidebar .comments_container .comment-content > ol
+	{
+		padding: 0 0 0 1.1em;
+		margin: 0;
+	}
+	
+	div#comments_sidebar .comments_container .comment-content ul li,
+	div#comments_sidebar .comments_container .comment-content ol li
+	{
+		margin-bottom: 2pt;
+		line-height: 1.4;
+	}
+	
+	
+	
 	/* All Comments */
 	ul.all_comments_listing div.item_body
 	{
 		display: block !important;
 	}
-
+	
+	
+	
 	/* footer enabled */
 	#footer
 	{
 		border: none;
+		margin: 0;
+		padding: 0;
 		padding-top: 1em;
 		color: #aaa;
 		-webkit-box-shadow: 0 0 0 #fff;
@@ -215,6 +326,7 @@ Updated by Christian Wach for Commentpress
 	
 	#footer_inner 
 	{
+		margin: 0;
 		padding: 0;
 	}
 	
@@ -230,6 +342,8 @@ Updated by Christian Wach for Commentpress
 	#footer ol li
 	{
 		color: #aaa;
+		font-size: 0.8em;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 	
 	#footer a
@@ -244,8 +358,12 @@ Updated by Christian Wach for Commentpress
 		display: block;
 		color: #666;
 		font-family: Arial, Helvetica, sans-serif;
+		font-size: 0.8em;
 	}
 	
+	
+	
+	/* layout preferences for other elements */
 	img
 	{
 		page-break-inside: avoid; 
@@ -288,5 +406,21 @@ Updated by Christian Wach for Commentpress
 	{
 		font-weight: bold;
 	}
-
+	
+	
+	
+	/* footnotes plugin compatibility */
+	.simple-footnotes .para_marker,
+	.simple-footnotes .commenticonbox,
+	.simple-footnotes li.list_commenticon .para_marker,
+	.simple-footnotes li.list_commenticon .commenticonbox,
+	.simple-footnotes li > a:last-child,
+	.footnotes li.list_commenticon .para_marker,
+	.footnotes li.list_commenticon .commenticonbox,
+	.footnotes li .footnotereverse,
+	.footnotes li > a:last-child
+	{
+		display: none;
+	}
+	
 }
