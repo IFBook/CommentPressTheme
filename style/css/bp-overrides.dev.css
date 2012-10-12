@@ -478,6 +478,39 @@ body.activity-permalink .activity-list li .activity-header > p
 	height: auto;
 }
 
+/* activity item content */
+ul.item-list .activity-inner ul,
+ul.item-list .activity-inner ol 
+{
+	margin: 0 0 0 26px;
+	border: none;
+}
+
+ul.item-list .activity-inner > ul,
+ul.item-list .activity-inner > ol 
+{
+	margin: 0 0 8px 26px;
+	border: none;
+}
+
+ul.item-list .activity-inner ul li 
+{
+	padding: 0 0 2px 0;
+	list-style-type: disc;
+	list-style-position: outside;
+	overflow: visible;
+	border: none;
+}
+
+ul.item-list .activity-inner ol li 
+{
+	padding: 0 0 2px 0;
+	list-style-type: decimal;
+	list-style-position: outside;
+	overflow: visible;
+	border: none;
+}
+
 
 
 
