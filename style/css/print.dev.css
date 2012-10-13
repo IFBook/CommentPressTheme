@@ -37,7 +37,7 @@ Updated by Christian Wach for Commentpress
 	h1, h2, h3, h4, h5, h6 
 	{
 		font-weight: bold;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		/* Avoid printed page breaks immediately after headers, or in middle of images or blockquotes */
 		page-break-after: avoid; 
 		page-break-inside: avoid;
@@ -116,7 +116,7 @@ Updated by Christian Wach for Commentpress
 	{
 		margin: 0;
 		padding: 0;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 
 	.post .search_meta,
@@ -125,7 +125,7 @@ Updated by Christian Wach for Commentpress
 	{
 		margin: 0;
 		padding: 0;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 90%;
 		color: #444;
 	}
@@ -133,7 +133,7 @@ Updated by Christian Wach for Commentpress
 	.post .search_meta a
 	{
 		text-decoration: none;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 	
 
@@ -142,7 +142,7 @@ Updated by Christian Wach for Commentpress
 	.post h1, .post h2, .post h3, .post h4, .post h5, .post h6 
 	{
 		font-weight: bold;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		text-transform: none;
 	}
 
@@ -247,6 +247,7 @@ Updated by Christian Wach for Commentpress
 	{
 		font-size: 110%;
 		padding: 0.2em 0 1em 0;
+		border: none !important;
 	}
 	
 	/* comment meta */
@@ -255,6 +256,29 @@ Updated by Christian Wach for Commentpress
 		color: #aaa;
 		text-decoration: none;
 	}
+	
+	/* comment elements to hide */
+	div#comments_sidebar .comments_container .reply
+	{
+		font-size: 110%;
+		padding: 0.2em 0 1em 0;
+		border: none !important;
+	}
+	
+	/* comment elements to show */
+	div#comments_sidebar .paragraph_wrapper
+	{
+		display: block !important;
+	}
+	
+	/* comment elements to hide */
+	div#comments_sidebar .paragraph_wrapper.no_comments,
+	a.comment-reply-link
+	{
+		display: none !important;
+	}
+	
+	
 	
 	
 	
@@ -267,7 +291,7 @@ Updated by Christian Wach for Commentpress
 	div#comments_sidebar .comments_container .comment-content h6 
 	{
 		font-weight: bold;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		text-transform: none;
 	}
 
@@ -343,7 +367,7 @@ Updated by Christian Wach for Commentpress
 	{
 		color: #aaa;
 		font-size: 0.8em;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 	
 	#footer a
@@ -357,7 +381,7 @@ Updated by Christian Wach for Commentpress
 	{
 		display: block;
 		color: #666;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		font-size: 0.8em;
 	}
 	

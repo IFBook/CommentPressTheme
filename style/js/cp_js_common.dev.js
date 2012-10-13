@@ -1943,6 +1943,34 @@ function cp_setup_para_permalink_icons() {
 function cp_setup_para_marker_icons() {
 
 	// unbind first to allow repeated calls to this function
+	jQuery('.textblock').unbind( 'click' );
+
+	/** 
+	 * @description: clicking on the little comment icon
+	 * @todo: 
+	 *
+	 */
+	jQuery('.textblock').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var text_sig = jQuery(this).attr('id');
+		//console.log( text_sig );
+		
+		// remove leading #
+		text_sig = text_sig.split('textblock-')[1];
+		
+		// use function
+		cp_do_comment_icon_action( text_sig, 'marker' );
+		
+		// --<
+		return false;
+		
+	});
+
+	// unbind first to allow repeated calls to this function
 	jQuery('span.para_marker a').unbind( 'click' );
 
 	/** 

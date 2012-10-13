@@ -227,7 +227,7 @@ Post-related styles
 {
 	
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 	padding-left: 7px;
 	padding-right: 7px;
 }
@@ -589,10 +589,12 @@ a.comment-edit-link:visited
 {
 	display: block;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 70%;
-	color: #666;
+	color: #761D19;
 	text-decoration: none;
 	margin: 5px 5px 0 0;
+	padding: 2px;
+	text-transform: uppercase;
+	font-size: 11px;
 }
 
 a.comment-edit-link:hover
@@ -617,6 +619,7 @@ a.comment-edit-link:hover
 	font-style: normal;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #222;
+	letter-spacing: 1px;
 }
 
 .comment-identifier cite img
@@ -701,12 +704,12 @@ a.reply_to_para:hover,
 	background: #eee;
 }
 
-div#respond h4
+div#respond h4#respond_title
 {
 	padding: 0px 0 5px 0;
 	background-color: transparent;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: #666;
+	color: #761D19;
 	font-size: 1em;
 	font-weight: normal;
 	margin: 0 0 5px 0;
@@ -724,10 +727,11 @@ div#respond h4 a:visited
 div#respond p
 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 70%;
+	font-size: 80%;
 	color: #666;
 	padding: 0;
 	margin: 0 0 5px 0;
+	line-height: 1.6;
 }
 
 div#respond p a:link,
@@ -735,7 +739,7 @@ div#respond p a:hover,
 div#respond p a:active,
 div#respond p a:visited
 {
-	color: #666;
+	color: #761D19;
 	text-decoration: none;
 	padding: 0;
 }
@@ -745,6 +749,39 @@ div#respond p a:hover,
 div#respond p a#cancel-comment-reply-link:hover
 {	
 	color: #761D19;
+}
+
+#commentform #author_details input, 
+#commentform textarea
+{
+	width: 90%;
+}
+
+#commentform #author_details label
+{
+	text-transform: uppercase;
+}
+
+#commentform #author_details input
+{
+	padding: 3px;
+	font-size: 12px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* logged in */
+#commentform #author_details p.author_is_logged_in
+{
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+/* not logged in */
+#commentform #author_details p.author_not_logged_in
+{
+	text-transform: uppercase;
+	font-size: 12px;
+	margin-bottom: 12px;
 }
 
 /*
@@ -1212,11 +1249,17 @@ ul#group_list li
 	font-style: normal;
 }
 
-#content .search_meta a,
+#content .search_meta a
+{
+	color: #222;
+	text-decoration: none;
+}
+
 #content .search_meta cite a
 {
 	color: #761D19;
 	text-decoration: none;
+	letter-spacing: 1px;
 }
 
 

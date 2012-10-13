@@ -724,7 +724,7 @@ Paragraph Comment Icon
 body.right-bubbles .post span.commenticonbox 
 {
 	position: absolute;
-	margin-top: 0;	
+	margin-top: 5px;
 	padding-right: 20px;
 	right: 25px;
 }
@@ -1576,7 +1576,7 @@ body.cp_sidebar_comments #comments_sidebar
 		margin: 0 0 0 0;
 		border-bottom: 2px solid #B5BFB2;
 		padding-bottom: 5px;
-		background: #CBFFBD;
+		background: #D2DCCF;
 	}
 	
 	.post .comment-identifier
@@ -1588,7 +1588,7 @@ body.cp_sidebar_comments #comments_sidebar
 		.comment-author-admin > div > div > .comment-identifier,
 		.bypostauthor > div > div > .comment-identifier
 		{
-			background: #D2DCCF;
+			background: #CFD1DC;
 		}
 	
 	.comment-content
@@ -1614,8 +1614,11 @@ body.cp_sidebar_comments #comments_sidebar
 	a.comment-reply-link
 	{
 		display: block;
-		padding: 4px 0 4px 4px;
+		padding: 4px;
 		border-bottom: 1px dashed #B5BFB2;
+		text-align: right;
+		text-transform: uppercase;
+		color: #761D19;
 	}
 	
 	div.reply_to_para
@@ -1623,6 +1626,9 @@ body.cp_sidebar_comments #comments_sidebar
 		padding: 0;
 		margin: 0;
 		border-bottom: 1px dashed #B5BFB2;
+		text-align: right;
+		text-transform: uppercase;
+		color: #761D19;
 	}
 	
 	/* wrapper for all comments */
@@ -1704,6 +1710,7 @@ body.cp_sidebar_comments #comments_sidebar
 		background-color: #CBFFBD;
 		margin: 0;
 		padding: 8px 8px;
+		border-bottom: 1px dashed #B5BFB2;
 	}
 	
 		/* need to reset table styles because TinyMCE doesn't do that by default. Doh. */
@@ -1737,11 +1744,30 @@ body.cp_sidebar_comments #comments_sidebar
 		/* cancel reply link */
 		#respond .cancel-comment-reply
 		{
+			float: right;
+		}
+		
+		#respond .cancel-comment-reply p
+		{
+			text-align: right;
+		}
+		
+		#respond .cancel-comment-reply p a
+		{
+			display: block;
+			padding: 2px;
+			text-transform: uppercase;
+			font-size: 11px;
 		}
 		
 		#cancel-comment-reply-link
 		{
 			display: block;
+		}
+		
+		fieldset#comment_details
+		{
+			margin: 0 0 8px 0;
 		}
 		
 		/* cancel reply link */
@@ -1919,9 +1945,14 @@ New Look TOC Sidebar for posts
 .post-identifier img
 {
 	float: left;
-	margin: 5px 0 0 5px;
+	margin: 5px 0 0 0;
 	padding: 0 5px 0 0;
 	vertical-align: bottom;
+}
+
+.post-identifier img:first-child
+{
+	margin: 5px 0 0 5px;
 }
 
 .post-identifier cite
@@ -1968,6 +1999,7 @@ New Look TOC Sidebar for posts
 #toc_sidebar .sidebar_minimiser ul li a.post_activity_link:hover
 {
 	color: #761D19;
+	background: #FAFAFA;
 }
 
 
@@ -2289,7 +2321,7 @@ Theme My Login
 	margin: 0 0 20px 0;
 	font-size: 1em;
 	font-weight: bold;
-	line-height: 1.45;
+	line-height: 1.5;
 	-moz-border-radius: 10px;
 	-khtml-border-radius: 10px;
 	-webkit-border-radius: 10px;

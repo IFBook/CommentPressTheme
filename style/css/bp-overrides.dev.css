@@ -203,7 +203,7 @@ form#whats-new-form h5
 	margin: 0;
 	margin-left: 76px;
 	padding: 0 0 3px 0;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #item-body form#whats-new-form h5
@@ -222,7 +222,7 @@ form.dir-form
 
 body.directory.logged-in #content form.dir-form h3
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
 }
 
@@ -261,7 +261,7 @@ div.item-list-tabs ul li
 	float: left;
 	list-style-type: none;
 	margin: 5px 0 0 5px;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 11px;
 	line-height: 22px !important;
 	text-transform: uppercase;
@@ -422,7 +422,7 @@ ul.item-list.activity-list li.load-more
 
 .activity-list li.load-more a 
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #761D19;
 	text-transform: uppercase;
 	font-size: 14px;
@@ -525,7 +525,7 @@ div.blog-button
 #register-page p
 {
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 }
 
 #register-page #signup_form,
@@ -538,7 +538,7 @@ div.blog-button
 #activate-page p
 {
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 	padding: 7px 19px 11px 19px;
 }
 
@@ -563,7 +563,7 @@ div.blog-button
 #register-page #cp-multisite-options h4
 {
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 	font-weight: bold;
 	color: #000;
 	padding: 7px 0 7px 0;
@@ -586,7 +586,7 @@ body.create-blog #setupform
 body.create-blog #content p
 {
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 	padding: 7px 19px 11px 19px;
 }
 
@@ -594,8 +594,24 @@ body.create-blog #content #setupform p,
 body.create-blog #content #cp-multisite-options p
 {
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 	padding: 7px 0 0 0;
+}
+
+body.create-blog #content #setupform label,
+body.create-blog #content #cp-multisite-options label
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	color: #761D19;
+	font-size: 14px;
+}
+
+body.create-blog #content #setupform label.checkbox,
+body.create-blog #content #cp-multisite-options label.checkbox
+{
+	color: #000;
+	font-size: 12px;
 }
 
 .standard-form#signup_form div.submit 
@@ -613,14 +629,41 @@ body.create-blog #cp-multisite-options
 body.create-blog #cp-multisite-options h4
 {
 	font-size: 1em;
-	line-height: 1.45;
+	line-height: 1.5;
 	font-weight: bold;
 	color: #000;
 	padding: 7px 0 7px 0;
 	margin: 0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
 }
 
-
+body.create-blog #content #setupform p.error
+{
+	border: 1px solid #E1CA82;
+	border: none;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	font-weight: normal;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	text-decoration: none;
+	background: #FFEAA6;
+	background-image: -webkit-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255, 255, 255, .5)), color-stop(100%,rgba(255, 255, 255, 0)));
+	background-image: -moz-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: -o-linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-image: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 0));
+	background-color: #DB1717;
+	border-color: #A71A1A;
+	clear: left;
+	color: #fff;
+	font-size: 12px;
+	display: block;
+	padding: 5px 10px;
+}
 
 
 /* messages */
@@ -887,7 +930,7 @@ body.create-blog.buddypress_page #content h3,
 {
 	font-size: 1.6em;
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
 	padding: 21px 19px 15px 19px;
 	background-color: #819565;
@@ -908,7 +951,7 @@ body.directory #content form.dir-form h3
 {
 	font-size: 1.6em;
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
 	padding: 21px 19px 15px 19px;
 	margin: 0;
@@ -922,7 +965,7 @@ div#item-header h2,
 body.group-admin #content div#item-header h2 
 {
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
 	font-size: 28px;
 	line-height: 120%;
@@ -954,7 +997,7 @@ div#item-header h2 a
 div#item-header div#item-actions h3 
 {
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
 }
 
@@ -1076,7 +1119,7 @@ ol#invite-anyone-steps #invite-anyone-custom-message
 span.highlight 
 {
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;
 	font-size: 14px;
 	padding: 0;
@@ -1088,7 +1131,7 @@ span.activity,
 .activity-list .activity-content .activity-header, 
 .activity-list .activity-content .comment-header 
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-transform: none;
 }
 
@@ -1135,7 +1178,7 @@ span.user-nicename {
 	color: #fff;
 	font-size: 16px;
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .standard-form textarea, 
@@ -1144,13 +1187,13 @@ span.user-nicename {
 .standard-form input[type="password"], 
 .dir-search input[type="text"] 
 {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #latest-update a
 {
 	font-size: 0.45em;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #222;
 	padding: 2px;
 	margin: 0 5px;
@@ -1188,7 +1231,7 @@ table.profile-fields td.label
 	padding: 5px 5px 0 5px;
 	font-size: 80%;
 	font-style: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #222;
 	line-height: 1.3;
 }
@@ -1412,7 +1455,7 @@ BuddyPress Group Email Subscription compatibility
 	font-size: 11px;
 	text-transform: uppercase;
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .single-item .group-subscription-div a
@@ -1489,7 +1532,7 @@ ul#members-list h5 .ass_manage_members_links
 	text-transform: uppercase;
 	font-size: 9px;
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 ul#admins-list h5 .ass_manage_members_links a, 
@@ -1498,5 +1541,5 @@ ul#members-list h5 .ass_manage_members_links a
 {
 	font-size: 9px;
 	font-weight: normal;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

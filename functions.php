@@ -2844,7 +2844,7 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 	
 	
 	if ( $comment->comment_approved == '0' ) {
-		$comment_text = '<p><em>Comment awaiting moderation</em></p>';
+		$comment_text = '<p><em>'.__( 'Comment awaiting moderation', 'commentpress-theme' ).'</em></p>';
 	} else {
 		$comment_text = get_comment_text();
 	}
@@ -2909,9 +2909,21 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 	AND 
 		current_user_can( 'edit_comment', $comment->comment_ID ) 
 	) {
-
+	
+		// set default edit link title text
+		$edit_title_text = apply_filters( 
+			'cp_comment_edit_link_title_text', 
+			__( 'Edit this comment', 'commentpress-theme' )
+		);
+	
+		// set default edit link text
+		$edit_text = apply_filters( 
+			'cp_comment_edit_link_text', 
+			__( 'Edit', 'commentpress-theme' )
+		);
+	
 		// get edit comment link
-		$editlink = '<span class="alignright"><a class="comment-edit-link" href="'.get_edit_comment_link().'" title="Edit comment">(Edit)</a></span>';
+		$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="'.get_edit_comment_link().'" title="'.$edit_title_text.'">'.$edit_text.'</a></span>';
 		
 	}
 	
