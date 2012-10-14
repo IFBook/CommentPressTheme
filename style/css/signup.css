@@ -1,10 +1,8 @@
 /*
 ===============================================================
-CommentPress WPMU Signup Page Stylesheet
+CommentPress Multisite Signup Page Stylesheet
 ===============================================================
 AUTHOR			: Christian Wach
-MODIFIED BY		: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 26/11/2009
 ---------------------------------------------------------------
 NOTES
 
@@ -123,12 +121,38 @@ to override some styles for it to fit with our static header.
 		margin: 30px 0 5px 0;
 	}
 	
+	#content .mu_register #cp-multisite-options h3
+	{
+		color: #761D19;
+		font-size: 1.2em;
+	}
+	
+	#content .mu_register #cp-multisite-options p
+	{
+		padding: 5px 0;
+	}
+	
 	#content .mu_register label.checkbox
 	{
 		color: #000;
 		font-size: 1em;
 		padding: 0 10px 0 0;
 		margin: 0;
+	}
+	
+	#content .mu_register #cp-multisite-options .checkbox label,
+	#content .mu_register #cp-multisite-options .cp-workflow-type label
+	{
+		color: #000;
+		font-size: 14px;
+		font-weight: bold;
+		margin: 5px 0;
+	}
+	
+	#content .mu_register #cp-multisite-options .cp-workflow-type label
+	{
+		font-size: 15px;
+		color: #761D19;
 	}
 	
 	#content .mu_register p.submit

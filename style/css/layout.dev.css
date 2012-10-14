@@ -660,9 +660,14 @@ ul#content-tabs li
 	
 	.post div.textblock
 	{
-		padding: 7px 7px 0 7px;
+		padding: 0 7px 0 7px;
 	}
 	
+	.post .textblock
+	{
+		position: relative;
+	}
+
 	/* line-by-line textblock formatting */
 	.post span.textblock
 	{
@@ -675,7 +680,8 @@ ul#content-tabs li
 	.post div.textblock blockquote,
 	.post div.textblock table
 	{
-		padding: 0 0 18px 0;
+		padding-left: 0;
+		padding-right: 0;
 	}
 	
 	.archive_item
@@ -726,7 +732,7 @@ body.right-bubbles .post span.commenticonbox
 	position: absolute;
 	margin-top: 5px;
 	padding-right: 20px;
-	right: 25px;
+	right: -44px;
 }
 
 /* left-aligned bubbles */
@@ -774,6 +780,7 @@ span.commenticonbox a.para_permalink
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-size: 10px; 
 		font-weight: normal;
+		font-style: normal;
 		position: absolute; 
 		float: right;
 		padding: 0 0 0 3px;
@@ -787,31 +794,33 @@ span.commenticonbox a.para_permalink
 	/* comment icon in blockquote */
 	.post blockquote span.commenticonbox 
 	{
-		right: 25px;
+		right: -59px;
 	}
 	
-	/* comment icon in span */
+	/* comment icon in span (line-by-line) */
 	span.textblock span.commenticonbox 
 	{
-		padding-top: 7px;
+		padding-top: 0;
+		right: -51px;
 	}
 	
-span.textblock.selected_para span.commenticonbox 
-{
-	padding-top: 7px;
-}
-
-span.textblock.selected_para 
-{
-	margin-left: -7px;	
-}
-
+	span.textblock.selected_para span.commenticonbox 
+	{
+		padding-top: 0;
+		right: -44px;
+	}
+	
+	span.textblock.selected_para 
+	{
+		margin-left: -7px;	
+	}
+	
 /* comment icon in lists */
 .post ul li.list_commenticon,
 .post ol li.list_commenticon
 {
 	float: left;
-	width: 0px;
+	width: 0;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -823,10 +832,28 @@ span.textblock.selected_para
 .post span.para_marker 
 {
 	position: absolute;
-	margin-left: -40px;
-	padding-right: 15px;
+	/* margin-left: -40px;
+	padding-right: 15px; */
 	font-style: normal;
+	left: -32px;
 }
+
+	/* para marker in blockquote */
+	.post blockquote span.para_marker 
+	{
+		margin-left: -15px;	
+	}
+
+	/* para marker comment icon in comment-block */
+	.post div.textblock span.para_marker
+	{
+		margin-top: 9px;	
+	}
+
+	.post div.textblock span.commenticonbox 
+	{
+		margin-top: 12px;	
+	}
 
 	.post span.para_marker span
 	{
@@ -840,6 +867,16 @@ span.textblock.selected_para
 		font-weight: normal;
 		font-size: 16px;
 		font-family: Georgia, serif;
+	}
+	
+	span.textblock span.para_marker 
+	{
+		left: -39px;
+	}
+	
+	span.textblock.selected_para span.para_marker 
+	{
+		left: -32px;
 	}
 	
 	/* enable visual cue for rollovers */
@@ -863,12 +900,6 @@ span.textblock.selected_para
 		color: #761D19;
 	}
 	
-	/* para marker in blockquote */
-	.post blockquote span.para_marker 
-	{
-		margin-left: -55px;	
-	}
-
 
 
 
