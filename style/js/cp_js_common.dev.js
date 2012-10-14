@@ -1940,13 +1940,35 @@ function cp_setup_para_permalink_icons() {
  * @todo: 
  *
  */
-function cp_setup_para_marker_icons() {
+function cp_setup_page_click_actions() {
 
 	// unbind first to allow repeated calls to this function
-	jQuery('.textblock').unbind( 'click' );
+	jQuery('.post_title a').unbind( 'click' );
 
 	/** 
-	 * @description: clicking on the little comment icon
+	 * @description: clicking on the page/post title
+	 * @todo: 
+	 *
+	 */
+	jQuery('.post_title a').click( function( event ) {
+	
+		// override event
+		event.preventDefault();
+	
+		// get text signature
+		var text_sig = '';
+		//console.log( text_sig );
+		
+		// use function
+		cp_do_comment_icon_action( text_sig, 'marker' );
+		
+		// --<
+		return false;
+		
+	});
+
+	/** 
+	 * @description: clicking on the textblock
 	 * @todo: 
 	 *
 	 */
@@ -2693,8 +2715,11 @@ jQuery(document).ready( function($) {
 	// set up comment icons (these used to be paragraph permalinks - now 'add comment')
 	cp_setup_para_permalink_icons();
 	
-	// set up paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
-	cp_setup_para_marker_icons();
+	// set up clicks in the page content: 
+	// title
+	// paragraph content
+	// paragraph icons (newly assigned as paragraph permalinks - also 'read comments')
+	cp_setup_page_click_actions();
 	
 	// set up user-defined links to paragraphs
 	cp_setup_para_links();
