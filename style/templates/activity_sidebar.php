@@ -394,7 +394,16 @@ if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is
 	<?php endif; ?>
 	
 	
-	
+	<?php /* ?>
+	<ul class="item-list cp-syndication">
+
+		<li>RSS</li>
+		<li>Facebook</li>
+		<li>Twitter</li>
+
+	</ul>
+	<?php */ ?>
+
 <?php 
 
 } // end BP check

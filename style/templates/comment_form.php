@@ -42,11 +42,13 @@ global $post;
 
 
 
-<h4 id="respond_title"><?php cp_comment_form_title( 'Leave a Comment', 'Leave a Reply to %s' ); ?></h4>
-
 <div class="cancel-comment-reply">
 	<p><?php cancel_comment_reply_link('Cancel'); ?></p>
 </div>
+
+
+
+<h4 id="respond_title"><?php cp_comment_form_title( 'Leave a Comment', 'Leave a Reply to %s' ); ?></h4>
 
 <?php if ( get_option('comment_registration') && !$user_ID ) : ?>
 
@@ -62,7 +64,7 @@ global $post;
 		
 		<?php if ( $user_ID ) : ?>
 		
-			<p>Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="Log out of this account">Log out &raquo;</a></p>
+			<p class="author_is_logged_in">Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a> &rarr; <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="Log out of this account">Log out</a></p>
 		
 		<?php else : ?>
 		
@@ -72,7 +74,7 @@ global $post;
 			<p><label for="email"><small>Mail (will not be published)<?php if ($req) echo ' <span class="req">(required)</span>'; ?></small></label><br />
 			<input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="30"<?php if ($req) { echo ' aria-required="true"'; } ?> /></p>
 			
-			<p><label for="url"><small>Website</small></label><br />
+			<p class="author_not_logged_in"><label for="url"><small>Website</small></label><br />
 			<input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="30" /></p>
 		
 		<?php endif; ?>
@@ -83,7 +85,7 @@ global $post;
 	
 		<legend class="off-left">Your comment</legend>
 		
-		<p><label for="comment" class="off-left">Comment</label><br />
+		<label for="comment" class="off-left">Comment</label>
 		<?php
 		
 		// in functions.php
@@ -96,7 +98,6 @@ global $post;
 		}
 		
 		?>		
-		</p>
 	
 	</fieldset>
 	
