@@ -2326,6 +2326,49 @@ Footer
 	
 /* 
 ---------------------------------------------------------------------
+Comment Orphaning
+---------------------------------------------------------------------
+*/
+
+/* WordPress jQuery Dialog */
+.cp_alert_text
+{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: whiteSmoke;
+	line-height: 1.4em;
+	font-size: 13px;
+	padding: 10px 14px;
+	color: red;
+}
+
+.comment-assign
+{
+	display: block;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #761D19;
+	text-decoration: none;
+	margin: 5px 5px 0 0;
+	padding: 2px;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+.comment-assign:hover
+{
+	cursor: move;
+}
+
+.comment-orphan
+{
+	background-color: #F5B0A6 !important;
+}
+
+
+
+
+
+/* 
+---------------------------------------------------------------------
 Theme My Login
 ---------------------------------------------------------------------
 */

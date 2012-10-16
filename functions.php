@@ -2925,12 +2925,18 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 		// get edit comment link
 		$editlink = '<span class="alignright comment-edit"><a class="comment-edit-link" href="'.get_edit_comment_link().'" title="'.$edit_title_text.'">'.$edit_text.'</a></span>';
 		
+		// add a filter for plugins
+		$editlink = apply_filters( 'cp_comment_edit_link', $editlink, $comment );
+		
 	}
 	
 	
 	
 	// get comment class(es)
 	$_comment_class = comment_class( null, $comment->comment_ID, $post->ID, false );
+	
+	// if orphaned, add class to identify as such
+	$_comment_orphan = ( isset( $comment->orphan ) ) ? ' comment-orphan' : '';
 	
 	
 	
@@ -2942,7 +2948,7 @@ function cp_get_comment_markup( $comment, $args, $depth ) {
 
 
 
-<div class="comment-identifier">
+<div class="comment-identifier'.$_comment_orphan.'">
 '.get_avatar( $comment, $size='32' ).'
 '.$editlink.'
 '.$author.'		
