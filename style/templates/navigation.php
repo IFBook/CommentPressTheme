@@ -149,7 +149,7 @@ else {
 	// do we have the plugin?
 	if ( is_object( $commentpress_obj ) ) {
 		
-		// NOTE: we need to account for situations where no CommentPress special pages exist
+		// NOTE: we need to account for situations where no Commentpress special pages exist
 		
 		// get title id and url
 		$title_id = $commentpress_obj->db->option_get( 'cp_welcome_page' );

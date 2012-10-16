@@ -2,7 +2,7 @@
 Contributors: christianwach
 Tags: commentpress, buddypress, groups, blogs, groupblogs, groupblog ,content, comments, commenting, debate, collaboration, content, two-columns, sticky-post, threaded-comments, paragraph-comments
 Requires at least: WP 3.3
-Tested up to: WP 3.4.2 / BP 1.6
+Tested up to: 3.4.2
 
 Commentpress allows readers to comment paragraph by paragraph in the margins of a text. You can use it to annotate, gloss, workshop, debate and more!
 
