@@ -95,10 +95,6 @@ Template Name: Welcome
 
 
 
-	<?php edit_post_link('Edit this entry', '<p class="edit_link">', '</p>'); ?>
-
-
-
 </div><!-- /post -->
 
 
