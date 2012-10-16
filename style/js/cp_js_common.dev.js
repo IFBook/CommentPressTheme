@@ -818,8 +818,8 @@ function cp_setup_comment_headers() {
 			//console.log( opening );
 			//alert( 'comment_block_permalink click' );
 	
-			// if not the whole page...
-			if( text_sig != '' ) {
+			// if not the whole page or pings...
+			if( text_sig != '' && text_sig != 'pingbacksandtrackbacks' ) {
 	
 				// get text block
 				var textblock = jQuery('#textblock-' + text_sig);
@@ -884,16 +884,16 @@ function cp_setup_comment_headers() {
 				// unhighlight paragraphs
 				jQuery.unhighlight_para();
 				
-				// only scroll if page is not highlighted
-				//if ( page_highlight === false ) {
+				// only scroll if not pings
+				if ( text_sig != 'pingbacksandtrackbacks' ) {
 			
 					// scroll to top
 					cp_scroll_to_top( 0, cp_scroll_speed );
 					
-				//}
+					// toggle page highlight flag
+					page_highlight = !page_highlight;
 				
-				// toggle page highlight flag
-				page_highlight = !page_highlight;
+				}
 				
 			}
 			
@@ -902,7 +902,7 @@ function cp_setup_comment_headers() {
 
 		
 		// if encouraging commenting...
-		if ( cp_promote_reading == '0' ) {
+		if ( cp_promote_reading == '0' && text_sig != 'pingbacksandtrackbacks' ) {
 		
 			// are comments open?
 			if ( cp_comments_open == 'y' ) {
@@ -913,7 +913,7 @@ function cp_setup_comment_headers() {
 				var para_num = para_id.split('-')[1];
 				
 				// do we have the comment form?
-				var has_form = jQuery( '#para_wrapper-' + text_sig ).find('#respond' )[0];
+				var has_form = jQuery( '#para_wrapper-' + text_sig ).find( '#respond' )[0];
 			
 				// if we have a comment list
 				if ( comment_list.length > 0 && comment_list[0] ) {
@@ -972,6 +972,8 @@ function cp_setup_comment_headers() {
 			
 		}
 		
+		
+		
 		// --<
 		return false;
 
@@ -1025,9 +1027,14 @@ function cp_enable_comment_permalink_clicks() {
 			
 			// get text sig
 			var text_sig = cp_get_text_sig_by_comment_id( '#'+comment_id );
-	
-			// scroll page to it
-			cp_scroll_page_to_textblock( text_sig );
+			
+			// if not a pingback...
+			if ( text_sig != 'pingbacksandtrackbacks' ) {
+			
+				// scroll page to it
+				cp_scroll_page_to_textblock( text_sig );
+			
+			}
 			
 			// scroll comments
 			cp_scroll_comments( jQuery('#'+comment_id), cp_scroll_speed );
