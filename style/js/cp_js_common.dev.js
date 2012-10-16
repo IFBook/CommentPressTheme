@@ -1974,9 +1974,6 @@ function cp_setup_page_click_actions() {
 	 */
 	jQuery('.textblock').click( function( event ) {
 	
-		// override event
-		event.preventDefault();
-	
 		// get text signature
 		var text_sig = jQuery(this).attr('id');
 		//console.log( text_sig );
@@ -1986,9 +1983,6 @@ function cp_setup_page_click_actions() {
 		
 		// use function
 		cp_do_comment_icon_action( text_sig, 'marker' );
-		
-		// --<
-		return false;
 		
 	});
 
