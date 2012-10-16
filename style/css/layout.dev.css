@@ -2343,7 +2343,7 @@ Comment Orphaning
 
 .comment-assign
 {
-	display: block;
+	display: none; /* allow only javascript-enabled browsers to see this */
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #761D19;
 	text-decoration: none;
