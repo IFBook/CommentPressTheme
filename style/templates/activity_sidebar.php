@@ -208,7 +208,14 @@ if (
 global $commentpress_obj, $post;
 
 // if we have the plugin enabled and it's BP
-if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is_buddypress() ) {
+if ( 
+	
+	is_multisite() AND 
+	is_object( $commentpress_obj ) AND 
+	$commentpress_obj->is_buddypress() AND
+	$commentpress_obj->is_groupblog()
+	
+) {
 
 
 

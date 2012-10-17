@@ -45,43 +45,30 @@ Template Name: Welcome
 	
 	}
 	
-
-
-	// set defaults
-	$args = array(
-	
-		'post_type' => 'attachment',
-		'numberposts' => 1,
-		'post_status' => null,
-		'post_parent' => get_the_ID()
-		
-	); 
-	
-	// get them...
-	$attachments = get_posts( $args );
-	
-	// well?
-	if ( $attachments ) {
-	
-		// we only want the first
-		$attachment = $attachments[0];
-	
-	}
-	
-	// if we have an image
-	if ( $attachment ) { 
-		
-		// show it
-		echo wp_get_attachment_image( $attachment->ID, 'full' );
-		
-	} else {
-		
-		// show post content
-		global $more; $more = false; the_content('', true);
-		
-	}
-	
 	?>
+
+
+
+	<?php
+	
+	// if we've elected to show the meta...
+	if ( cp_get_post_meta_visibility( get_the_ID() ) ) {
+
+	?>
+	<div class="search_meta">
+		
+		<?php cp_echo_post_meta(); ?>
+		
+	</div>
+	<?php
+	
+	}
+
+	?>
+	
+	
+	
+	<?php global $more; $more = true; the_content(''); ?>
 
 
 
