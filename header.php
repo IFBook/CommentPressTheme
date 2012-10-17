@@ -61,7 +61,17 @@ $_body_classes = cp_get_body_classes( true );
 
 
 
-<?php include (get_template_directory() . '/style/templates/header_body.php'); ?>
+<?php 
+
+// until WordPress supports a locate_theme_file() function, use filter
+$include = apply_filters( 
+	'cp_template_header_body',
+	get_template_directory() . '/style/templates/header_body.php'
+);
+
+include( $include );
+
+?>
 
 
 

@@ -42,7 +42,17 @@ Separated this out for inclusion in multiple files.
 		<?php get_search_form(); ?>
 	</div><!-- /book_search -->
 	
-	<?php include (get_template_directory() . '/style/templates/user_links.php'); ?>
+	<?php 
+	
+	// until WordPress supports a locate_theme_file() function, use filter
+	$include = apply_filters( 
+		'cp_template_user_links',
+		get_template_directory() . '/style/templates/user_links.php'
+	);
+	
+	include( $include );
+	
+	?>
 	
 </div><!-- /book_header -->
 
@@ -50,7 +60,17 @@ Separated this out for inclusion in multiple files.
 
 <div id="header">
 
-	<?php include (get_template_directory() . '/style/templates/navigation.php'); ?>
+	<?php 
+	
+	// until WordPress supports a locate_theme_file() function, use filter
+	$include = apply_filters( 
+		'cp_template_navigation',
+		get_template_directory() . '/style/templates/navigation.php'
+	);
+	
+	include( $include );
+
+	?>
 
 </div><!-- /header -->
 

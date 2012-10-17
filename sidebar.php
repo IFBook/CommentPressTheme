@@ -205,19 +205,37 @@ if ( is_object( $commentpress_obj ) ) {
 	// is it commentable?
 	if ( $commentable ) {
 	
+		// until WordPress supports a locate_theme_file() function, use filter
+		$include = apply_filters( 
+			'cp_template_comments_sidebar',
+			get_template_directory() . '/style/templates/comments_sidebar.php'
+		);
+		
 		// get comments sidebar
-		include( get_template_directory() . '/style/templates/comments_sidebar.php');
+		include( $include );
 		
 	}
 	
+	// until WordPress supports a locate_theme_file() function, use filter
+	$include = apply_filters( 
+		'cp_template_toc_sidebar',
+		get_template_directory() . '/style/templates/toc_sidebar.php'
+	);
+	
 	// always include TOC
-	include( get_template_directory() . '/style/templates/toc_sidebar.php' );
+	include( $include );
 	
 	// do we want to show activity tab?
 	if ( cp_show_activity_tab() ) {
 		
+		// until WordPress supports a locate_theme_file() function, use filter
+		$include = apply_filters( 
+			'cp_template_activity_sidebar',
+			get_template_directory() . '/style/templates/activity_sidebar.php'
+		);
+		
 		// get activity sidebar
-		include (get_template_directory() . '/style/templates/activity_sidebar.php');
+		include( $include );
 		
 	}
 	
