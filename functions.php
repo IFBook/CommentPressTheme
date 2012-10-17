@@ -3,7 +3,6 @@
 Commentpress Theme Functions
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 06/10/2011
 ---------------------------------------------------------------
 NOTES
 

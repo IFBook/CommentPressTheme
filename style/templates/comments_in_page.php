@@ -3,7 +3,6 @@
 Commentpress Theme Comments in Page
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 12/10/2009
 ---------------------------------------------------------------
 NOTES
 
