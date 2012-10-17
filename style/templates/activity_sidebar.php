@@ -394,22 +394,32 @@ if ( is_multisite() AND is_object( $commentpress_obj ) AND $commentpress_obj->is
 	<?php endif; ?>
 	
 	
-	<?php /* ?>
-	<ul class="item-list cp-syndication">
-
-		<li>RSS</li>
-		<li>Facebook</li>
-		<li>Twitter</li>
-
-	</ul>
-	<?php */ ?>
-
 <?php 
 
 } // end BP check
 
 
 ?>
+
+
+
+<?php
+
+/*
+// prepare for ShareThis integration
+if ( function_exists( 'sharethis_button' ) ) {
+	// wrap in identifier
+	echo '<h3 class="activity_heading">Share with ShareThis</h3>';
+	echo '<div class="paragraph_wrapper">';
+	echo '<p class="cp_share_this_buttons" style="padding: 10px 18px;">';
+	sharethis_button();
+	echo '</p>';
+	echo '</div>';
+}
+*/
+
+?>
+
 
 
 
