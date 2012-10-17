@@ -307,12 +307,14 @@ Post-related styles
 {
 	list-style-type: disc;
 	margin: 2px 0 10px 28px;
+	line-height: 1.5;
 }
 
 .post ol li
 {
 	list-style-type: decimal;
 	margin: 2px 0 10px 28px;
+	line-height: 1.5;
 }
 
 .post ul li.list_commenticon,
