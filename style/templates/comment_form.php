@@ -3,7 +3,6 @@
 Commentpress Theme Comment Form
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 21/10/2010
 ---------------------------------------------------------------
 NOTES
 

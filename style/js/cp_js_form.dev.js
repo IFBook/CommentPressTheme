@@ -3,7 +3,6 @@
 CommentPress addComment Javascript
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 06/10/2010
 DEPENDENCIES	: cp_js_common.js
 ---------------------------------------------------------------
 NOTES

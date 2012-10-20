@@ -3,7 +3,6 @@
 Show/Hide All Comments
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 06/10/2010
 REQUIRES		: jquery.js
 ---------------------------------------------------------------
 */
