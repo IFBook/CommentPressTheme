@@ -3,7 +3,6 @@
 Commentpress Theme Functions
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 06/10/2011
 ---------------------------------------------------------------
 NOTES
 
@@ -3656,32 +3655,33 @@ add_filter( 'comment_post_redirect', 'cp_comment_post_redirect', 4, 1 );
 
 
 
-// remove caption shortcode
-remove_shortcode( 'caption' );
-
 if ( ! function_exists( 'cp_image_caption_shortcode' ) ):
 /** 
  * @description: rebuild caption shortcode output
+ * @param array $empty WordPress passes '' as the first param!
  * @param array $attr Attributes attributed to the shortcode.
  * @param string $content Optional. Shortcode content.
  * @return string
- * @todo: Do we need to hook into this?
+ * @todo:
  *
  */
-function cp_image_caption_shortcode( $attr, $content ) {
-
-	// Allow plugins/themes to override the default caption template.
-	$output = apply_filters('img_caption_shortcode', '', $attr, $content);
-	if ( $output != '' )
-		return $output;
-
+function cp_image_caption_shortcode( $empty=null, $attr, $content ) {
+	
+	// get our shortcode vars
 	extract(shortcode_atts(array(
 		'id'	=> '',
 		'align'	=> 'alignnone',
 		'width'	=> '',
 		'caption' => ''
 	), $attr));
-
+	
+	/*
+	print_r( array(
+		'content' => $content,
+		'caption' => $caption,
+	) ); die();
+	*/
+	
 	if ( 1 > (int) $width || empty($caption) )
 		return $content;
 	
@@ -3693,15 +3693,19 @@ function cp_image_caption_shortcode( $attr, $content ) {
 	
 	// get width
 	$_width = (0 + (int) $width);
-
-	return '<span class="captioned_image'.$_alignment.'" style="width: '.$_width.'px"><span '.$id.' class="wp-caption">'
+	
+	// construct
+	$_caption = '<span class="captioned_image'.$_alignment.'" style="width: '.$_width.'px"><span '.$id.' class="wp-caption">'
 	. do_shortcode( $content ) . '</span><small class="wp-caption-text">'.$caption.'</small></span>';
+	
+	// --<
+	return $_caption;
 	
 }
 endif; // cp_image_caption_shortcode
 
-// add a shortcode for the above
-add_shortcode( 'caption', 'cp_image_caption_shortcode' );
+// add a filter for the above
+add_filter( 'img_caption_shortcode', 'cp_image_caption_shortcode', 10, 3 );
 
 
 

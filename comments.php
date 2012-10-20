@@ -3,7 +3,6 @@
 Commentpress Theme Comments
 ===============================================================
 AUTHOR			: Christian Wach <needle@haystack.co.uk>
-LAST MODIFIED	: 22/03/2009
 ---------------------------------------------------------------
 NOTES
 
@@ -39,9 +38,15 @@ if ( is_object( $commentpress_obj ) ) {
 
 	// are we asking for in-page comments?
 	if ( $commentpress_obj->db->is_special_page() ) {
-
+		
+		// until WordPress supports a locate_theme_file() function, use filter
+		$include = apply_filters( 
+			'cp_template_comments_in_page',
+			get_template_directory() . '/style/templates/comments_in_page.php'
+		);
+	
 		// include 'comments in page' template
-		include(get_template_directory() . '/style/templates/comments_in_page.php');
+		include( $include );
 		return;
 		
 	}
@@ -49,8 +54,14 @@ if ( is_object( $commentpress_obj ) ) {
 	// are we allowing comments on paragraphs?
 	if ( $commentpress_obj->comments_by_paragraph() ) {
 
+		// until WordPress supports a locate_theme_file() function, use filter
+		$include = apply_filters( 
+			'cp_template_comments_by_para',
+			get_template_directory() . '/style/templates/comments_by_para.php'
+		);
+	
 		// include comments split by paragraph template
-		include(get_template_directory() . '/style/templates/comments_by_para.php');
+		include( $include );
 		return;
 		
 	}
@@ -156,7 +167,13 @@ if ( is_object( $commentpress_obj ) ) {
 
 <?php
 
+// until WordPress supports a locate_theme_file() function, use filter
+$include = apply_filters( 
+	'cp_template_comment_form',
+	get_template_directory() . '/style/templates/comment_form.php'
+);
+
 // include comment form
-include( get_template_directory() . '/style/templates/comment_form.php');
+include( $include );
 
 ?>
