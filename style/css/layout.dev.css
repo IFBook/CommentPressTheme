@@ -937,6 +937,13 @@ span.captioned_image
 		margin-left: 7px; 
 	}
 
+p > span.textblock:first-child > span.captioned_image
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 0;
+}
+
 span.wp-caption 
 { 
 	display: block;

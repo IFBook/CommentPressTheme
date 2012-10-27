@@ -205,15 +205,18 @@ if (
 
 
 // access plugin
-global $commentpress_obj, $post;
+global $commentpress_obj, $post, $blog_id;
 
 // if we have the plugin enabled and it's BP
 if ( 
 	
+	// test for multisite buddypress
 	is_multisite() AND 
 	is_object( $commentpress_obj ) AND 
 	$commentpress_obj->is_buddypress() AND
-	$commentpress_obj->is_groupblog()
+	
+	// either groupblog or main BP blog
+	( $commentpress_obj->is_groupblog() OR BP_ROOT_BLOG == $blog_id )
 	
 ) {
 
